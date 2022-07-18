@@ -4,4 +4,4 @@ from app.auth import auth_blueprint as auth_bp
 
 @auth_bp.route('/login')
 def login():
-    return render_template('auth/login.html')
+    return render_template('auth/login.html', legend='Welcome to login page')
