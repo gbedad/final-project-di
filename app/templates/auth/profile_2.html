@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+{% from "_macros.html" import render_field, render_fields %}
+
+{% block content %}
+<div class="row mb-4">
+  <div class="col-10"><h3>{{ legend }}</h3></div>
+  <div class="col"><p>Connected as: {{ current_user.username }}</p></div>
+</div>
+{% include 'auth/nav_profile.html' %}
+<hr>
+<div class="row mb-2">
+    <div class="col-2"></div>
+    <div class="col-8 d-flex justify-content-center">
+        <form method="post">
+        {{ form.hidden_tag() }}
+            <div class="row mb-2">
+                <div class="col-6">
+                <div class="form-outline">
+                    {{ render_fields(form.school_subjects) }}
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-outline">
+                    {{ render_fields(form.school_levels) }}
+                </div>
+            </div>
+            <div class="col">
+            <div class="form-outline">
+                {{ form.avail.label(class="form-label") }}<br>
+                {{ form.avail(size=64, class="form-control") }}
+                {% for error in form.avail.errors %}
+                <span class="danger">[{{ error }}]</span>
+                {% endfor %}
+            </div>
+            </div>
+        </div>
+            <div class="row mb-2">
+                <div class="col-6">
+                    <div class="form-outline">
+                        {{ form.school_levels.label(class="form-label") }}<br>
+                        {{ form.school_levels(size=64, class="form-control") }}
+                        {% for error in form.school_levels.errors %}
+                        <span class="danger">[{{ error }}]</span>
+                        {% endfor %}
+              </div>
+                </div>
+                <div class="col">
+                    <div class="form-outline">
+                        {{ form.teaching_terms.label(class="form-label") }}<br>
+                        {{ form.teaching_terms(size=64, class="form-control") }}
+                        {% for error in form.teaching_terms.errors %}
+                        <span class="danger">[{{ error }}]</span>
+                        {% endfor %}
+              </div>
+                </div>
+                <div class="col">
+                    <div class="form-outline">
+                        {{ form.availability_days.label(class="form-label") }}<br>
+                        {{ form.availability_days(size=64, class="form-control") }}
+                        {% for error in form.availability_days.errors %}
+                        <span class="danger">[{{ error }}]</span>
+                        {% endfor %}
+              </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <div class="form-outline">
+                        {{ form.avail.label(class="form-label") }}<br>
+                        {{ form.avail(size=64, class="form-control") }}
+                        {% for error in form.avail.errors %}
+                        <span class="danger">[{{ error }}]</span>
+                        {% endfor %}
+              </div>
+                </div>
+                <div class="col">
+                    <div class="form-outline">
+                        {{ form.activity.label(class="form-label") }}<br>
+                        {{ form.activity(size=64, class="form-control") }}
+                        {% for error in form.activity.errors %}
+                        <span class="danger">[{{ error }}]</span>
+                        {% endfor %}
+              </div>
+                </div>
+                <div class="col">
+                        <div class="form-outline">
+                            {{ render_field(form.contract_type) }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-4">
+            <div class="col d-flex justify-content-center">
+    </div>
+  </div>
+    <!-- Submit button -->
+        <p class="col" >{{ form.submit(class="btn btn-primary btn-block mb-4") }}</p>
+        </form>
+    </div>
+</div>
+{% endblock %}

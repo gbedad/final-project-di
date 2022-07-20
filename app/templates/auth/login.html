@@ -5,7 +5,54 @@ Login
 {% endblock %}
 
 {% block content %}
-<h2>{{legend}}</h2>
+<div class="row mb-4">
+    <div class="col-4"></div>
+    <div class="col-4 d-flex justify-content-center">
+    <form method="post">
+    <h2>{{legend}}</h2>
+    {{ form.hidden_tag() }}
+  <!-- Email input -->
+    <div class="form-outline mb-4">
+            {{ form.email.label(class="form-label") }}<br>
+            {{ form.email(size=64, class="form-control") }}
+            {% for error in form.email.errors %}
+            <span class="danger">[{{ error }}]</span>
+            {% endfor %}
+  </div>
 
-{{ message }}
+    <!-- Password input -->
+    <div class="form-outline mb-4">
+            {{ form.password.label(class="form-label") }}<br>
+            {{ form.password(size=64, class="form-control") }}
+            {% for error in form.password.errors %}
+            <span class="danger">[{{ error }}]</span>
+            {% endfor %}
+  </div>
+
+    <!-- 2 column grid layout for inline styling -->
+    <div class="row mb-4">
+    <div class="col d-flex justify-content-center">
+      <!-- Checkbox -->
+      <div class="form-check">
+        {{ form.remember_me() }} {{ form.remember_me.label }}
+      </div>
+    </div>
+
+    <div class="col">
+      <!-- Simple link -->
+      <a href="#!">Forgot password?</a>
+    </div>
+  </div>
+
+    <!-- Submit button -->
+    <p class="col" >{{ form.submit(class="btn btn-primary btn-block mb-4") }}</p>
+
+      <!-- Register buttons -->
+      <div class="text-center">
+        <p>Not a member? <a href="{{url_for('auth.register')}}">Register</a></p>
+      </div>
+    </form>
+    </div>
+    <div class="col-4"></div>
+</div>
 {% endblock %}

@@ -1,28 +1,39 @@
 from flask import Flask
 from config import Config
-from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
+from flask_login import LoginManager
+from flask_sqlalchemy import SQLAlchemy
 import os
 
-from .auth import auth_blueprint as auth_bp
-from .main import main_blueprint as main_bp
 
+
+# login.login_message = _l('Please log in to access this page.')
+
+
+flask_app = Flask(__name__)
 db = SQLAlchemy()
+CONFIG_TYPE = os.getenv('CONFIG_TYPE', default='config.DevelopmentConfig')
+flask_app.config.from_object(CONFIG_TYPE)
+flask_app.config.from_object(Config)
+flask_app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
 migrate = Migrate()
 
+login_manager = LoginManager()
+login_manager.init_app(flask_app)
+login_manager.login_view = 'auth.login'
 
-def create_app(config_class=Config):
-    flask_app = Flask(__name__)
-    flask_app.config.from_object(config_class)
-    db.init_app(flask_app)
-    migrate.init_app(flask_app, db)
-    flask_app.register_blueprint(auth_bp)
-    flask_app.register_blueprint(main_bp)
+db.init_app(flask_app)
+migrate.init_app(flask_app, db)
 
-    CONFIG_TYPE = os.getenv('CONFIG_TYPE', default='config.DevelopmentConfig')
-    flask_app.config.from_object(CONFIG_TYPE)
+from app.auth.routes import auth_bp
+from app.main.routes import main_bp
 
-    return flask_app
+flask_app.register_blueprint(auth_bp)
+flask_app.register_blueprint(main_bp)
 
 
-from app.main import routes
+#from app.main import routes
+#from app.auth import routes, forms, models
+
+

@@ -5,7 +5,83 @@ Register
 {% endblock %}
 
 {% block content %}
-<h2>{{legend}}</h2>
+<div class="row mb-4">
+    <div class="col-4"></div>
+    <div class="col-4 d-flex justify-content-center">
+    <form method="post">
+    <h2>{{legend}}</h2>
+    {{ form.hidden_tag() }}
+        <div class="row mb-4">
+        <div class="col d-flex justify-content-center">
+                <div class="form-outline mb-4">
+            {{ form.first_name.label(class="form-label") }}<br>
+            {{ form.first_name(size=64, class="form-control") }}
+            {% for error in form.first_name.errors %}
+            <span class="danger">[{{ error }}]</span>
+            {% endfor %}
+        </div>
+        <div class="form-outline mb-4">
+            {{ form.last_name.label(class="form-label") }}<br>
+            {{ form.last_name(size=64, class="form-control") }}
+            {% for error in form.last_name.errors %}
+            <span class="danger">[{{ error }}]</span>
+            {% endfor %}
+        </div>
 
-{{ message }}
+        </div>
+    </div>
+    <!-- Username input -->
+    <div class="form-outline mb-4">
+            {{ form.username.label(class="form-label") }}<br>
+            {{ form.username(size=64, class="form-control") }}
+            {% for error in form.username.errors %}
+            <span class="danger">[{{ error }}]</span>
+            {% endfor %}
+  </div>
+  <!-- Email input -->
+    <div class="form-outline mb-4">
+            {{ form.email.label(class="form-label") }}<br>
+            {{ form.email(size=64, class="form-control") }}
+            {% for error in form.email.errors %}
+            <span class="danger">[{{ error }}]</span>
+            {% endfor %}
+  </div>
+
+    <!-- Password input -->
+    <div class="form-outline mb-4">
+            {{ form.password.label(class="form-label") }}<br>
+            {{ form.password(size=64, class="form-control") }}
+            {% for error in form.password.errors %}
+            <span class="danger">[{{ error }}]</span>
+            {% endfor %}
+  </div>
+        <!-- Confirm Password input -->
+    <div class="form-outline mb-4">
+            {{ form.password2.label(class="form-label") }}<br>
+            {{ form.password2(size=64, class="form-control") }}
+            {% for error in form.password2.errors %}
+            <span class="danger">[{{ error }}]</span>
+            {% endfor %}
+  </div>
+
+    <!-- 2 column grid layout for inline styling -->
+    <div class="row mb-4">
+    <div class="col d-flex justify-content-center">
+
+    </div>
+
+
+  </div>
+
+    <!-- Submit button -->
+    <p class="col" >{{ form.submit(class="btn btn-primary btn-block mb-4") }}</p>
+
+      <!-- Register buttons -->
+      <div class="text-center">
+        <p>Already member? <a href="{{url_for('auth.login')}}">Sign In</a></p>
+      </div>
+    </form>
+    </div>
+    <div class="col-4"></div>
+</div>
 {% endblock %}
