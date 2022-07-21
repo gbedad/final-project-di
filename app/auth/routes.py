@@ -80,7 +80,7 @@ def profile_1(user_name):
     if form.validate_on_submit():
         pass
     user = models.User.query.filter_by(username=user_name).first_or_404()
-    return render_template('auth/profile_1.html', data=user, form=form, legend='Address')
+    return render_template('auth/profile_1.html', data=user, form=form, legend='My Information')
 
 
 @auth_bp.route('/user/<user_name>/profile_2', methods=['GET', 'POST'])
@@ -90,12 +90,25 @@ def profile_2(user_name):
     if form.validate_on_submit():
         pass
     user = models.User.query.filter_by(username=user_name).first_or_404()
-    return render_template('auth/profile_2.html', data=user, form=form, legend='Teaching')
+    return render_template('auth/profile_2.html', data=user, form=form, legend='How I can Help')
 
 
 @auth_bp.route('/user/<user_name>/profile_3', methods=['GET', 'POST'])
 @login_required
 def profile_3(user_name):
+    form = forms.ProfilePage3Form()
+    if form.validate_on_submit():
+        pass
     user = models.User.query.filter_by(username=user_name).first_or_404()
-    return render_template('auth/profile_3.html', data=user, legend='Communication')
+    return render_template('auth/profile_3.html', data=user,form=form, legend='More About Me')
+
+
+@auth_bp.route('/user/<user_name>/profile_4', methods=['GET', 'POST'])
+@login_required
+def profile_4(user_name):
+    form = forms.ProfilePage4Form()
+    if form.validate_on_submit():
+        pass
+    user = models.User.query.filter_by(username=user_name).first_or_404()
+    return render_template('auth/profile_4.html', data=user, form=form, legend='My Interviews')
 

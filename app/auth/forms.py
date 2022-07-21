@@ -1,8 +1,9 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, SelectMultipleField, SelectField, widgets,\
-    DateField, TextAreaField, validators, IntegerField, IntegerRangeField
+    DateField, TextAreaField, validators, IntegerField, IntegerRangeField, TimeField, TelField, FieldList, FormField, Form
 from wtforms.validators import ValidationError, DataRequired, Email, EqualTo, Regexp, NumberRange
 from .models import User
+
 
 CONTRACT_TYPES = [('1', 'Bénévolat'), ('2', 'Service Civique'), ('3', 'Stage'), ('4', 'Autres')]
 SCHOOL_SUBJECTS = [('5', 'Mathématiques'), ('6', 'Français'), ('7', 'Anglais'),
@@ -14,6 +15,7 @@ SCHOOL_LEVELS = [('1', 'Primaire'), ('2', '6ème'), ('3', '5ème'),
 
 MODALITIES = [('1', 'Présentiel 12ème'), ('2', 'Présentiel 17ème'), ('3', 'Présentiel Aubervilliers'), ('4', 'Présentiel Autres'), ('5', 'Distanciel'), ('6', 'Hybride')]
 
+INQUIRIES = [('1', 'Je veux aider'), ('2', "Paris je m'engage"), ('3', 'Autres')]
 
 class RegistrationForm(FlaskForm):
     first_name = StringField('First Name', validators=[DataRequired()])
@@ -48,10 +50,15 @@ class ProfilePage1Form(FlaskForm):
     zipcode = StringField('Zipcode', validators=[DataRequired()])
     city = StringField('City', validators=[DataRequired()])
     email2 = StringField('Email 2')
-    phone = StringField('Phone', validators=[DataRequired(), Regexp(regex='^[+-]?[0-9]$')])
+    phone = TelField('Phone', validators=[DataRequired(), Regexp(regex='^[+-]?[0-9]$')])
     short_text = TextAreaField(u'Please feel free to add any comment', validators=[validators.optional(), validators.length(max=400)])
     birth_date = DateField('Birth Date', format='%d-%m-%Y')
     submit = SubmitField('Save')
+
+
+class SelectTimeForm(Form):
+    time_from = TimeField('From', validators=[DataRequired()], format='%H:%M')
+    time_to = TimeField('To', validators=[DataRequired()], format='%H:%M')
 
 
 class ProfilePage2Form(FlaskForm):
@@ -76,9 +83,34 @@ class ProfilePage2Form(FlaskForm):
     start_date = DateField('Starting Date', format='%Y-%m-%d', validators=[DataRequired()])
     end_date = DateField('Ending Date', format='%Y-%m-%d', validators=[DataRequired()])
     frequency = IntegerField('Freq(h/week)', validators=[DataRequired(), NumberRange(min=1, max=6)])
-    company = StringField('Establishment', validators=[DataRequired()])
-    activity = StringField('Activity', validators=[DataRequired()])
-    contract_type = SelectField(u'Contract Type', validators=[DataRequired()], choices=CONTRACT_TYPES)
+    monday = FieldList(FormField(SelectTimeForm), min_entries=1, max_entries=1)
+    tuesday = FieldList(FormField(SelectTimeForm), min_entries=1, max_entries=1)
+    wednesday = FieldList(FormField(SelectTimeForm), min_entries=1, max_entries=1)
+    thursday = FieldList(FormField(SelectTimeForm), min_entries=1, max_entries=1)
+    friday = FieldList(FormField(SelectTimeForm), min_entries=1, max_entries=1)
+    sunday = FieldList(FormField(SelectTimeForm), min_entries=1, max_entries=1)
+    contract_type = SelectField(u'Engagement Type', validators=[DataRequired()], choices=CONTRACT_TYPES)
     submit = SubmitField('Save')
 
+
+class ProfilePage3Form(FlaskForm):
+    why = TextAreaField('Why', validators=[DataRequired(), validators.length(max=400)],
+                        render_kw={"placeholder": "Why do I apply for such a tutorship mission?"})
+    experience = TextAreaField('Experience', validators=[DataRequired(), validators.length(max=400)],
+                        render_kw={"placeholder": "Do I have already experience of tutorship in the education field?"})
+    when = TextAreaField('When', validators=[DataRequired(), validators.length(max=400)],
+                        render_kw={"placeholder": "When do I want to be contacted?"})
+    inquiry = SelectField('How did you learn about us', validators=[DataRequired()], choices=INQUIRIES)
+    submit = SubmitField('Save')
+
+
+class ProfilePage4Form(FlaskForm):
+    why = TextAreaField('Why', validators=[DataRequired(), validators.length(max=400)],
+                        render_kw={"placeholder": "Why do I apply for such a tutorship mission?"})
+    experience = TextAreaField('Experience', validators=[DataRequired(), validators.length(max=400)],
+                        render_kw={"placeholder": "Do I have already experience of tutorship in the education field?"})
+    when = TextAreaField('When', validators=[DataRequired(), validators.length(max=400)],
+                        render_kw={"placeholder": "When do I want to be contacted?"})
+    inquiry = SelectField('How did you learn about us', validators=[DataRequired()], choices=INQUIRIES)
+    submit = SubmitField('Save')
 

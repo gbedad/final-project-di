@@ -102,21 +102,87 @@
 
         </div>
         <div class="row">
-
                 <div class="col">
                     <div class="form-outline">
-                        {{ form.activity.label(class="form-label") }}<br>
-                        {{ form.activity(size=64, class="form-control") }}
-                        {% for error in form.activity.errors %}
+                        {{ form.monday.label(class="form-label") }}<br>
+                        {% for nested in form.monday %}
+                        {{ nested }}
+                        {% endfor %}
+                        {% for error in form.tuesday.errors %}
                         <span class="danger">[{{ error }}]</span>
                         {% endfor %}
                     </div>
                 </div>
+                <div class="col">
+                    <div class="form-outline">
+                        {{ form.tuesday.label(class="form-label") }}<br>
+                        {% for nested in form.tuesday %}
+                        {{ nested }}
+                        {% endfor %}
+                        {% for error in form.tuesday.errors %}
+                        <span class="danger">[{{ error }}]</span>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-outline">
+                        {{ form.tuesday.label(class="form-label") }}<br>
+                        {% for nested in form.tuesday %}
+                        {{ nested }}
+                        {% endfor %}
+                        {% for error in form.tuesday.errors %}
+                        <span class="danger">[{{ error }}]</span>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-outline">
+                        {{ form.wednesday.label(class="form-label") }}<br>
+                        {% for nested in form.wednesday %}
+                        {{ nested }}
+                        {% endfor %}
+                        {% for error in form.wednesday.errors %}
+                        <span class="danger">[{{ error }}]</span>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-outline">
+                        {{ form.thursday.label(class="form-label") }}<br>
+                        {% for nested in form.thursday %}
+                        {{ nested }}
+                        {% endfor %}
+                        {% for error in form.thursday.errors %}
+                        <span class="danger">[{{ error }}]</span>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-outline">
+                        {{ form.friday.label(class="form-label") }}<br>
+                        {% for nested in form.friday %}
+                        {{ nested }}
+                        {% endfor %}
+                        {% for error in form.friday.errors %}
+                        <span class="danger">[{{ error }}]</span>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="col">
+                        <div class="form-outline">
+                            {{ form.sunday.label(class="form-label") }}<br>
+                            {% for nested in form.sunday %}
+                            {{ nested }}
+                            {% endfor %}
+                            {% for error in form.sunday.errors %}
+                            <span class="danger">[{{ error }}]</span>
+                            {% endfor %}
+                        </div>
+                    </div>
 
         </div>
-
     <!-- Submit button -->
-        <p>{{ form.submit(class="btn btn-primary btn-block mb-4") }}</p>
+        <p class="text-center mt-4">{{ form.submit(class="btn btn-success btn-block mb-4") }}</p>
         </form>
     </div>
 </div>

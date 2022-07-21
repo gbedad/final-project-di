@@ -1,10 +1,57 @@
 {% extends 'base.html' %}
+{% from "_macros.html" import render_field, render_fields %}
 
 {% block content %}
+
 <div class="row mb-4">
   <div class="col-10"><h3>{{ legend }}</h3></div>
   {% include 'auth/breadcrumb_user.html' %}
 </div>
 {% include 'auth/nav_profile.html' %}
 <hr>
+<form method="post">
+{{ form.hidden_tag() }}
+    <div class="row mb-2">
+        <div class="col-6">
+            <div class="form-outline mb-4">
+                    {{ form.why.label(class="form-label") }}<br>
+                    {{ form.why(size=64, class="form-control") }}
+                    {% for error in form.why.errors %}
+                    <span class="danger">[{{ error }}]</span>
+                    {% endfor %}
+            </div>
+        </div>
+    <div class="col-6">
+        <div class="form-outline mb-4">
+                {{ form.experience.label(class="form-label") }}<br>
+                {{ form.experience(size=64, class="form-control") }}
+                {% for error in form.experience.errors %}
+                <span class="danger">[{{ error }}]</span>
+                {% endfor %}
+        </div>
+    </div>
+</div>
+    <div>
+    <div class="row mb-2">
+        <div class="col-6">
+            <div class="form-outline mb-4">
+                    {{ form.when.label(class="form-label") }}<br>
+                    {{ form.when(size=64, class="form-control") }}
+                    {% for error in form.when.errors %}
+                    <span class="danger">[{{ error }}]</span>
+                    {% endfor %}
+            </div>
+        </div>
+            <div class="col">
+                    <div class="form-outline">
+                        {{ render_field(form.inquiry) }}
+                    </div>
+            </div>
+</div>
+    <div>
+    <!-- Submit button -->
+    <p class="text-center mt-4" >{{ form.submit(class="btn btn-success btn-block mb-4") }}</p>
+</div>
+</form>
+
 {% endblock %}

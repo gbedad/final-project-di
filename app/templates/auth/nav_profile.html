@@ -3,19 +3,19 @@
     <a class="nav-link" aria-current="page" href="{{url_for('auth.profile', user_name=current_user.username)}}">View Profile</a>
   </li>
   <li class="nav-item">
-    <a class="{{'nav-link' if  current_user.status >= '0' else 'nav-link disabled' }}" href="{{url_for('auth.profile_1', user_name=current_user.username)}}"><i class="bi bi-1-circle m-1"></i>My Information</a>
+    <a class="{{'nav-link' if  current_user.status >= '1' else 'nav-link disabled' }}" href="{{url_for('auth.profile_1', user_name=current_user.username)}}"><i class="bi bi-1-circle m-1"></i>My Information</a>
   </li>
   <li class="nav-item">
-    <a class="{{'nav-link' if  current_user.status >= '1' else 'nav-link disabled' }}" href="{{url_for('auth.profile_2', user_name=current_user.username)}}"><i class="bi bi-2-circle m-1"></i>How I can Help</a>
+    <a class="{{'nav-link' if  current_user.status >= '2' else 'nav-link disabled' }}" href="{{url_for('auth.profile_2', user_name=current_user.username)}}"><i class="bi bi-2-circle m-1"></i>How I can Help</a>
   </li>
   <li class="nav-item">
-    <a class="{{'nav-link' if  current_user.status >= '2' else 'nav-link disabled' }}" href="{{url_for('auth.profile_3', user_name=current_user.username)}}"><i class="bi bi-3-circle m-1"></i>More About Me</a>
+    <a class="{{'nav-link' if  current_user.status >= '3' else 'nav-link disabled' }}" href="{{url_for('auth.profile_3', user_name=current_user.username)}}"><i class="bi bi-3-circle m-1"></i>More About Me</a>
   </li>
   <li class="nav-item">
-    <a class="{{'nav-link' if  current_user.status >= '3' else 'nav-link disabled' }}" href="{{url_for('auth.profile_3', user_name=current_user.username)}}"><i class="bi bi-4-circle m-1"></i>My Interviews</a>
+    <a class="{{'nav-link' if  current_user.status >= '4' else 'nav-link disabled' }}" href="{{url_for('auth.profile_4', user_name=current_user.username)}}"><i class="bi bi-4-circle m-1"></i>My Interviews</a>
   </li>
   <li class="nav-item">
-    <a class="{{'nav-link' if  current_user.status >= '4' else 'nav-link disabled' }}" href="{{url_for('auth.profile_3', user_name=current_user.username)}}"><i class="bi bi-5-circle m-1"></i>My Commitment</a>
+    <a class="{{'nav-link' if  current_user.status >= '5' else 'nav-link disabled' }}" href="{{url_for('auth.profile_4', user_name=current_user.username)}}"><i class="bi bi-5-circle m-1"></i>My Commitment</a>
   </li>
 
 </ul>
