@@ -63,7 +63,7 @@
                 <div class="col">
                     <div class="form-outline">
                         {{ form.birth_date.label(class="form-label") }}<br>
-                        {{ form.birth_date(size=64, class="form-control") }}
+                        {{ form.birth_date(size=10, class="form-control") }}
                         {% for error in form.birth_date.errors %}
                         <span class="danger">[{{ error }}]</span>
                         {% endfor %}

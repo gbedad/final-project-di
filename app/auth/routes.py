@@ -6,6 +6,7 @@ from app.auth import models
 from app.auth import forms
 from flask.blueprints import Blueprint
 from app import db
+from datetime import datetime
 
 auth_bp = Blueprint('auth',  __name__, template_folder='templates', static_folder='static')
 
@@ -81,33 +82,36 @@ def profile_1(user_name):
     my_infos = user.my_info
 
     if request.method == 'POST':
-        my_infos.address = request.form["address"]
-        my_infos.city = request.form["city"]
-        my_infos.zipcode = request.form["zipcode"]
-        my_infos.email2 = request.form["email2"]
-        my_infos.phone = request.form["phone"]
-        my_infos.birth_date = request.form["birth_date"]
-        my_infos.short_text = request.form["short_text"]
-        try:
-            db.session.commit()
-            flash('Update successful', 'info')
-            return render_template('auth/profile_1.html', form=form, data=user)
-        except:
-            flash('Something went wrong, try again!', 'warning')
-            return render_template('auth/profile_1.html', form=form)
-        personal_info = models.MyInformation(address=form.address.data, city=form.city.data,
+        if my_infos is not None:
+            my_infos.address = request.form["address"]
+            my_infos.city = request.form["city"]
+            my_infos.zipcode = request.form["zipcode"]
+            my_infos.email2 = request.form["email2"]
+            my_infos.phone = request.form["phone"]
+            my_infos.birth_date = request.form["birth_date"]
+            my_infos.short_text = request.form["short_text"]
+            try:
+                db.session.commit()
+                flash('Update successful', 'info')
+                return render_template('auth/profile_1.html', form=form, data=user)
+            except:
+                flash('Something went wrong, try again!', 'warning')
+                return render_template('auth/profile_1.html', form=form)
+        else:
+            personal_info = models.MyInformation(address=form.address.data, city=form.city.data,
                                              zipcode=form.zipcode.data, email2=form.email2.data,
                                              phone=form.phone.data, birth_date=form.birth_date.data,
                                              short_text=form.short_text.data, user=user)
-        db.session.add(personal_info)
-        db.session.commit()
-    form.address.data = my_infos.address
-    form.city.data = my_infos.city
-    form.zipcode.data = my_infos.zipcode
-    form.email2.data = my_infos.email2
-    form.phone.data = my_infos.phone
-    form.birth_date.data = my_infos.birth_date
-    form.short_text.data = my_infos.short_text
+            db.session.add(personal_info)
+            db.session.commit()
+    if my_infos is not None:
+        form.address.data = my_infos.address
+        form.city.data = my_infos.city
+        form.zipcode.data = my_infos.zipcode
+        form.email2.data = my_infos.email2
+        form.phone.data = my_infos.phone
+        form.birth_date.data = datetime.strptime(my_infos.birth_date,'%Y-%m-%d')
+        form.short_text.data = my_infos.short_text
 
     return render_template('auth/profile_1.html', data=user, form=form, legend='My Information')
 

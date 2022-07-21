@@ -1,8 +1,10 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, SelectMultipleField, SelectField, widgets,\
-    DateField, TextAreaField, validators, IntegerField, IntegerRangeField, TimeField, TelField, FieldList, FormField, Form
+     TextAreaField, validators, IntegerField, IntegerRangeField, TimeField, TelField, FieldList, FormField, Form
 from wtforms.validators import ValidationError, DataRequired, Email, EqualTo, Regexp, NumberRange
+from wtforms.fields import DateField
 from .models import User
+
 
 
 CONTRACT_TYPES = [('1', 'Bénévolat'), ('2', 'Service Civique'), ('3', 'Stage'), ('4', 'Autres')]
