@@ -76,10 +76,25 @@ def profile(user_name):
 @auth_bp.route('/user/<user_name>/profile_1', methods=['GET', 'POST'])
 @login_required
 def profile_1(user_name):
-    form = forms.ProfilePage1Form()
-    if form.validate_on_submit():
-        pass
     user = models.User.query.filter_by(username=user_name).first_or_404()
+    my_infos = user.my_info
+    print(my_infos.address)
+    form = forms.ProfilePage1Form()
+
+    if form.validate_on_submit():
+
+        personal_info = models.MyInformation(address=form.address.data, city=form.city.data,
+                                             zipcode=form.city.data, email2=form.email2.data,
+                                             phone=form.phone.data, birth_date= form.birth_date.data,
+                                             short_text=form.short_text.data, user=user)
+        db.session.commit()
+    form.address.data = my_infos.address
+    form.city.data = my_infos.city
+    form.zipcode.data = my_infos.zipcode
+    form.email2.data = my_infos.email2
+    form.phone.data = my_infos.phone
+    #form.birth_date.data = my_infos.birth_date
+    form.short_text.data = my_infos.short_text
     return render_template('auth/profile_1.html', data=user, form=form, legend='My Information')
 
 
@@ -112,3 +127,24 @@ def profile_4(user_name):
     user = models.User.query.filter_by(username=user_name).first_or_404()
     return render_template('auth/profile_4.html', data=user, form=form, legend='My Interviews')
 
+
+@auth_bp.route('/user/<user_name>/profile_5', methods=['GET', 'POST'])
+@login_required
+def profile_5(user_name):
+    form = forms.ProfilePage5Form()
+    if form.validate_on_submit():
+        pass
+    user = models.User.query.filter_by(username=user_name).first_or_404()
+    if request.method == 'POST':
+        cv_file = request.files['cv_file']
+        b3_file = request.files['b3_file']
+        id_file = request.files['id_file']
+        if cv_file or b3_file or id_file:
+            upload_cv = models.Upload(cv_filename=cv_file.filename, cv_data=cv_file.read())
+            db.session.add(upload_cv)
+            upload_b3 = models.Upload(b3_filename=b3_file.filename, b3_data=b3_file.read())
+            db.session.add(upload_b3)
+            upload_id = models.Upload(id_filename=id_file.filename, b3_data=id_file.read())
+            db.session.add(upload_id)
+        db.session.commit()
+    return render_template('auth/profile_5.html', data=user, form=form, legend='My Commitment')

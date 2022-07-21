@@ -9,81 +9,47 @@
 </div>
 {% include 'auth/nav_profile.html' %}
 <hr>
-<form method="post">
-{{ form.hidden_tag() }}
-    <div class="row mb-2">
-        <div class="col-2">Interview 1</div>
-
-        <div class="col-5">
-            <div>
-                <span>Schedule: </span><span>me 30/11/2022 à 14h</span><br>
-                <span>With: </span><span>noemie@sephoraberrebi.org</span>
-            </div>
+<form method=post enctype=multipart/form-data>
+<div class="row">
+    <div class="col-1"></div>
+    <div class="col">
+            <h5 class="mb-4">To finalize the validation process : </h5>
+    <div class="row mb-4">
+        <div class="col">
+            <span>Please upload your CV </span>
         </div>
-        <div class="col-1">
-            <div class="col">
-                <span>Accept?</span><br>
-                <i class="bi bi-check-square"></i>
-            </div>
+        <div class="col mb-4">
+            <input type=file name=cv_file>
+            <input type=submit value=Upload>
         </div>
-        <div class="col-4">
-            <div class="row">
-                    <div class="col">
-                        <div class="row">Proposed</div>
-                        <div class="row"><i class="bi bi-check-circle-fill text-success"></i></div>
-                    </div>
-                    <div class="col">
-                        <div class="row">Accepted</div>
-                        <div class="row"><i class="bi bi-circle"></i></div>
-                    </div>
-                    <div class="col">
-                        <div class="row">Done</div>
-                        <div class="row"><i class="bi bi-circle"></i></div>
-                    </div>
-                </div>
+        <div class="col mb-4">
+            <p>{{ data.upload_id.cv_filename }}</p>
         </div>
+        <br>
     </div>
-
-
-    <hr>
-        <div class="row mb-2">
-        <div class="col-2">Interview 2</div>
-
-        <div class="col-5">
-            <div>
-                <span>Schedule: </span><span>me 30/11/2022 à 14h</span><br>
-                <span>With: </span><span>noemie@sephoraberrebi.org</span>
-            </div>
+    <div class="row mb-4">
+        <div class="col">
+            <span>Please upload your B3 </span>
         </div>
-        <div class="col-1">
-            <div class="col">
-                <span>Accept?</span><br>
-                <i class="bi bi-check-square"></i>
-            </div>
+        <div class="col mb-4">
+            <input type=file name=b3_file>
+            <input type=submit value=Upload>
         </div>
-        <div class="col-4">
-            <div class="row">
-                    <div class="col">
-                        <div class="row">Proposed</div>
-                        <div class="row"><i class="bi bi-check-circle-fill text-success"></i></div>
-                    </div>
-                    <div class="col">
-                        <div class="row">Accepted</div>
-                        <div class="row"><i class="bi bi-circle"></i></div>
-                    </div>
-                    <div class="col">
-                        <div class="row">Done</div>
-                        <div class="row"><i class="bi bi-circle"></i></div>
-                    </div>
-                </div>
-        </div>
+        <br>
     </div>
-
-
-    <div>
-    <!-- Submit button -->
-    <p class="text-center mt-4" >{{ form.submit(class="btn btn-success btn-block mb-4") }}</p>
+    <div class="row mb-4">
+        <div class="col">
+            <span>Please upload your ID </span>
+        </div>
+        <div class="col mb-4">
+            <input type=file name=id_file>
+            <input type=submit value=Upload>
+        </div>
+        <br>
     </div>
+    </div>
+</div>
 </form>
+
 
 {% endblock %}

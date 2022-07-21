@@ -50,9 +50,9 @@ class ProfilePage1Form(FlaskForm):
     zipcode = StringField('Zipcode', validators=[DataRequired()])
     city = StringField('City', validators=[DataRequired()])
     email2 = StringField('Email 2')
-    phone = TelField('Phone', validators=[DataRequired(), Regexp(regex='^[+-]?[0-9]$')])
+    phone = TelField('Phone', validators=[DataRequired()])
     short_text = TextAreaField(u'Please feel free to add any comment', validators=[validators.optional(), validators.length(max=400)])
-    birth_date = DateField('Birth Date', format='%d-%m-%Y')
+    birth_date = DateField('Birth Date', format='%Y-%m-%d')
     submit = SubmitField('Save')
 
 
@@ -113,4 +113,8 @@ class ProfilePage4Form(FlaskForm):
                         render_kw={"placeholder": "When do I want to be contacted?"})
     inquiry = SelectField('How did you learn about us', validators=[DataRequired()], choices=INQUIRIES)
     submit = SubmitField('Save')
+
+
+class ProfilePage5Form(FlaskForm):
+    pass
 
