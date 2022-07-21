@@ -40,7 +40,7 @@ class MyInformation(db.Model):
     phone = db.Column(db.String(32))
     birth_date = db.Column(db.String(32))
     short_text = db.Column(db.String(400))
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), unique=True)
 
 
 class Upload(db.Model):
