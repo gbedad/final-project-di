@@ -18,3 +18,6 @@ li.active > a {
 	background-color: #333;
 	color: #fff;
 }
+.table-dark {
+    color: cyan;
+}

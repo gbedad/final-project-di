@@ -15,7 +15,8 @@
 {% macro render_fields(field) %}
 
   {{ field.label(class="form-label") }}<br>
-  {{ field(class="form-control", style="list-style:none" , **kwargs)|safe }}
+  {{ field(class="form-control", style="list-style:none", **kwargs)|safe }}
+
   {% if field.errors %}
     <ul class=errors>
     {% for error in field.errors %}

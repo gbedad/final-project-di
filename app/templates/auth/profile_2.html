@@ -11,7 +11,7 @@
 <div class="row mb-2">
 
     <div class="col-12 d-flex justify-content-center">
-        <form method="post">
+        <form method="post" novalidate>
         {{ form.hidden_tag() }}
         <div class="row mb-2">
             <div class="col">
@@ -60,11 +60,14 @@
             <div class="col">
                 <div class="form-outline">
                     {{ render_fields(form.modalities) }}
+                        {% for error in form.modalities.errors %}
+                        <span class="danger">[{{ error }}]</span>
+                        {% endfor %}
                 </div>
             </div>
             <div class="col">
                     <div class="form-outline">
-                        {{ render_field(form.contract_type) }}
+                        {{ render_field(form.engagement) }}
                     </div>
             </div>
             <div class="col-2">
@@ -101,18 +104,20 @@
 
 
         </div>
+        <!--
         <div class="row">
                 <div class="col">
                     <div class="form-outline">
                         {{ form.monday.label(class="form-label") }}<br>
                         {% for nested in form.monday %}
-                        {{ nested }}
+                        {{ render_field(nested)}}
                         {% endfor %}
                         {% for error in form.tuesday.errors %}
                         <span class="danger">[{{ error }}]</span>
                         {% endfor %}
                     </div>
                 </div>
+
                 <div class="col">
                     <div class="form-outline">
                         {{ form.tuesday.label(class="form-label") }}<br>
@@ -181,6 +186,7 @@
                     </div>
 
         </div>
+        -->
     <!-- Submit button -->
         <p class="text-center mt-4">{{ form.submit(class="btn btn-success btn-block mb-4") }}</p>
         </form>

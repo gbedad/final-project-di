@@ -3,8 +3,8 @@ from config import Config
 from flask_migrate import Migrate
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
-import os
 
+import os
 
 
 # login.login_message = _l('Please log in to access this page.')
@@ -28,9 +28,11 @@ migrate.init_app(flask_app, db)
 
 from app.auth.routes import auth_bp
 from app.main.routes import main_bp
+from app.admin.routes import admin_bp
 
 flask_app.register_blueprint(auth_bp)
 flask_app.register_blueprint(main_bp)
+flask_app.register_blueprint(admin_bp)
 
 
 #from app.main import routes
