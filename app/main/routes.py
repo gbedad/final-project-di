@@ -9,4 +9,5 @@ main_bp = Blueprint('main',  __name__, template_folder='templates', static_folde
 @main_bp.route("/index")
 @login_required
 def index():
+
     return render_template('main/index.html', title='Home page')

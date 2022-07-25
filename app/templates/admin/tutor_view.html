@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+{% from "_macros.html" import render_field, render_fields, switch_status %}
+
+{% block content %}
+<div class="row mb-4">
+  <div class="col-10 me-0"><h3>{{ legend }}</h3></div>
+  {% include 'auth/breadcrumb_user.html' %}
+</div>
+<hr>
+<div class="container">
+  <div class="row row-cols-2 row-cols-lg-4 mb-4">
+    <div class="col mb-2"><span class="fw-lighter desc">First Name</span><br>{{data.first_name}}</div>
+    <div class="col"><span class="fw-lighter desc">Last Name</span><br>{{data.last_name}}</div>
+    <div class="col"><span class="fw-lighter desc">Email</span><br>{{data.email}}</div>
+    <div class="col"><span class="fw-lighter desc">Engagement</span><br>{{data.tutoring_exp.engagement}}</div>
+    <div class="col"><span class="fw-lighter desc">Modalities</span><br>{{data.tutoring_exp.modalities}}</div>
+    <div class="col-4 col-lg-2"><span class="fw-lighter desc">Source</span><br>{{data.more.inquiry}}</div>
+    <div class="col-4 col-lg-2"><span class="fw-lighter desc">Status</span><br>{{switch_status(data.status)}}</div>
+    <div class="col-4 col-lg-2"><span class="fw-lighter desc">Start Date</span><br>{{data.tutoring_exp.start_date}}</div>
+    <div class="col-4 col-lg-2"><span class="fw-lighter desc">End Date</span><br>{{data.tutoring_exp.end_date}}</div>
+    <div class="col-4 col-lg-2"></div>
+    <div class="col-4 col-lg-2"></div>
+  </div>
+  <div class="container">
+  <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3">
+    <div class="col">
+      <div class="p-3 border bg-light">Plan Interview</div>
+    </div>
+      <a href="{{url_for('admin.change_tutor_status', tutor_id=data.id)}}" data-bs-toggle="modal" data-bs-target="#statusModal">
+      <div class="col">
+      <div class="p-3 border bg-light">Change Status</div>
+    </div>
+      </a>
+    <div class="col">
+      <div class="p-3 border bg-light">Row column</div>
+    </div>
+    <div class="col">
+      <div class="p-3 border bg-light">Row column</div>
+    </div>
+    <div class="col">
+      <div class="p-3 border bg-light">Row column</div>
+    </div>
+    <div class="col">
+      <div class="p-3 border bg-light">Row column</div>
+    </div>
+    <div class="col">
+      <div class="p-3 border bg-light">Row column</div>
+    </div>
+    <div class="col">
+      <div class="p-3 border bg-light">Row column</div>
+    </div>
+    <div class="col">
+      <div class="p-3 border bg-light">Row column</div>
+    </div>
+    <div class="col">
+      <div class="p-3 border bg-light">Row column</div>
+    </div>
+  </div>
+    {% block modal %}
+    {% endblock %}
+</div>
+</div>
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

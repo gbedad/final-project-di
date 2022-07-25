@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% from "_macros.html" import render_field, render_fields, switch_status %}
 
 {% block content %}
 <div class="row mb-4">
@@ -34,14 +35,14 @@
       <td>{{tutor.last_name}}</td>
       <td>{{tutor.username}}
       <td>{{tutor.email}}</td>
-      <td>{{tutor.phone}}</td>
+      <td>{{tutor.my_info.phone}}</td>
       <td>{{tutor.my_info.birth_date}}</td>
       <td>{{tutor.more.inquiry}}</td>
       <td>{{tutor.tutoring_exp.start_date}}</td>
       <td>{{tutor.tutoring_exp.end_date}}</td>
       <td>{{tutor.tutoring_exp.engagement}}</td>
       <td>{{tutor.tutoring_exp.modalities}}</td>
-      <td>{{tutor.status}}</td>
+      <td>{{switch_status(tutor.status)}}</td>
       <td><a href="{{url_for('admin.get_tutor_by_id', tutor_id=tutor.id)}}"><i class="bi bi-gear-fill text-decoration-none text-info"></i></a></td>
 
     </tr>

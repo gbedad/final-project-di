@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% from "_macros.html" import render_field, render_fields, switch_status %}
+
+{% block content %}
+<div class="row mb-4">
+  <div class="col-10 me-0"><h3>{{ legend }}</h3></div>
+  {% include 'auth/breadcrumb_user.html' %}
+</div>
+<hr>
+  <div class="container">
+  <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3">
+    <a href="{{url_for('admin.show_tutors')}}" class="text-decoration-none text-info">
+    <div class="col">
+      <div class="p-3 border bg-light">List of Tutors</div>
+    </div>
+    </a>
+    <div class="col">
+      <div class="p-3 border bg-light">Check Students</div>
+    </div>
+    <div class="col">
+      <div class="p-3 border bg-light">Create Student</div>
+    </div>
+    <div class="col">
+      <div class="p-3 border bg-light">Create Course</div>
+    </div>
+    <div class="col">
+      <div class="p-3 border bg-light">Row column</div>
+    </div>
+    <div class="col">
+      <div class="p-3 border bg-light">Row column</div>
+    </div>
+    <div class="col">
+      <div class="p-3 border bg-light">Row column</div>
+    </div>
+    <div class="col">
+      <div class="p-3 border bg-light">Row column</div>
+    </div>
+    <div class="col">
+      <div class="p-3 border bg-light">Row column</div>
+    </div>
+    <div class="col">
+      <div class="p-3 border bg-light">Row column</div>
+    </div>
+  </div>
+</div>
+</div>
+
+{% endblock %}

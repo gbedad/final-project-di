@@ -21,3 +21,8 @@ li.active > a {
 .table-dark {
     color: cyan;
 }
+
+.desc {
+    font-size:0.8rem;
+    color: purple
+}
