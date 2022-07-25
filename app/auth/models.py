@@ -35,6 +35,7 @@ class User(UserMixin, db.Model):
     more = db.relationship('MoreAboutMe', backref='user', uselist=False)
     tutoring_exp = db.relationship('Tutoring', backref='user', uselist=False)
     user_subjects = db.relationship('Subjects', secondary=subjects_table, back_populates='all_users')
+    my_interviews = db.relationship('Interviews', backref='user', uselist=False)
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
@@ -124,6 +125,7 @@ class Interviews(db.Model):
     interviewer = db.Column(db.String(32))
     is_accepted = db.Column(db.Boolean)
     message = db.Column(db.String(500))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), unique=True)
 
     def accepted(self):
         if self.is_accepted is True:

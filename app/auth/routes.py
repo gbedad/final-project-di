@@ -251,10 +251,15 @@ def profile_3(user_name):
 @auth_bp.route('/user/<user_name>/profile_4', methods=['GET', 'POST'])
 @login_required
 def profile_4(user_name):
-    form = forms.ProfilePage4Form()
-    if form.validate_on_submit():
-        pass
+    form = forms.ValidateInterviewDateForm()
     user = models.User.query.filter_by(username=user_name).first_or_404()
+    if form.validate_on_submit():
+        user.my_interviews.is_accepted = form.is_accepted.data
+        db.session.commit()
+        flash('Interview date accepted', 'info')
+
+    form.is_accepted.data = user.my_interviews.is_accepted
+
     return render_template('auth/profile_4.html', data=user, form=form, legend='My Interviews')
 
 

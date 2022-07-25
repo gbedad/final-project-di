@@ -3,7 +3,7 @@ from wtforms import StringField, PasswordField, BooleanField, SubmitField, Selec
      TextAreaField, validators, IntegerField, IntegerRangeField, TimeField, TelField, FieldList, FormField, Form
 from wtforms.validators import ValidationError, DataRequired, Email, EqualTo, Regexp, NumberRange
 from wtforms.fields import DateField
-from .models import User, Subjects, Grades
+from .models import User, Subjects, Grades, Interviews
 
 
 
@@ -34,6 +34,8 @@ class GradesChoice(object):
         choices = [(item.id, f'{item.grade}') for item in sel_grades]
         for choice in choices:
             yield choice
+
+
 
 
 class RegistrationForm(FlaskForm):
@@ -133,6 +135,11 @@ class ProfilePage4Form(FlaskForm):
                         render_kw={"placeholder": "When do I want to be contacted?"})
     inquiry = SelectField('How did you learn about us', validators=[DataRequired()], choices=INQUIRIES)
     submit = SubmitField('Save')
+
+
+class ValidateInterviewDateForm(FlaskForm):
+    is_accepted = BooleanField(false_values=(False, 'false', 0, '0'))
+    submit = SubmitField('Confirm')
 
 
 class ProfilePage5Form(FlaskForm):

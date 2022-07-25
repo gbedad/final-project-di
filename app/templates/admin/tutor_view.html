@@ -24,14 +24,14 @@
   </div>
   <div class="container">
   <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3">
-    <div class="col">
-      <div class="p-3 border bg-light">Plan Interview</div>
-    </div>
-      <a href="{{url_for('admin.change_tutor_status', tutor_id=data.id)}}" data-bs-toggle="modal" data-bs-target="#statusModal">
-      <div class="col">
-      <div class="p-3 border bg-light">Change Status</div>
-    </div>
-      </a>
+
+
+      <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#interviewModal">
+  Plan Interview
+</button>
+    <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#statusModal">
+  Change Status
+</button>
     <div class="col">
       <div class="p-3 border bg-light">Row column</div>
     </div>
@@ -57,23 +57,76 @@
       <div class="p-3 border bg-light">Row column</div>
     </div>
   </div>
-    {% block modal %}
-    {% endblock %}
+
 </div>
+
+</div>
+<!-- Change Status Modal -->
+<div class="modal fade" id="statusModal" tabindex="-1" aria-labelledby="statusModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="statusModalLabel">Change Current status</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form method="post">
+            {{ status_form.hidden_tag() }}
+            <div class="form-outline mb-4">
+                {{ render_field(status_form.status) }}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <p>{{status_form.submit(class="btn btn-info")}}</p>
+                <button type="submit" class="btn btn-primary" >update</button>
+            </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- Change Status Modal -->
+<div class="modal fade" id="interviewModal" tabindex="-1" aria-labelledby="interviewModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="interviewModalLabel">Plan Interview</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form method="post">
+            {{ interview_form.hidden_tag() }}
+            <div class="form-outline mb-4">
+                {{ interview_form.interview_date.label(class="form-label") }}<br>
+                    {{ interview_form.interview_date(size=64, class="form-control") }}
+                    {% for error in interview_form.interview_date.errors %}
+                    <span class="danger">[{{ error }}]</span>
+                    {% endfor %}
+            </div>
+            <div class="form-outline mb-4">
+                {{ render_field(interview_form.interviewer) }}
+            </div>
+            <div class="form-outline mb-4">
+                {{ interview_form.message.label(class="form-label") }}<br>
+                    {{ interview_form.message(size=64, class="form-control") }}
+                    {% for error in interview_form.message.errors %}
+                    <span class="danger">[{{ error }}]</span>
+                    {% endfor %}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <p>{{interview_form.submit(class="btn btn-info")}}</p>
+                <button type="submit" class="btn btn-primary" >update</button>
+            </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
 </div>
 
 {% endblock %}
-
-
-
-
-
-
-
-
-
-
-
-
 
 
