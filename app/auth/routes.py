@@ -58,6 +58,7 @@ def register():
     return render_template('auth/register.html', form=form, legend='Welcome to signup page')
 
 
+# TODO forgot and reset password features
 @auth_bp.route('/reset_request_password')
 def reset_request():
     return render_template('auth/reset_request_password.html', legend='Request Reset Password')
@@ -195,6 +196,7 @@ def profile_2(user_name):
             #added_tutoring = models.Tutoring(maths=request.form['maths'], user=user)
             #db.session.add(added_tutoring)
             #db.session.commit()
+        # TODO validate when information is None. With db.session.add().
 
     if my_tutorate is not None:
         form.engagement.data = my_tutorate.engagement
@@ -256,7 +258,10 @@ def profile_4(user_name):
     if form.validate_on_submit():
         user.my_interviews.is_accepted = form.is_accepted.data
         db.session.commit()
-        flash('Interview date accepted', 'info')
+        if user.my_interviews.is_accepted:
+            flash( 'Interview date accepted', 'info')
+        else:
+            flash('Interview date declined', 'warning')
 
     form.is_accepted.data = user.my_interviews.is_accepted
 

@@ -41,3 +41,11 @@
   <span>validated</span>
 {% endif %}
 {% endmacro %}
+
+{% macro show_icon(str) %}
+{% if str == 'Yes' %}
+  <i class="bi bi-check-circle-fill text-success"></i>
+{% elif str == 'Not Yet' %}
+  <i class="bi bi-circle text-info"></i>
+{% endif %}
+{% endmacro %}
