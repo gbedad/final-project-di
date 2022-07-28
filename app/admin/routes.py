@@ -7,7 +7,7 @@ from app.auth import models
 from app.admin import forms
 from flask.blueprints import Blueprint
 from app import db
-from datetime import datetime
+from datetime import datetime, time
 from collections import namedtuple
 
 admin_bp = Blueprint('admin',  __name__, template_folder='templates', static_folder='static')
@@ -47,7 +47,7 @@ def get_tutor_by_id(tutor_id):
     selected_tutor = models.User.query.filter_by(id=tutor_id).first_or_404()
     tutor_interviews = selected_tutor.my_interviews
 
-    if request.method == 'POST' and status_form.validate_on_submit():
+    if status_form.validate_on_submit():
 
         selected_tutor.status = status_form.status.data
         try:
@@ -59,15 +59,23 @@ def get_tutor_by_id(tutor_id):
             return redirect(url_for('admin.get_tutor_by_id', tutor_id=selected_tutor.id))
 
     elif request.method == 'POST' and interview_form.validate_on_submit():
-        if tutor_interviews.interview_date != "" or tutor_interviews.interview_time != "" or not interview_form.interviewer:
-            tutor_interviews.interview_date = datetime.strptime(str(interview_form.interview_date.data), '%Y-%m-%d')
-            tutor_interviews.interview_time = str(interview_form.interview_time)
-            tutor_interviews.interviewer = interview_form.interviewer.data
-            tutor_interviews.message = interview_form.message.data
+        if tutor_interviews:
+
+            if tutor_interviews.interview_date is not None or not interview_form.interviewer:
+                tutor_interviews.interview_date = datetime.strptime(str(interview_form.interview_date.data), '%Y-%m-%d')
+
+                tutor_interviews.interviewer = interview_form.interviewer.data
+
+                tutor_interviews.message = interview_form.message.data
+
         else:
-            update_interviews = models.Interviews(interview_date=interview_form.interview_date.data, interview_time=interview_form.interview_time.data, interviewer=interview_form.interviewer.data,
-                                message=interview_form.message.data, user=selected_tutor)
+
+            update_interviews = models.Interviews(interview_date=interview_form.interview_date.data,
+                                                  interviewer=interview_form.interviewer.data,
+                                                  message=interview_form.message.data, user=selected_tutor)
+
             db.session.add(update_interviews)
+
             db.session.commit()
 
         try:
@@ -79,13 +87,18 @@ def get_tutor_by_id(tutor_id):
             return redirect(url_for('admin.get_tutor_by_id', tutor_id=selected_tutor.id))
     status_form.status.data = selected_tutor.status
 
-    if tutor_interviews.interview_date != "" or tutor_interviews.interview_time != "" or not interview_form.interviewer:
-        interview_form.interview_date.data = datetime.strptime(str(tutor_interviews.interview_date), '%Y-%m-%d')
-        interview_form.interview_time = tutor_interviews.interview_time
-        interview_form.interviewer.data = tutor_interviews.interviewer
-        interview_form.message.data = tutor_interviews.message
+    if tutor_interviews:
 
-    return render_template('admin/tutor_view.html', data=selected_tutor, status_form=status_form, interview_form=interview_form, title='View Tutor', legend=f'{selected_tutor.username} information')
+        if tutor_interviews.interview_date and interview_form.interviewer:
+            interview_form.interview_date.data = datetime.strptime(str(tutor_interviews.interview_date), '%Y-%m-%d %H:%M:%S')
+
+            interview_form.interviewer.data = tutor_interviews.interviewer
+
+            interview_form.message.data = tutor_interviews.message
+
+    return render_template('admin/tutor_view.html', data=selected_tutor, status_form=status_form,
+                           interview_form=interview_form, title='View Tutor',
+                           legend=f'{selected_tutor.username} information')
 
 '''
 @admin_bp.route('/admin/tutors/<int:tutor_id>/change_status', methods=['GET', 'POST'])

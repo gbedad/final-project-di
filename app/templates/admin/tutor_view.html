@@ -23,15 +23,24 @@
     <div class="col-4 col-lg-2"></div>
   </div>
   <div class="container">
-  <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3">
+  <div class="row row-cols-2 row-cols-lg-5 g-5 g-lg-3">
+
+      <div class="col">
+          <div class="p-3 text-center border bg-dark">
+                <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#interviewModal">
+                Plan Interview
+                </button>
+          </div>
+      </div>
+      <div class="col">
+            <div class="p-3 text-center border bg-dark">
+                <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#statusModal">
+                    Change Status
+                </button>
+            </div>
+        </div>
 
 
-      <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#interviewModal">
-  Plan Interview
-</button>
-    <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#statusModal">
-  Change Status
-</button>
     <div class="col">
       <div class="p-3 border bg-light">Row column</div>
     </div>
@@ -105,13 +114,7 @@
                     <span class="danger">[{{ error }}]</span>
                     {% endfor %}
             </div>
-            <div class="form-outline mb-4">
-                {{ interview_form.interview_time.label(class="form-label") }}<br>
-                    {{ interview_form.interview_time(size=32, class="form-control") }}
-                    {% for error in interview_form.interview_time.errors %}
-                    <span class="danger">[{{ error }}]</span>
-                    {% endfor %}
-            </div>
+
             <div class="form-outline mb-4">
                 {{ render_field(interview_form.interviewer) }}
             </div>
