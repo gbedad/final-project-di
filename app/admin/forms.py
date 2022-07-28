@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SelectField, SubmitField
+from wtforms import StringField, SelectField, SubmitField, DateField, TimeField
 from wtforms.validators import ValidationError, DataRequired
 from ..auth.models import User
 
@@ -21,7 +21,8 @@ class ChangeTutorStatus(FlaskForm):
 
 
 class PlanInterview(FlaskForm):
-    interview_date = StringField('Interview Date')
+    interview_date = DateField('Interview Date', format='%Y-%m-%d')
+    interview_time = TimeField('Interview Time', format='%H:%M')
     interviewer = SelectField('Interviewer', choices=InterviewerChoice())
     message = StringField('Short Message')
 

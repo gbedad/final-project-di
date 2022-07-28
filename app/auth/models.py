@@ -121,7 +121,8 @@ class Grades(db.Model):
 
 class Interviews(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    interview_date = db.Column(db.String(32))
+    interview_date = db.Column(db.String(64))
+    interview_time = db.Column(db.String(32))
     interviewer = db.Column(db.String(32))
     is_accepted = db.Column(db.Boolean)
     message = db.Column(db.String(500))

@@ -87,7 +87,7 @@
   </div>
 </div>
 
-<!-- Change Status Modal -->
+<!-- Interview Modal -->
 <div class="modal fade" id="interviewModal" tabindex="-1" aria-labelledby="interviewModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -102,6 +102,13 @@
                 {{ interview_form.interview_date.label(class="form-label") }}<br>
                     {{ interview_form.interview_date(size=64, class="form-control") }}
                     {% for error in interview_form.interview_date.errors %}
+                    <span class="danger">[{{ error }}]</span>
+                    {% endfor %}
+            </div>
+            <div class="form-outline mb-4">
+                {{ interview_form.interview_time.label(class="form-label") }}<br>
+                    {{ interview_form.interview_time(size=32, class="form-control") }}
+                    {% for error in interview_form.interview_time.errors %}
                     <span class="danger">[{{ error }}]</span>
                     {% endfor %}
             </div>

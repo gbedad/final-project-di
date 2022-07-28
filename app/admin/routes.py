@@ -47,29 +47,41 @@ def get_tutor_by_id(tutor_id):
     selected_tutor = models.User.query.filter_by(id=tutor_id).first_or_404()
     tutor_interviews = selected_tutor.my_interviews
 
-    if status_form.validate_on_submit():
+    if request.method == 'POST' and status_form.validate_on_submit():
+
         selected_tutor.status = status_form.status.data
-    if request.method == 'POST' and interview_form.validate_on_submit():
-        if tutor_interviews is not None:
-            tutor_interviews.interview_date = interview_form.interview_date.data
+        try:
+            db.session.commit()
+            flash('Status Updated successfully', 'success')
+            return redirect(url_for('admin.get_tutor_by_id', tutor_id=selected_tutor.id))
+        except:
+            flash('Something wrong happened', 'warning')
+            return redirect(url_for('admin.get_tutor_by_id', tutor_id=selected_tutor.id))
+
+    elif request.method == 'POST' and interview_form.validate_on_submit():
+        if tutor_interviews.interview_date != "" or tutor_interviews.interview_time != "" or not interview_form.interviewer:
+            tutor_interviews.interview_date = datetime.strptime(str(interview_form.interview_date.data), '%Y-%m-%d')
+            tutor_interviews.interview_time = str(interview_form.interview_time)
             tutor_interviews.interviewer = interview_form.interviewer.data
             tutor_interviews.message = interview_form.message.data
         else:
-            update_interviews = models.Interviews(interview_date=interview_form.interview_date.data, interviewer=interview_form.interviewer.data,
+            update_interviews = models.Interviews(interview_date=interview_form.interview_date.data, interview_time=interview_form.interview_time.data, interviewer=interview_form.interviewer.data,
                                 message=interview_form.message.data, user=selected_tutor)
             db.session.add(update_interviews)
             db.session.commit()
 
         try:
             db.session.commit()
-            flash('Updated successfully', 'success')
+            flash('Interview Planned successfully', 'success')
             return redirect(url_for('admin.get_tutor_by_id', tutor_id=selected_tutor.id))
         except:
             flash('Something wrong happened', 'warning')
             return redirect(url_for('admin.get_tutor_by_id', tutor_id=selected_tutor.id))
     status_form.status.data = selected_tutor.status
-    if tutor_interviews is not None:
-        interview_form.interview_date.data = tutor_interviews.interview_date
+
+    if tutor_interviews.interview_date != "" or tutor_interviews.interview_time != "" or not interview_form.interviewer:
+        interview_form.interview_date.data = datetime.strptime(str(tutor_interviews.interview_date), '%Y-%m-%d')
+        interview_form.interview_time = tutor_interviews.interview_time
         interview_form.interviewer.data = tutor_interviews.interviewer
         interview_form.message.data = tutor_interviews.message
 
