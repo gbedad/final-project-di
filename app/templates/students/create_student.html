@@ -1,0 +1,145 @@
+{% extends 'base.html' %}
+
+{% from "_macros.html" import render_field, render_fields, switch_status %}
+
+{% block title %}
+Create Student
+{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+  <div class="col-10 me-0"><h3>{{ legend }}</h3></div>
+  {% include 'auth/breadcrumb_user.html' %}
+</div>
+<hr>
+
+<div class="row mb-2">
+
+    <div class="col-12 d-flex justify-content-center">
+        <form method="post" novalidate>
+        {{ form.hidden_tag() }}
+
+        <div  class="row mb-4">
+            <div class="col-2">
+                <div class="form-outline">
+                        {{ form.first_name.label(class="form-label") }}<br>
+                        {{ form.first_name(size=64, class="form-control") }}
+                        {% for error in form.first_name.errors %}
+                        <span class="danger">[{{ error }}]</span>
+                        {% endfor %}
+                    </div>
+            </div>
+            <div class="col-2">
+                    <div class="form-outline">
+                        {{ form.last_name.label(class="form-label") }}<br>
+                        {{ form.last_name(size=64, class="form-control") }}
+                        {% for error in form.last_name.errors %}
+                        <span class="danger">[{{ error }}]</span>
+                        {% endfor %}
+                    </div>
+            </div>
+            <div class="col-3">
+                    <div class="form-outline">
+                        {{ form.email.label(class="form-label") }}<br>
+                        {{ form.email(size=64, class="form-control") }}
+                        {% for error in form.email.errors %}
+                        <span class="danger">[{{ error }}]</span>
+                        {% endfor %}
+                    </div>
+            </div>
+            <div class="col-2">
+                    <div class="form-outline">
+                        {{ form.phone.label(class="form-label") }}<br>
+                        {{ form.phone(size=64, class="form-control") }}
+                        {% for error in form.phone.errors %}
+                        <span class="danger">[{{ error }}]</span>
+                        {% endfor %}
+                    </div>
+            </div>
+            <div class="col-2">
+                    <div class="form-outline">
+                        {{ form.phone_parents.label(class="form-label") }}<br>
+                        {{ form.phone_parents(size=64, class="form-control") }}
+                        {% for error in form.phone_parents.errors %}
+                        <span class="danger">[{{ error }}]</span>
+                        {% endfor %}
+                    </div>
+            </div>
+        </div>
+            <div class="row mb-4">
+                <div class="col-4">
+                    <div class="form-outline">
+                        {{ form.street.label(class="form-label") }}<br>
+                        {{ form.street(size=64, class="form-control") }}
+                        {% for error in form.street.errors %}
+                        <span class="danger">[{{ error }}]</span>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="col-2">
+                        <div class="form-outline">
+                            {{ form.city.label(class="form-label") }}<br>
+                            {{ form.city(size=64, class="form-control") }}
+                            {% for error in form.city.errors %}
+                            <span class="danger">[{{ error }}]</span>
+                            {% endfor %}
+                        </div>
+                </div>
+                <div class="col-2">
+                        <div class="form-outline">
+                            {{ form.zipcode.label(class="form-label") }}<br>
+                            {{ form.zipcode(size=64, class="form-control") }}
+                            {% for error in form.zipcode.errors %}
+                            <span class="danger">[{{ error }}]</span>
+                            {% endfor %}
+                        </div>
+                </div>
+                <div class="col-3">
+                    <div class="form-outline">
+                        {{ render_field(form.modality) }}
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-4">
+                <div class="col-4">
+                        <div class="form-outline">
+                            {{ form.school.label(class="form-label") }}<br>
+                            {{ form.school(size=64, class="form-control") }}
+                            {% for error in form.school.errors %}
+                            <span class="danger">[{{ error }}]</span>
+                            {% endfor %}
+                        </div>
+                </div>
+                <div class="col-2">
+                        <div class="form-outline">
+                            {{ render_field(form.grade) }}
+                        </div>
+                </div>
+                <div class="col-2">
+                        <div class="form-outline">
+                            {{ form.avail_from.label(class="form-label") }}<br>
+                            {{ form.avail_from(size=64, class="form-control") }}
+                            {% for error in form.avail_from.errors %}
+                            <span class="danger">[{{ error }}]</span>
+                            {% endfor %}
+                        </div>
+                </div>
+                <div class="col-2">
+                        <div class="form-outline">
+                            {{ form.avail_to.label(class="form-label") }}<br>
+                            {{ form.avail_to(size=64, class="form-control") }}
+                            {% for error in form.avail_to.errors %}
+                            <span class="danger">[{{ error }}]</span>
+                            {% endfor %}
+                        </div>
+                </div>
+            </div>
+        </div>
+        <p class="text-center mt-4">{{ form.submit(class="btn btn-success btn-block mb-4") }}</p>
+        </form>
+    </div>
+    <hr>
+
+</div>
+
+{% endblock %}

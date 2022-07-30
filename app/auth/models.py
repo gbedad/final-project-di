@@ -115,6 +115,7 @@ class Subjects(db.Model):
     all_users = db.relationship('User', secondary=users_table, back_populates='user_subjects')
 
 
+
 class Grades(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     grade = db.Column(db.String(32))
@@ -143,3 +144,47 @@ class Interviews(db.Model):
             return True
 
 
+class Students(db.Model):
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    first_name = db.Column(db.String(32))
+    last_name = db.Column(db.String(32))
+    email = db.Column(db.String(32))
+    phone = db.Column(db.String(32))
+    phone_parents = db.Column(db.String(32))
+    street = db.Column(db.String(32))
+    city = db.Column(db.String(32))
+    zipcode = db.Column(db.String(32))
+    school = db.Column(db.String(32))
+    grade = db.Column(db.String(32), default='')
+    modality = db.Column(db.String(32), default='')
+    student_subjects = db.relationship('SubjectPossible', backref='student')
+    avail_from = db.Column(db.String(32))
+    avail_to = db.Column(db.String(32))
+
+    def __repr__(self):
+        return f'<Student : {self.first_name} {self.last_name}>'
+
+
+class Modalities(db.Model):
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    modality = db.Column(db.String(32))
+
+    def __repr__(self):
+        return f'<Modality : {self.name}>'
+
+
+class GradesPossible(db.Model):
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    grade_name = db.Column(db.String(32))
+
+    def __repr__(self):
+        return f'<Grade : {self.grade_name}>'
+
+
+class SubjectPossible(db.Model):
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    subject_name = db.Column(db.String(32))
+    subject_owner = db.Column(db.Integer, db.ForeignKey('students.id'))
+
+    def __repr__(self):
+        return f'<Subject : {self.subject_name}>'

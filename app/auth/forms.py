@@ -23,7 +23,7 @@ INQUIRIES = [('Je veux aider', 'Je veux aider'), ("Paris je m'engage", "Paris je
 class SubjectsChoice(object):
     def __iter__(self):
         sel_subjects = Subjects.query.all()
-        choices = [(item.id, f'{item.subject}') for item in sel_subjects]
+        choices = [(item.subject, f'{item.subject}') for item in sel_subjects]
         for choice in choices:
             yield choice
 
@@ -31,11 +31,9 @@ class SubjectsChoice(object):
 class GradesChoice(object):
     def __iter__(self):
         sel_grades = Grades.query.all()
-        choices = [(item.id, f'{item.grade}') for item in sel_grades]
+        choices = [(item.grade, f'{item.grade}') for item in sel_grades]
         for choice in choices:
             yield choice
-
-
 
 
 class RegistrationForm(FlaskForm):

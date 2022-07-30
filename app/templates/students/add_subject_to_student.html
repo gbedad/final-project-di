@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% from "_macros.html" import render_field, render_field_wo_label, render_fields, switch_status %}
+
+{% block title %}
+Add Subject
+{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+  <div class="col-10 me-0"><h3>{{ legend }}</h3></div>
+  {% include 'auth/breadcrumb_user.html' %}
+    <a href="{{url_for('admin.student_list')}}" class="text-decoration-none desc">Back to Student List</a>
+</div>
+<hr>
+ <div class="row">
+
+         <form action="" method="post">
+             {{ form.hidden_tag() }}
+             <div class="row mb-3">
+            <div class="col-6">
+               {{ render_field_wo_label(form.subject)}}
+            </div>
+            <div class="col-3">{{ form.submit(class="btn btn-info") }}</div>
+         </form>
+            </div>
+   </div>
+
+<div class="row mb-2">
+    <div class="col d-flex justify-content-around">
+        <div class="col" >
+        <table>
+            <thead>
+                <tr>
+                <th>Subject</th>
+                <th></th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for subj in student.student_subjects %}
+            <tr>
+                <td>{{ subj.subject_name }}</td>
+                <td></td>
+                <td><a href="{{url_for('admin.delete_subject', subject_id=subj.id)}}"><i class="bi bi-trash ml-4 text-danger"></i></a></td>
+            </tr>
+            {% endfor  %}
+            </tbody>
+        </table>
+
+    </div>
+</div>
+{% endblock %}
