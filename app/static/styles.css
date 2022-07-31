@@ -26,3 +26,7 @@ li.active > a {
     font-size:0.8rem;
     color: purple
 }
+
+.btn-primary {
+    background-color: purple;
+}

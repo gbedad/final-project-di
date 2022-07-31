@@ -24,10 +24,9 @@ Create Student
       <th scope="col">Email</th>
       <th scope="col">Grade</th>
       <th scope="col">Modality</th>
-      <th scope="col">Avail From</th>
-      <th scope="col">Avail To</th>
       <th scope="col">Update</th>
       <th scope="col">Subjects</th>
+      <th scope="col">When</th>
 
     </tr>
   </thead>
@@ -40,10 +39,9 @@ Create Student
       <td>{{ student.email }}</td>
       <td>{{ student.grade }}</td>
       <td>{{ student.modality }}</td>
-      <td>{{ student.avail_from }}</td>
-      <td>{{ student.avail_to }}</td>
       <td><a href="{{url_for('admin.update_student', student_id=student.id)}}"><i class="bi bi-pencil-square text-decoration-none desc"></i></a></td>
       <td><a href="{{url_for('admin.add_subject', student_id=student.id)}}"><i class="bi bi-file-earmark-plus text-decoration-none desc"></i></a></td>
+      <td><a href="{{url_for('admin.add_availabilities', student_id=student.id)}}"><i class="bi bi-calendar-day text-decoration-none desc"></i></a></td>
     </tr>
   {% endfor %}
   </tbody>

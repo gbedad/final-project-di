@@ -1,12 +1,12 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, SelectField, SubmitField, DateTimeField, DateField, TimeField
 from wtforms.validators import ValidationError, DataRequired
-from ..auth.models import User, Modalities, Students, SubjectPossible
+from ..auth.models import User, Modalities, Students, SubjectPossible, Availabilities
 from ..auth.forms import SubjectsChoice, GradesChoice
 
 
 STATUS = [('1','created'), ('2','proposed'), ('3', 'documented'), ('4', 'preselected'), ('5', 'selected'), ('6', 'validated')]
-
+DAYS = [('Monday', 'Monday'), ('Tuesday', 'Tuesday'), ('Wednesday', 'Wednesday'), ('Thursday', 'Thursday'), ('Friday', 'Friday'), ('Sunday', 'Sunday') ]
 
 class InterviewerChoice(object):
     def __iter__(self):
@@ -49,8 +49,6 @@ class CreateStudentForm(FlaskForm):
     school = StringField('School')
     grade = SelectField('Grade', choices=GradesChoice())
     modality = SelectField('Modality', choices=ModalitiesChoice())
-    avail_from = TimeField('Avail From', format='%H:%M')
-    avail_to = TimeField('Avail To', format='%H:%M')
 
     submit = SubmitField('Create Student')
 
@@ -79,8 +77,6 @@ class UpdateStudentForm(FlaskForm):
     school = StringField('School')
     grade = SelectField('Grade', choices=GradesChoice())
     modality = SelectField('Modality', choices=ModalitiesChoice())
-    avail_from = TimeField('Avail From', format='%H:%M')
-    avail_to = TimeField('Avail To', format='%H:%M')
 
     submit = SubmitField('Update Student')
 
@@ -94,3 +90,12 @@ class AddSubjectToStudent(FlaskForm):
         subject = SubjectPossible.query.filter_by(subject_name=self.subject_name.data).first()
         if subject:
             raise ValidationError('Subject already selected.')
+
+
+class AddAvailabilitiesToStudent(FlaskForm):
+    day_possible = SelectField('Day', choices=DAYS, validators=[DataRequired()])
+    day_time_from = TimeField('Day From', format='%H:%M', validators=[DataRequired()])
+    day_time_to = TimeField('Day To', format='%H:%M', validators=[DataRequired(),])
+
+    submit = SubmitField('Add Availability')
+

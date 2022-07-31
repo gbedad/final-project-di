@@ -158,8 +158,7 @@ class Students(db.Model):
     grade = db.Column(db.String(32), default='')
     modality = db.Column(db.String(32), default='')
     student_subjects = db.relationship('SubjectPossible', backref='student')
-    avail_from = db.Column(db.String(32))
-    avail_to = db.Column(db.String(32))
+    student_availabilities = db.relationship('Availabilities', backref='student')
 
     def __repr__(self):
         return f'<Student : {self.first_name} {self.last_name}>'
@@ -188,3 +187,16 @@ class SubjectPossible(db.Model):
 
     def __repr__(self):
         return f'<Subject : {self.subject_name}>'
+
+
+class Availabilities(db.Model):
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    day_possible = db.Column(db.String(32))
+    day_time_from = db.Column(db.String(32))
+    day_time_to = db.Column(db.String(32))
+    availability_owner = db.Column(db.Integer, db.ForeignKey('students.id'))
+
+    def __repr__(self):
+        return f'<Availabilities : {self.day_possible} from {self.day_time_from} to {self.day_time_to}>'
+
+

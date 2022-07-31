@@ -116,13 +116,11 @@ def create_student():
         school = form.school.data
         grade = form.grade.data
         modality = form.modality.data
-        avail_from = form.avail_from.data
-        avail_to = form.avail_to.data
 
         student = models.Students(first_name=first_name, last_name=last_name,
                                   email=email, phone=phone, phone_parents=phone_parents,
                                   street=street, city=city, zipcode=zipcode, school=school,
-                                  grade=grade, modality=modality, avail_from=avail_from,  avail_to=avail_to)
+                                  grade=grade, modality=modality)
         db.session.add(student)
 
 
@@ -150,7 +148,7 @@ def student_list():
 
         print(student.first_name)
 
-    return render_template('students/student_list.html', data=students, title='Show Students', legend='List of Students')
+    return render_template('students/student_list.html', data=students, title='Show Students', legend='Students List')
 
 
 @admin_bp.route('/admin/student/add_subject/<int:student_id>', methods=['GET', 'POST'])
@@ -198,8 +196,7 @@ def update_student(student_id):
         student.school = form.school.data
         student.grade = form.grade.data
         student.modality = form.modality.data
-        student.avail_from = form.avail_from.data
-        student.avail_to = form.avail_to.data
+
         try:
             db.session.commit()
             flash(f'Student {student.first_name} {student.last_name} updated successfully', 'success')
@@ -220,8 +217,7 @@ def update_student(student_id):
     form.school.data = student.school
     form.grade.data = student.grade
     form.modality.data = student.modality
-    form.avail_from.data = datetime.strptime(student.avail_from, '%H:%M:%S')
-    form.avail_to.data = datetime.strptime(student.avail_to, '%H:%M:%S')
+
     return render_template('students/create_student.html', form=form, student=student, title='Update Student', legend=f'Update {student.first_name} {student.last_name}')
 
 
@@ -233,6 +229,43 @@ def delete_subject(subject_id):
     db.session.commit()
     return redirect(url_for('admin.add_subject', student_id=subject.subject_owner))
 
+
+@admin_bp.route('/admin/student/add_availabilities/<int:student_id>', methods=['GET', 'POST'])
+@login_required
+def add_availabilities(student_id):
+    form = forms.AddAvailabilitiesToStudent()
+    student = models.Students.query.filter_by(id=student_id).first()
+
+    days_list = []
+    for d in student.student_availabilities:
+        days_list.append(d.day_possible)
+
+    if request.method == 'POST':
+
+        if form.validate_on_submit:
+            d = form.day_possible.data
+            if d in  days_list:
+                flash('This day is  already indicated', 'warning')
+                return redirect(url_for('admin.add_availabilities', student_id=student.id))
+            f = form.day_time_from.data.strftime('%H:%M')
+            t = form.day_time_to.data.strftime('%H:%M')
+            day_added = models.Availabilities(day_possible=d, day_time_from=f, day_time_to=t, availability_owner=student.id)
+
+            db.session.add(day_added)
+
+            db.session.commit()
+
+    return render_template('students/add_availabilities_to_student.html', form=form, student=student, title='Add Availability',
+                           legend=f"Add Availability to {student.first_name} {student.last_name}")
+
+
+@admin_bp.route('/admin/student/availabilities/<int:availability_id>/cancel', methods=['GET', 'POST'])
+@login_required
+def delete_availability(availability_id):
+    day_selected = models.Availabilities.query.filter_by(id=availability_id).first()
+    db.session.delete(day_selected)
+    db.session.commit()
+    return redirect(url_for('admin.add_availabilities', student_id=day_selected.availability_owner))
 '''
 @admin_bp.route('/admin/tutors/<int:tutor_id>/change_status', methods=['GET', 'POST'])
 @login_required

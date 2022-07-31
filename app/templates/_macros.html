@@ -1,6 +1,6 @@
 {% macro render_field(field) %}
 
-  {{ field.label(class="form-label") }}<br>
+  {{ field.label(class="form-label desc mb-0") }}<br>
   {{ field(class="form-control", **kwargs)|safe }}
   {% if field.errors %}
     <ul class=errors>
@@ -60,4 +60,6 @@
   <i class="bi bi-circle text-info"></i>
 {% endif %}
 {% endmacro %}
+
+
 
