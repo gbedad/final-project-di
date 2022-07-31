@@ -1,23 +1,25 @@
+import datetime
+
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, SelectMultipleField, SelectField, widgets,\
      TextAreaField, validators, IntegerField, IntegerRangeField, TimeField, TelField, FieldList, FormField, Form
 from wtforms.validators import ValidationError, DataRequired, Email, EqualTo, Regexp, NumberRange
 from wtforms.fields import DateField
-from .models import User, Subjects, Grades, Interviews
-
+from .models import User, Subjects, Grades, Interviews, Modalities
 
 
 CONTRACT_TYPES = [('Bénévolat', 'Bénévolat'), ('Service Civique', 'Service Civique'), ('Stage', 'Stage'), ('Autres', 'Autres')]
-SCHOOL_SUBJECTS = [('5', 'Mathématiques'), ('6', 'Français'), ('7', 'Anglais'),
-                   ('8', 'Espagnol'), ('9', 'Allemand'), ('10', 'SVT'),
-                   ('11', 'Physique'),('12', 'Histoire-Géographie'), ('13', 'Géopolitique'),]
+SCHOOL_SUBJECTS = [('Mathématiques', 'Mathématiques'), ('Français', 'Français'), ('Anglais', 'Anglais'),
+                   ('Espagnol', 'Espagnol'), ('Allemand', 'Allemand'), ('SVT', 'SVT'),
+                   ('Physique', 'Physique'),('Histoire-Géographie', 'Histoire-Géographie'), ('Géopolitique', 'Géopolitique'),]
 SCHOOL_LEVELS = [('Primaire', 'Primaire'), ('6ème', '6ème'), ('5ème', '5ème'),
                    ('4ème', '4ème'), ('3ème', '3ème'), ('Seconde', 'Seconde'),
                    ('Première', 'Première'),('Terminale', 'Terminale'), ('Sup', 'Sup')]
 
-MODALITIES = [('1', 'Présentiel 12ème'), ('2', 'Présentiel 17ème'), ('3', 'Présentiel Aubervilliers'), ('4', 'Présentiel Autres'), ('5', 'Distanciel'), ('6', 'Hybride')]
+MODALITIES = [('Présentiel 12ème', 'Présentiel 12ème'), ('Présentiel 17ème', 'Présentiel 17ème'), ('Présentiel Aubervilliers', 'Présentiel Aubervilliers'), ('Présentiel Autres', 'Présentiel Autres'), ('Distanciel', 'Distanciel'), ('Hybride', 'Hybride')]
 
 INQUIRIES = [('Je veux aider', 'Je veux aider'), ("Paris je m'engage", "Paris je m'engage"), ('Autres', 'Autres')]
+DAYS = [('Monday', 'Monday'), ('Tuesday', 'Tuesday'), ('Wednesday', 'Wednesday'), ('Thursday', 'Thursday'), ('Friday', 'Friday'), ('Sunday', 'Sunday') ]
 
 
 class SubjectsChoice(object):
@@ -102,7 +104,7 @@ class ProfilePage2Form(FlaskForm):
     availability_days = StringField('Availability Days')
     start_date = DateField('Starting Date', format='%Y-%m-%d')
     end_date = DateField('Ending Date', format='%Y-%m-%d')
-    frequency = IntegerField('Freq(h/week)', validators=[DataRequired(), NumberRange(min=1, max=6)])
+    frequency = IntegerField('Freq(h/week)', default=1, validators=[NumberRange(min=1, max=6)])
     monday = FieldList(FormField(SelectTimeForm), min_entries=1, max_entries=1)
     tuesday = FieldList(FormField(SelectTimeForm), min_entries=1, max_entries=1)
     wednesday = FieldList(FormField(SelectTimeForm), min_entries=1, max_entries=1)
@@ -143,3 +145,29 @@ class ValidateInterviewDateForm(FlaskForm):
 class ProfilePage5Form(FlaskForm):
     pass
 
+
+class AddAvailabilitiesToTutor(FlaskForm):
+    day_possible = SelectField('Day', choices=DAYS)
+    day_time_from = TimeField('Day From', format='%H:%M')
+    day_time_to = TimeField('Day To', format='%H:%M')
+
+    submit = SubmitField('Add Availability')
+
+
+class AddModalityToTutor(FlaskForm):
+    modality = SelectField('Modality', choices=MODALITIES)
+
+    submit = SubmitField('Add Modality')
+
+    def validate_modality(self, modality):
+        modality_sel = Modalities.query.filter_by(modality=self.modality.data).first()
+        if modality_sel is not None:
+            raise ValidationError('Modality already selected.')
+
+
+class AddSubjectGradesToTutor(FlaskForm):
+    subject = SelectField('Subject', choices=SCHOOL_SUBJECTS)
+    grade_from = SelectField('Grade From', choices=SCHOOL_LEVELS)
+    grade_to = SelectField('Grade To', choices=SCHOOL_LEVELS)
+
+    submit = SubmitField('Add Subject')

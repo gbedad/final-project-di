@@ -83,6 +83,9 @@ class Tutoring(db.Model):
     friday = db.Column(db.String(10))
     sunday = db.Column(db.String(10))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), unique=True)
+    tutor_availabilities = db.relationship('Availabilities', backref='tutor')
+    tutor_modalities = db.relationship('Modalities', backref='tutor')
+    tutor_subjects = db.relationship('SubjectsGrades', backref='tutor')
 
     def __repr__(self):
         return f'<Tutoring : {self.engagement}>'
@@ -114,6 +117,13 @@ class Subjects(db.Model):
     grades_a = db.relationship('Grades', secondary=subject_grade_table, back_populates='subjects_a')
     all_users = db.relationship('User', secondary=users_table, back_populates='user_subjects')
 
+
+class SubjectsGrades(db.Model):
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    subject = db.Column(db.String(32))
+    grade_from = db.Column(db.String(32))
+    grade_to = db.Column(db.String(32))
+    user_subjects_owner = db.Column(db.Integer, db.ForeignKey('tutoring.id'))
 
 
 class Grades(db.Model):
@@ -167,6 +177,7 @@ class Students(db.Model):
 class Modalities(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     modality = db.Column(db.String(32))
+    user_modality_owner = db.Column(db.Integer, db.ForeignKey('tutoring.id'))
 
     def __repr__(self):
         return f'<Modality : {self.name}>'
@@ -195,6 +206,7 @@ class Availabilities(db.Model):
     day_time_from = db.Column(db.String(32))
     day_time_to = db.Column(db.String(32))
     availability_owner = db.Column(db.Integer, db.ForeignKey('students.id'))
+    user_avail_owner = db.Column(db.Integer, db.ForeignKey('tutoring.id'))
 
     def __repr__(self):
         return f'<Availabilities : {self.day_possible} from {self.day_time_from} to {self.day_time_to}>'

@@ -133,84 +133,114 @@ def add_item_to_list(d, ls):
 @login_required
 def profile_2(user_name):
     form = forms.ProfilePage2Form()
+    availability_form = forms.AddAvailabilitiesToTutor()
+    modality_form = forms.AddModalityToTutor()
+    subjects_form = forms.AddSubjectGradesToTutor()
     user = models.User.query.filter_by(username=user_name).first_or_404()
     my_tutorate = user.tutoring_exp
-    values = dict(form.maths.choices)
-    mods = dict(form.modalities.choices)
 
-    if form.validate_on_submit():
+    if request.method == 'POST':
 
-        if my_tutorate is not None:
+        if availability_form.validate_on_submit():
+            d = availability_form.day_possible.data
+            f = availability_form.day_time_from.data.strftime('%H:%M')
+            t = availability_form.day_time_to.data.strftime('%H:%M')
+            day_added = models.Availabilities(day_possible=d, day_time_from=f, day_time_to=t,
+                                              user_avail_owner=user.tutoring_exp.id)
 
-            selected_maths = form.maths.data
-            my_maths = add_item_to_list(values, selected_maths)
-            selected_physics = form.physics.data
-            my_physics = add_item_to_list(values, selected_physics)
-            selected_svt = form.svt.data
-            my_svt = add_item_to_list(values, selected_svt)
-            selected_french = form.french.data
-            my_french = add_item_to_list(values, selected_french)
-            selected_english = form.english.data
-            my_english = add_item_to_list(values, selected_english)
-            selected_spanish = form.spanish.data
-            my_spanish = add_item_to_list(values, selected_spanish)
-            selected_history = form.history.data
-            my_history = add_item_to_list(values, selected_history)
-            selected_geopolitics = form.geopolitics.data
-            my_geopolitics = add_item_to_list(values, selected_geopolitics)
-
-            my_tutorate.maths = my_maths
-            my_tutorate.physics = my_physics
-            my_tutorate.svt = my_svt
-            my_tutorate.french = my_french
-            my_tutorate.english = my_english
-            my_tutorate.spanish = my_spanish
-            my_tutorate.history = my_history
-            my_tutorate.geopolitics = my_geopolitics
-
-            selected_modalities = form.modalities.data
-            my_modalities = add_item_to_list(mods, selected_modalities)
-
-            my_tutorate.modalities = my_modalities
-            my_tutorate.engagement = form.engagement.data
-            my_tutorate.frequency = form.frequency.data
-            my_tutorate.start_date = form.start_date.data
-            my_tutorate.end_date = form.end_date.data
-
-            group = namedtuple('Avail', ['time_from', 'time_to'])
-
-            for field in form.monday:
-                my_tutorate.monday = group(field.time_from.data, field.time_to.data )
-
-            print(my_tutorate.engagement)
+            db.session.add(day_added)
 
             try:
                 db.session.commit()
-                flash('Tutoring info added', 'info')
-                return render_template('auth/profile_2.html', data=user, form=form, legend='How I can Help')
+                flash('Availabilities added', 'info')
             except:
-                flash('Something wrong happened, try again', 'warning')
-                return render_template('auth/profile_2.html', data=user, form=form, legend='How I can Help')
-        else:
-            pass
-            #added_tutoring = models.Tutoring(maths=request.form['maths'], user=user)
-            #db.session.add(added_tutoring)
-            #db.session.commit()
-        # TODO validate when information is None. With db.session.add().
+                flash('Something wrong happened', 'warning')
 
-    if my_tutorate is not None:
-        form.engagement.data = my_tutorate.engagement
-        form.frequency.data = my_tutorate.frequency
-        form.start_date.data = datetime.strptime(my_tutorate.start_date, '%Y-%m-%d')
-        form.end_date.data = datetime.strptime(my_tutorate.end_date, '%Y-%m-%d')
-        my_list = my_tutorate.modalities.split(',')
+        if subjects_form.validate_on_submit():
+            d = subjects_form.subject.data
+            f = subjects_form.grade_from.data
+            t = subjects_form.grade_to.data
+            subject_added = models.SubjectsGrades(subject=d, grade_from=f, grade_to=t,
+                                              user_subjects_owner=user.tutoring_exp.id)
 
-        if my_tutorate.modalities:
-            form.modalities.data = my_list
+            db.session.add(subject_added)
 
-            print(form.modalities.data)
+            try:
+                db.session.commit()
+                flash('Subjects added', 'info')
+            except:
+                flash('Something wrong happened', 'warning')
 
-    return render_template('auth/profile_2.html', data=user, form=form, legend='How I can Help')
+        if modality_form.validate_on_submit():
+            d = modality_form.modality.data
+            mod_added = models.Modalities(modality=d, user_modality_owner=user.tutoring_exp.id)
+
+            db.session.add(mod_added)
+
+            try:
+                db.session.commit()
+                flash('Modalities added', 'info')
+            except:
+                flash('Something wrong happened', 'warning')
+
+        if form.validate_on_submit():
+            print("on the good track")
+
+            if my_tutorate is not None:
+
+                my_tutorate.engagement = form.engagement.data
+                my_tutorate.frequency = form.frequency.data
+                my_tutorate.start_date = form.start_date.data.strftime('%Y-%m-%d')
+                my_tutorate.end_date = form.end_date.data.strftime('%Y-%m-%d')
+
+                try:
+                    db.session.commit()
+                    flash('Tutoring info added', 'info')
+                    return render_template('auth/profile_2.html', data=user, form=form, avail_form=availability_form, mod_form=modality_form, subjects_form=subjects_form, legend='How I can Help')
+                except:
+                    flash('Something wrong happened, try again', 'warning')
+                    return render_template('auth/profile_2.html', data=user, form=form, avail_form=availability_form, mod_form=modality_form, subjects_form=subjects_form, legend='How I can Help')
+            else:
+                pass
+                #added_tutoring = models.Tutoring(maths=request.form['maths'], user=user)
+                #db.session.add(added_tutoring)
+                #db.session.commit()
+            # TODO validate when information is None. With db.session.add().
+
+    form.engagement.data = my_tutorate.engagement
+    form.frequency.data = my_tutorate.frequency
+    form.start_date.data = datetime.strptime(my_tutorate.start_date, '%Y-%m-%d')
+    form.end_date.data = datetime.strptime(my_tutorate.end_date, '%Y-%m-%d')
+
+    return render_template('auth/profile_2.html', data=user, form=form, avail_form=availability_form, mod_form=modality_form, subjects_form=subjects_form, legend='How I can Help')
+
+
+@auth_bp.route('/tutor/availabilities/<int:availability_id>/cancel', methods=['GET', 'POST'])
+@login_required
+def delete_availability(availability_id):
+    day_selected = models.Availabilities.query.filter_by(id=availability_id).first()
+    db.session.delete(day_selected)
+    db.session.commit()
+    return redirect(url_for('auth.profile_2', user_name=current_user.username))
+
+
+@auth_bp.route('/tutor/modalities/<int:modality_id>/cancel', methods=['GET', 'POST'])
+@login_required
+def delete_modality(modality_id):
+    mod_selected = models.Modalities.query.filter_by(id=modality_id).first()
+    db.session.delete(mod_selected)
+    db.session.commit()
+    return redirect(url_for('auth.profile_2', user_name=current_user.username))
+
+
+@auth_bp.route('/tutor/subjects/<int:subject_id>/cancel', methods=['GET', 'POST'])
+@login_required
+def delete_subject(subject_id):
+    subj_selected = models.SubjectsGrades.query.filter_by(id=subject_id).first()
+    db.session.delete(subj_selected)
+    db.session.commit()
+    return redirect(url_for('auth.profile_2', user_name=current_user.username))
+
 
 
 @auth_bp.route('/user/<user_name>/profile_3', methods=['GET', 'POST'])

@@ -8,6 +8,7 @@ from ..auth.forms import SubjectsChoice, GradesChoice
 STATUS = [('1','created'), ('2','proposed'), ('3', 'documented'), ('4', 'preselected'), ('5', 'selected'), ('6', 'validated')]
 DAYS = [('Monday', 'Monday'), ('Tuesday', 'Tuesday'), ('Wednesday', 'Wednesday'), ('Thursday', 'Thursday'), ('Friday', 'Friday'), ('Sunday', 'Sunday') ]
 
+
 class InterviewerChoice(object):
     def __iter__(self):
         sel_interviewers = User.query.filter_by(role='admin')
@@ -95,7 +96,7 @@ class AddSubjectToStudent(FlaskForm):
 class AddAvailabilitiesToStudent(FlaskForm):
     day_possible = SelectField('Day', choices=DAYS, validators=[DataRequired()])
     day_time_from = TimeField('Day From', format='%H:%M', validators=[DataRequired()])
-    day_time_to = TimeField('Day To', format='%H:%M', validators=[DataRequired(),])
+    day_time_to = TimeField('Day To', format='%H:%M', validators=[DataRequired()])
 
     submit = SubmitField('Add Availability')
 

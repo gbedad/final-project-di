@@ -123,8 +123,6 @@ def create_student():
                                   grade=grade, modality=modality)
         db.session.add(student)
 
-
-
         try:
             db.session.commit()
             flash('Student successfully added', 'success')
@@ -244,7 +242,7 @@ def add_availabilities(student_id):
 
         if form.validate_on_submit:
             d = form.day_possible.data
-            if d in  days_list:
+            if d in days_list:
                 flash('This day is  already indicated', 'warning')
                 return redirect(url_for('admin.add_availabilities', student_id=student.id))
             f = form.day_time_from.data.strftime('%H:%M')

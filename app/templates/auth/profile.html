@@ -7,21 +7,99 @@
 </div>
 {% include 'auth/nav_profile.html' %}
 <hr>
-<p><span>Username:</span>{{data.username}}</p>
-<p><span>Email:</span>{{data.email}}</p>
-<p><span>Role:</span>{{data.role}}</p>
-<p><span>First Name:</span>{{data.first_name}}</p>
-<p><span>Last Name:</span>{{data.last_name}}</p>
-<p><span>Street: </span>{{data.my_info.address}}</p>
-<p><span>City: </span>{{data.my_info.city}}</p>
-<p><span>Zipcode: </span>{{data.my_info.zipcode}}</p>
+<div class="row">
+  <div class="col">
+    <p><span>Username:</span>{{data.username}}</p>
+    <p><span>Email:</span>{{data.email}}</p>
+    <p><span>Role:</span>{{data.role}}</p>
+    <p><span>First Name:</span>{{data.first_name}}</p>
+    <p><span>Last Name:</span>{{data.last_name}}</p>
+  </div>
 
-<p><span>Zipcode: </span>{{data.my_info.phone}}</p>
-<p><span>Zipcode: </span>{{data.my_info.email2}}</p>
-<p><span>Date of Birth: </span>{{data.my_info.birth_date}}</p>
-<p><span>Short text: </span>{{data.my_info.short_text}}</p>
-<p><span>Short text: </span>{{data.more.when}}</p>
-<p><span>Inquiry: </span>{{data.more.inquiry}}</p>
+  <div class="col">
+    <p><span>Street: </span>{{data.my_info.address}}</p>
+    <p><span>City: </span>{{data.my_info.city}}</p>
+    <p><span>Zipcode: </span>{{data.my_info.zipcode}}</p>
+
+<p><span>Phone: </span>{{data.my_info.phone}}</p>
+<p><span>Email 2: </span>{{data.my_info.email2}}</p>
+  </div>
+
+  <div class="col">
+    <p><span>Date of Birth: </span>{{data.my_info.birth_date}}</p>
+    <p><span>Short text: </span>{{data.my_info.short_text}}</p>
+    <p><span>Short text: </span>{{data.more.when}}</p>
+    <p><span>Inquiry: </span>{{data.more.inquiry}}</p>
+  </div>
+</div>
+<hr>
+<div class="row">
+  <div class="col-4">
+    <h6 class="mb-0">Availabilities</h6>
+    <table class="table">
+    <thead>
+      <tr>
+        <th scope="col" class="desc mb-0">day</th>
+        <th scope="col" class="desc mb-0">From</th>
+        <th scope="col" class="desc mb-0">To</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for time in data.tutoring_exp.tutor_availabilities %}
+      <tr>
+        <td>{{time.day_possible}}</td>
+        <td>{{time.day_time_from}}</td>
+        <td>{{time.day_time_to}}</td>
+      </tr>
+    {% endfor  %}
+    </tbody>
+  </table>
+
+  </div>
+  <div class="col-4">
+    <h6 class="mb-0">Subjects</h6>
+    <table class="table">
+    <thead>
+      <tr>
+        <th scope="col" class="desc mb-0">Subject</th>
+        <th scope="col" class="desc mb-0">Grade From</th>
+        <th scope="col" class="desc mb-0">Grade To</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for subj in data.tutoring_exp.tutor_subjects %}
+      <tr>
+        <td>{{subj.subject}}</td>
+        <td>{{subj.grade_from}}</td>
+        <td>{{subj.grade_to}}</td>
+      </tr>
+    {% endfor  %}
+    </tbody>
+  </table>
+
+  </div>
+  <div class="col-2">
+    <h6 class="mb-0">Modalities</h6>
+    <table class="table">
+    <thead>
+      <tr>
+        <th scope="col" class="desc mb-0">Modality</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for mod in data.tutoring_exp.tutor_modalities %}
+      <tr>
+        <td>{{mod.modality}}</td>
+      </tr>
+    {% endfor  %}
+    </tbody>
+  </table>
+
+  </div>
+</div>
+
+
+
 
 
 
