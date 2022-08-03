@@ -32,6 +32,20 @@
     <p><span>Inquiry: </span>{{data.more.inquiry}}</p>
   </div>
 </div>
+<div class="row">
+  <div class="col">
+    <p><span>Engagement: </span>{{data.tutoring_exp.engagement}}</p>
+  </div>
+  <div class="col">
+    <p><span>From: </span>{{data.tutoring_exp.start_date}}</p>
+  </div>
+  <div class="col">
+    <p><span>To: </span>{{data.tutoring_exp.end_date}}</p>
+  </div>
+  <div class="col">
+    <p><span>Frequency: </span>{{data.tutoring_exp.frequency}} h/week</p>
+  </div>
+</div>
 <hr>
 <div class="row">
   <div class="col-4">
@@ -97,12 +111,4 @@
 
   </div>
 </div>
-
-
-
-
-
-
-
-
 {% endblock %}

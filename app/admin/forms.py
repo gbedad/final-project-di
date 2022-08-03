@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, SelectField, SubmitField, DateTimeField, DateField, TimeField
 from wtforms.validators import ValidationError, DataRequired
-from ..auth.models import User, Modalities, Students, SubjectPossible, Availabilities
+from ..auth.models import User, Modalities, Students, SubjectPossible, Availabilities, SubjectToStudy
 from ..auth.forms import SubjectsChoice, GradesChoice
 
 
@@ -24,6 +24,7 @@ class ChangeTutorStatus(FlaskForm):
 
 class PlanInterview(FlaskForm):
     interview_date = DateField('Interview Date', format='%Y-%m-%d')
+    interview_time = TimeField('Interview Time', format='%H:%M')
     interviewer = SelectField('Interviewer', choices=InterviewerChoice())
     message = StringField('Short Message')
 
@@ -88,7 +89,7 @@ class AddSubjectToStudent(FlaskForm):
     submit = SubmitField('Add Subject')
 
     def validate_subject_name(self, subject_name):
-        subject = SubjectPossible.query.filter_by(subject_name=self.subject_name.data).first()
+        subject = SubjectToStudy.query.filter_by(subject_name=self.subject_name.data).first()
         if subject:
             raise ValidationError('Subject already selected.')
 

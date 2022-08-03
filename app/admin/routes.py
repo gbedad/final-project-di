@@ -9,6 +9,7 @@ from flask.blueprints import Blueprint
 from app import db
 from datetime import datetime, time
 from collections import namedtuple
+from app.utils import get_grade_from_range, check_tuple_in_list
 
 admin_bp = Blueprint('admin',  __name__, template_folder='templates', static_folder='static')
 
@@ -62,11 +63,12 @@ def get_tutor_by_id(tutor_id):
         if tutor_interviews:
 
             if tutor_interviews.interview_date is not None or not interview_form.interviewer:
-                tutor_interviews.interview_date = datetime.strptime(str(interview_form.interview_date.data), '%Y-%m-%d')
+                tutor_interviews.interview_date = interview_form.interview_date.data.strftime('%Y-%m-%d')
+                tutor_interviews.interview_time = interview_form.interview_time.data
                 tutor_interviews.interviewer = interview_form.interviewer.data
                 tutor_interviews.message = interview_form.message.data
         else:
-            update_interviews = models.Interviews(interview_date=interview_form.interview_date.data,
+            update_interviews = models.Interviews(interview_date=interview_form.interview_date.data, interview_time=interview_form.interview_time.data,
                                                   interviewer=interview_form.interviewer.data,
                                                   message=interview_form.message.data, user=selected_tutor)
             db.session.add(update_interviews)
@@ -80,14 +82,11 @@ def get_tutor_by_id(tutor_id):
             return redirect(url_for('admin.get_tutor_by_id', tutor_id=selected_tutor.id))
     status_form.status.data = selected_tutor.status
 
-    if tutor_interviews:
-
-        if tutor_interviews.interview_date and interview_form.interviewer:
-            interview_form.interview_date.data = datetime.strptime(str(tutor_interviews.interview_date), '%Y-%m-%d %H:%M:%S')
-
-            interview_form.interviewer.data = tutor_interviews.interviewer
-
-            interview_form.message.data = tutor_interviews.message
+    if tutor_interviews and tutor_interviews.interview_time:
+        interview_form.interview_date.data = datetime.strptime(tutor_interviews.interview_date, '%Y-%m-%d')
+        interview_form.interview_time.data = datetime.strptime(tutor_interviews.interview_time, '%H:%M:%S')
+        interview_form.interviewer.data = tutor_interviews.interviewer
+        interview_form.message.data = tutor_interviews.message
 
     return render_template('admin/tutor_view.html', data=selected_tutor, status_form=status_form,
                            interview_form=interview_form, title='View Tutor',
@@ -169,7 +168,7 @@ def add_subject(student_id):
             if s in subjects_for_student:
                 flash('Subject already selected', 'warning')
                 return redirect(url_for('admin.add_subject', student_id=student.id))
-            subj_added = models.SubjectPossible(subject_name=form.subject.data, subject_owner=student.id)
+            subj_added = models.SubjectToStudy(subject_name=form.subject.data, subject_owner=student.id)
 
             db.session.add(subj_added)
 
@@ -222,7 +221,7 @@ def update_student(student_id):
 @admin_bp.route('/admin/student/subject/<int:subject_id>/cancel', methods=['GET', 'POST'])
 @login_required
 def delete_subject(subject_id):
-    subject = models.SubjectPossible.query.filter_by(id=subject_id).first()
+    subject = models.SubjectToStudy.query.filter_by(id=subject_id).first()
     db.session.delete(subject)
     db.session.commit()
     return redirect(url_for('admin.add_subject', student_id=subject.subject_owner))
@@ -264,26 +263,50 @@ def delete_availability(availability_id):
     db.session.delete(day_selected)
     db.session.commit()
     return redirect(url_for('admin.add_availabilities', student_id=day_selected.availability_owner))
-'''
-@admin_bp.route('/admin/tutors/<int:tutor_id>/change_status', methods=['GET', 'POST'])
+
+
+@admin_bp.route('/admin/tutor/<int:tutor_id>/view', methods=['GET', 'POST'])
 @login_required
-def change_tutor_status(tutor_id):
-    if current_user.role not in ['superadmin', 'admin']:
-        flash('Sorry, you have to be an admin', 'warning')
-        return redirect(url_for('auth.login'))
-    form = forms.ChangeTutorStatus()
-    selected_tutor = models.User.query.filter_by(id=tutor_id).first_or_404()
-    print(selected_tutor.status)
-    if form.validate_on_submit():
-        selected_tutor.status = form.status.data
-        print(selected_tutor.status)
-        try:
-            db.session.commit()
-            flash('Status changed successfully', 'success')
-            return redirect(url_for('admin.get_tutor_by_id', tutor_id=selected_tutor.id))
-        except:
-            flash('Something wrong happened', 'warning')
-            return redirect(url_for('admin.get_tutor_by_id', tutor_id=selected_tutor.id))
-    form.status.data = selected_tutor.status
-    return render_template('admin/status_modal.html', data=selected_tutor, form=form, title='View Tutor')
-'''
+def tutor_detailed_view(tutor_id):
+    tutor_selected = models.User.query.filter_by(id=tutor_id).first()
+
+    if tutor_selected:
+        return render_template('admin/tutor_profile.html', data=tutor_selected, title='Tutor Details', legend='Tutor Details')
+
+
+@admin_bp.route('/admin/student/<int:student_id>/search_tutor', methods=['GET', 'POST'])
+@login_required
+def search_tutor(student_id):
+    student_selected = models.Students.query.filter_by(id=student_id).first()
+    tutors = models.User.query.filter_by(role='supervisor')
+    filtered_grade = student_selected.grade
+    filtered_subjects = [x.subject_name for x in student_selected.student_subjects]
+    student_filtered_days = [(y.day_possible, y.day_time_from, y.day_time_to) for y in student_selected.student_availabilities]
+
+    print(filtered_subjects, student_filtered_days)
+    tutors_list = []
+    for tutor in tutors:
+
+        """if student_filtered_days[0][0] == tutor_filtered_days[0][0] and student_filtered_days[0][1] >= tutor_filtered_days[0][1] and \
+                student_filtered_days[0][2] <= tutor_filtered_days[0][2]:
+            check_day = True"""
+        if tutor.tutoring_exp:
+            tutor_filtered_days = [(y.day_possible, y.day_time_from, y.day_time_to) for y in
+                                   tutor.tutoring_exp.tutor_availabilities]
+            print(tutor_filtered_days)
+            for subj in tutor.tutoring_exp.tutor_subjects:
+                grade_list = get_grade_from_range(subj.grade_from,  subj.grade_to)
+                if subj.subject in filtered_subjects and filtered_grade in grade_list:
+                    for availability in student_filtered_days:
+                        print(student_filtered_days)
+                        print(tutor_filtered_days)
+                        test_days = check_tuple_in_list(tutor, availability, tutor_filtered_days)
+                        print("test_days", test_days)
+                        if len(test_days[0]):
+                            tutors_list.append(tutor)
+            print(tutors_list)
+    if len(tutors_list) == 0:
+        flash('No tutor available for this student', 'warning')
+                #return redirect(url_for('admin.search_tutor', student_id=student_selected.id))
+
+    return render_template('admin/adequate_tutor_for_student.html', student=student_selected, data=tutors_list, title='Show list of possible tutors', legend=f'Find Tutor for {student_selected.first_name} {student_selected.last_name}')

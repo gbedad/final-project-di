@@ -1,0 +1,127 @@
+{% extends 'base.html' %}
+{% from "_macros.html" import render_field, render_fields, switch_status %}
+
+{% block content %}
+<div class="row mb-4">
+  <div class="col-10 me-0"><h3>{{ legend }}</h3></div>
+  {% include 'auth/breadcrumb_user.html' %}
+    <a href="{{url_for('admin.student_list')}}" class="text-decoration-none desc">Back to Student List</a>
+</div>
+<hr>
+<div class="row mb-3">
+  <div class="col-4">
+      <div class="card" style="width: 18rem;">
+        <div class="card-body">
+    <h5 class="card-title"><span class="desc mb-0">Student</span><br>{{student.first_name}} {{student.last_name}}</h5>
+    <h6 class="card-subtitle mb-2 text-muted"><span class="desc mb-0">Grade</span><br>{{student.grade}}</h6>
+      <table class="table table-sm desc">
+        <thead>
+           <tr>
+              <th scope="col">Subject</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for subject in student.student_subjects %}
+          <tr>
+            <td>{{subject.subject_name}}</td
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    <table class="table table-sm desc">
+        <thead>
+           <tr>
+              <th scope="col">Day</th>
+              <th scope="col">From</th>
+              <th scope="col">To</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for avail in student.student_availabilities %}
+          <tr>
+            <td>{{avail.day_possible}}</td>
+            <td>{{avail.day_time_from}}</td>
+            <td>{{avail.day_time_to}}</td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    <p><span class="desc mb-0">Modality</span><br>{{student.modality}}</p>
+    <a href="#" class="card-link">Card link</a>
+    <a href="#" class="card-link">Another link</a>
+  </div>
+        </div>
+
+  </div>
+
+  <div class="col-8">
+    <div class="row row-cols-1 row-cols-md-2 g-4">
+        {% if data ==[] %}
+        <div class="card" style="width: 18rem;">
+            <i class="bi bi-emoji-frown text-warning text-center fs-1"></i>
+            <div class="card-body">
+            <p class="card-text">There are Tutors matching requests of {{student.first_name}} {{student.last_name}}. Check with tutors and student if they can change availabilities for days and hours.</p>
+        </div>
+    </div>
+        <p></p>
+        {% else %}
+
+      {% for tutor in data %}
+        <div class="col">
+        <div class="card h-100" style="width: 18rem;">
+            <div class="card-body">
+            <h5 class="card-title">Tutor <i class="bi bi-emoji-smile ms-3 text-success"></i></h5>
+            <h6 class="card-subtitle mb-2 text-muted"><span class="desc mb-0">Name</span><br>{{ tutor.first_name }} {{ tutor.last_name }}</h6>
+                <table class="table table-sm desc">
+        <thead>
+           <tr>
+              <th scope="col">Subject</th>
+              <th scope="col">Grade From</th>
+              <th scope="col">Grade To</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for subj in tutor.tutoring_exp.tutor_subjects %}
+          <tr>
+            <td>{{subj.subject}}</td>
+            <td>{{subj.grade_from}}</td>
+            <td>{{subj.grade_to}}</td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    {% if tutor %}
+      <table class="table table-sm desc">
+        <thead>
+           <tr>
+              <th scope="col">Day</th>
+              <th scope="col">From</th>
+              <th scope="col">To</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for daytime in tutor.tutoring_exp.tutor_availabilities %}
+          <tr>
+            <td>{{daytime.day_possible}}</td>
+            <td>{{daytime.day_time_from}}</td>
+            <td>{{daytime.day_time_to}}</td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+      {% endif %}
+            <div class="card-footer">
+                <a href="#" class="card-link">Card link</a>
+                <a href="#" class="card-link">Another link</a>
+            </div>
+
+          </div>
+        </div>
+            </div>
+        {% endfor %}
+        {% endif %}
+
+    </div>
+  </div>
+</div>
+{% endblock %}

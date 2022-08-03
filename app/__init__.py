@@ -29,10 +29,12 @@ migrate.init_app(flask_app, db)
 from app.auth.routes import auth_bp
 from app.main.routes import main_bp
 from app.admin.routes import admin_bp
+from app.course.routes import course_bp
 
 flask_app.register_blueprint(auth_bp)
 flask_app.register_blueprint(main_bp)
 flask_app.register_blueprint(admin_bp)
+flask_app.register_blueprint(course_bp)
 
 
 #from app.main import routes

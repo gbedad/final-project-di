@@ -5,7 +5,7 @@ from wtforms import StringField, PasswordField, BooleanField, SubmitField, Selec
      TextAreaField, validators, IntegerField, IntegerRangeField, TimeField, TelField, FieldList, FormField, Form
 from wtforms.validators import ValidationError, DataRequired, Email, EqualTo, Regexp, NumberRange
 from wtforms.fields import DateField
-from .models import User, Subjects, Grades, Interviews, Modalities
+from .models import User, Subjects, Grades, Interviews, Modalities, SubjectsGrades, Availabilities, ModalitiesPossible, SubjectPossible, Tutoring
 
 
 CONTRACT_TYPES = [('Bénévolat', 'Bénévolat'), ('Service Civique', 'Service Civique'), ('Stage', 'Stage'), ('Autres', 'Autres')]
@@ -16,16 +16,23 @@ SCHOOL_LEVELS = [('Primaire', 'Primaire'), ('6ème', '6ème'), ('5ème', '5ème'
                    ('4ème', '4ème'), ('3ème', '3ème'), ('Seconde', 'Seconde'),
                    ('Première', 'Première'),('Terminale', 'Terminale'), ('Sup', 'Sup')]
 
-MODALITIES = [('Présentiel 12ème', 'Présentiel 12ème'), ('Présentiel 17ème', 'Présentiel 17ème'), ('Présentiel Aubervilliers', 'Présentiel Aubervilliers'), ('Présentiel Autres', 'Présentiel Autres'), ('Distanciel', 'Distanciel'), ('Hybride', 'Hybride')]
 
 INQUIRIES = [('Je veux aider', 'Je veux aider'), ("Paris je m'engage", "Paris je m'engage"), ('Autres', 'Autres')]
 DAYS = [('Monday', 'Monday'), ('Tuesday', 'Tuesday'), ('Wednesday', 'Wednesday'), ('Thursday', 'Thursday'), ('Friday', 'Friday'), ('Sunday', 'Sunday') ]
 
 
+class ModalitiesChoice(object):
+    def __iter__(self):
+        sel_modalities = ModalitiesPossible.query.all()
+        choices = [(item.modality, f'{item.modality}') for item in sel_modalities]
+        for choice in choices:
+            yield choice
+
+
 class SubjectsChoice(object):
     def __iter__(self):
-        sel_subjects = Subjects.query.all()
-        choices = [(item.subject, f'{item.subject}') for item in sel_subjects]
+        sel_subjects = SubjectPossible.query.all()
+        choices = [(item.subject_name, f'{item.subject_name}') for item in sel_subjects]
         for choice in choices:
             yield choice
 
@@ -83,34 +90,10 @@ class SelectTimeForm(Form):
 
 
 class ProfilePage2Form(FlaskForm):
-    maths = SelectMultipleField(u'Mathématiques', choices=GradesChoice(), coerce=int, option_widget=widgets.CheckboxInput(),widget=widgets.ListWidget(prefix_label=False))
-    physics = SelectMultipleField(u'Physique', choices=GradesChoice(), coerce=int,
-                                option_widget=widgets.CheckboxInput(), widget=widgets.ListWidget(prefix_label=False))
-    french = SelectMultipleField(u'Français', choices=GradesChoice(), coerce=int,
-                                option_widget=widgets.CheckboxInput(), widget=widgets.ListWidget(prefix_label=False))
-    english = SelectMultipleField(u'Anglais', choices=GradesChoice(), coerce=int,
-                                option_widget=widgets.CheckboxInput(), widget=widgets.ListWidget(prefix_label=False))
-    spanish = SelectMultipleField(u'Espagnol', choices=GradesChoice(), coerce=int,
-                                option_widget=widgets.CheckboxInput(), widget=widgets.ListWidget(prefix_label=False))
-    svt = SelectMultipleField(u'SVT', choices=GradesChoice(), coerce=int,
-                                option_widget=widgets.CheckboxInput(), widget=widgets.ListWidget(prefix_label=False))
-    history = SelectMultipleField(u'Histoire-Géo', choices=GradesChoice(), coerce=int,
-                                option_widget=widgets.CheckboxInput(), widget=widgets.ListWidget(prefix_label=False))
-    geopolitics = SelectMultipleField(u'Géopolitique', choices=GradesChoice(), coerce=int,
-                                option_widget=widgets.CheckboxInput(), widget=widgets.ListWidget(prefix_label=False))
-    modalities = SelectMultipleField(u'Modalities', choices=MODALITIES, coerce=str,
-                                option_widget=widgets.CheckboxInput(), widget=widgets.ListWidget(prefix_label=False))
     engagement = SelectField(u'Engagement Type', choices=CONTRACT_TYPES)
-    availability_days = StringField('Availability Days')
     start_date = DateField('Starting Date', format='%Y-%m-%d')
     end_date = DateField('Ending Date', format='%Y-%m-%d')
     frequency = IntegerField('Freq(h/week)', default=1, validators=[NumberRange(min=1, max=6)])
-    monday = FieldList(FormField(SelectTimeForm), min_entries=1, max_entries=1)
-    tuesday = FieldList(FormField(SelectTimeForm), min_entries=1, max_entries=1)
-    wednesday = FieldList(FormField(SelectTimeForm), min_entries=1, max_entries=1)
-    thursday = FieldList(FormField(SelectTimeForm), min_entries=1, max_entries=1)
-    friday = FieldList(FormField(SelectTimeForm), min_entries=1, max_entries=1)
-    sunday = FieldList(FormField(SelectTimeForm), min_entries=1, max_entries=1)
 
     submit = SubmitField('Save')
 
@@ -147,27 +130,38 @@ class ProfilePage5Form(FlaskForm):
 
 
 class AddAvailabilitiesToTutor(FlaskForm):
-    day_possible = SelectField('Day', choices=DAYS)
-    day_time_from = TimeField('Day From', format='%H:%M')
-    day_time_to = TimeField('Day To', format='%H:%M')
+    day_possible = SelectField(u'Day', choices=DAYS, coerce=str,)
+    day_time_from = TimeField(u'Day From', format='%H:%M')
+    day_time_to = TimeField(u'Day To', format='%H:%M')
 
     submit = SubmitField('Add Availability')
 
+    """def validate_day_possible(self, day_possible):
+        day_possible_sel = Availabilities.query.filter_by(day_possible=self.day_possible.data).filter_by(user_avail_owner=Tutoring.id).first()
+        if day_possible_sel is not None:
+            raise ValidationError('Day already selected.')"""
+
 
 class AddModalityToTutor(FlaskForm):
-    modality = SelectField('Modality', choices=MODALITIES)
+    modality = SelectField(u'Modality', choices=ModalitiesChoice(), coerce=str)
 
     submit = SubmitField('Add Modality')
 
-    def validate_modality(self, modality):
+    """def validate_modality(self, modality):
         modality_sel = Modalities.query.filter_by(modality=self.modality.data).first()
         if modality_sel is not None:
             raise ValidationError('Modality already selected.')
+"""
 
 
 class AddSubjectGradesToTutor(FlaskForm):
-    subject = SelectField('Subject', choices=SCHOOL_SUBJECTS)
-    grade_from = SelectField('Grade From', choices=SCHOOL_LEVELS)
-    grade_to = SelectField('Grade To', choices=SCHOOL_LEVELS)
+    subject = SelectField(u'Subject', choices=SubjectsChoice(), coerce=str)
+    grade_from = SelectField(u'Grade From', choices=GradesChoice(), coerce=str)
+    grade_to = SelectField(u'Grade To', choices=GradesChoice(), coerce=str)
 
     submit = SubmitField('Add Subject')
+
+    """def validate_subject(self, subject):
+        subject_sel = SubjectsGrades.query.filter_by(subject=self.subject.data).filter_by(user_subjects_owner=Tutoring.id).first()
+        if subject_sel is not None:
+            raise ValidationError('Subject already selected.')"""

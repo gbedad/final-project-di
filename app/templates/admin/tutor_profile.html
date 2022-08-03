@@ -1,0 +1,108 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row mb-4">
+  <div class="col-10 me-0"><h3>{{ legend }}</h3></div>
+  {% include 'auth/breadcrumb_user.html' %}
+  <a href="{{url_for('admin.get_tutor_by_id', tutor_id=data.id)}}" class="text-decoration-none desc">Back to Tutor View</a>
+</div>
+<hr>
+<div class="row">
+  <div class="col">
+    <p class="mb-1"><span class="mb-0 desc">Username:</span><br>{{data.username}}</p>
+    <p class="mb-1"><span class="mb-0 desc">Email:</span><br>{{data.email}}</p>
+    <p class="mb-1"><span class="mb-0 desc">Role:</span><br>{{data.role}}</p>
+    <p class="mb-1"><span class="mb-0 desc">First Name:</span><br>{{data.first_name}}</p>
+    <p class="mb-1"><span class="mb-0 desc">Last Name:</span><br>{{data.last_name}}</p>
+  </div>
+
+  <div class="col">
+    <p class="mb-1"><span class="mb-0 desc">Street: </span><br>{{data.my_info.address}}</p>
+    <p class="mb-1"><span class="mb-0 desc">City: </span><br>{{data.my_info.city}}</p>
+    <p class="mb-1"><span class="mb-0 desc">Zipcode: </span><br>{{data.my_info.zipcode}}</p>
+
+<p class="mb-1"><span class="mb-0 desc">Phone: </span><br>{{data.my_info.phone}}</p>
+<p class="mb-1"><span class="mb-0 desc">Email 2: </span><br>{{data.my_info.email2}}</p>
+  </div>
+
+  <div class="col">
+    <p class="mb-1"><span class="mb-0 desc">Date of Birth: </span><br>{{data.my_info.birth_date}}</p>
+    <p class="mb-1"><span class="mb-0 desc">Short text: </span><br>{{data.my_info.short_text}}</p>
+    <p class="mb-1"><span class="mb-0 desc">Short text: </span><br>{{data.more.when}}</p>
+
+  </div>
+  <div class="col">
+    <p class="mb-1"><span class="mb-0 desc">Source: </span><br>{{data.more.inquiry}}</p>
+    <p class="mb-1"><span class="mb-0 desc">Engagement: </span><br>{{data.tutoring_exp.engagement}}</p>
+    <p class="mb-1"><span class="mb-0 desc">From: </span><br>{{data.tutoring_exp.start_date}}</p>
+    <p class="mb-1"><span class="mb-0 desc">To: </span><br>{{data.tutoring_exp.end_date}}</p>
+    <p class="mb-1"><span class="mb-0 desc">Frequency: </span><br>{{data.tutoring_exp.frequency}} h/week</p>
+  </div>
+</div>
+
+<hr>
+<div class="row">
+  <div class="col-4">
+    <h6 class="mb-0">Availabilities</h6>
+    <table class="table table-sm">
+    <thead>
+      <tr>
+        <th scope="col" class="desc mb-0">day</th>
+        <th scope="col" class="desc mb-0">From</th>
+        <th scope="col" class="desc mb-0">To</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for time in data.tutoring_exp.tutor_availabilities %}
+      <tr>
+        <td>{{time.day_possible}}</td>
+        <td>{{time.day_time_from}}</td>
+        <td>{{time.day_time_to}}</td>
+      </tr>
+    {% endfor  %}
+    </tbody>
+  </table>
+
+  </div>
+  <div class="col-4">
+    <h6 class="mb-0">Subjects</h6>
+    <table class="table table-sm">
+    <thead>
+      <tr>
+        <th scope="col" class="desc mb-0">Subject</th>
+        <th scope="col" class="desc mb-0">Grade From</th>
+        <th scope="col" class="desc mb-0">Grade To</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for subj in data.tutoring_exp.tutor_subjects %}
+      <tr>
+        <td>{{subj.subject}}</td>
+        <td>{{subj.grade_from}}</td>
+        <td>{{subj.grade_to}}</td>
+      </tr>
+    {% endfor  %}
+    </tbody>
+  </table>
+
+  </div>
+  <div class="col-2">
+    <h6 class="mb-0">Modalities</h6>
+    <table class="table table-sm">
+    <thead>
+      <tr>
+        <th scope="col" class="desc mb-0">Modality</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for mod in data.tutoring_exp.tutor_modalities %}
+      <tr>
+        <td>{{mod.modality}}</td>
+      </tr>
+    {% endfor  %}
+    </tbody>
+  </table>
+
+  </div>
+</div>
+{% endblock %}

@@ -15,7 +15,7 @@ Create Student
 
 <div class="row mb-2">
   <div class="col-12 d-flex justify-content-center">
-    <table class="table">
+    <table class="table table-hover">
       <thead>
     <tr>
       <th scope="col">First</th>
@@ -27,6 +27,7 @@ Create Student
       <th scope="col">Update</th>
       <th scope="col">Subjects</th>
       <th scope="col">When</th>
+      <th scope="col">Search</th>
 
     </tr>
   </thead>
@@ -42,6 +43,7 @@ Create Student
       <td><a href="{{url_for('admin.update_student', student_id=student.id)}}"><i class="bi bi-pencil-square text-decoration-none desc"></i></a></td>
       <td><a href="{{url_for('admin.add_subject', student_id=student.id)}}"><i class="bi bi-file-earmark-plus text-decoration-none desc"></i></a></td>
       <td><a href="{{url_for('admin.add_availabilities', student_id=student.id)}}"><i class="bi bi-calendar-day text-decoration-none desc"></i></a></td>
+      <td><a href="{{url_for('admin.search_tutor', student_id=student.id)}}"><i class="bi bi-binoculars text-decoration-none desc"></i></a></td>
     </tr>
   {% endfor %}
   </tbody>

@@ -167,7 +167,7 @@ class Students(db.Model):
     school = db.Column(db.String(32))
     grade = db.Column(db.String(32), default='')
     modality = db.Column(db.String(32), default='')
-    student_subjects = db.relationship('SubjectPossible', backref='student')
+    student_subjects = db.relationship('SubjectToStudy', backref='student')
     student_availabilities = db.relationship('Availabilities', backref='student')
 
     def __repr__(self):
@@ -180,7 +180,15 @@ class Modalities(db.Model):
     user_modality_owner = db.Column(db.Integer, db.ForeignKey('tutoring.id'))
 
     def __repr__(self):
-        return f'<Modality : {self.name}>'
+        return f'<Modality : {self.modality}>'
+
+
+class ModalitiesPossible(db.Model):
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    modality = db.Column(db.String(32))
+
+    def __repr__(self):
+        return f'<Modality : {self.modality}>'
 
 
 class GradesPossible(db.Model):
@@ -191,10 +199,18 @@ class GradesPossible(db.Model):
         return f'<Grade : {self.grade_name}>'
 
 
-class SubjectPossible(db.Model):
+class SubjectToStudy(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     subject_name = db.Column(db.String(32))
     subject_owner = db.Column(db.Integer, db.ForeignKey('students.id'))
+
+    def __repr__(self):
+        return f'<Subject : {self.subject_name}>'
+
+
+class SubjectPossible(db.Model):
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    subject_name = db.Column(db.String(32))
 
     def __repr__(self):
         return f'<Subject : {self.subject_name}>'
