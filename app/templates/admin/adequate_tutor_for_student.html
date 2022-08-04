@@ -47,7 +47,7 @@
         </tbody>
       </table>
     <p><span class="desc mb-0">Modality</span><br>{{student.modality}}</p>
-    <a href="#" class="card-link">Card link</a>
+    <a href="{{url_for('admin.search_tutor', student_id=student.id)}}" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Create Course</a>
     <a href="#" class="card-link">Another link</a>
   </div>
         </div>
@@ -60,7 +60,7 @@
         <div class="card" style="width: 18rem;">
             <i class="bi bi-emoji-frown text-warning text-center fs-1"></i>
             <div class="card-body">
-            <p class="card-text">There are Tutors matching requests of {{student.first_name}} {{student.last_name}}. Check with tutors and student if they can change availabilities for days and hours.</p>
+            <p class="card-text">There is no Tutor matching requests of {{student.first_name}} {{student.last_name}}. Check with tutors and student if they can change availabilities for days and hours.</p>
         </div>
     </div>
         <p></p>
@@ -124,4 +124,85 @@
     </div>
   </div>
 </div>
+
+
+
+
+<!-- Modal Create Course -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Create a Course</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form method="post">
+            {{ form.hidden_tag() }}
+            <div  class="row">
+                <div class="col">
+                    <div class="form-outline">
+                        {{ render_field(form.student) }}
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-outline">
+                        {{ render_field(form.tutor) }}
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="form-outline">
+                        {{ render_field(form.selected_day) }}
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-outline">
+                        {{ form.start_time.label(class="form-label desc mb-0") }}<br>
+                        {{ form.start_time(size=10, class="form-control") }}
+                        {% for error in form.start_time.errors %}
+                        <span class="danger">[{{ error }}]</span>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="form-outline">
+                        {{ form.end_time.label(class="form-label desc mb-0") }}<br>
+                        {{ form.end_time(size=10, class="form-control") }}
+                        {% for error in form.end_time.errors %}
+                        <span class="danger">[{{ error }}]</span>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="form-outline">
+                        {{ render_field(form.subject) }}
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="form-outline">
+                        {{ render_field(form.status) }}
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <p> {{ form.submit(class="btn btn-primary btn-block mb-4") }}</p>
+                <button type="button" class="btn btn-primary">Create</button>
+                <button type="button" class="btn btn-info">Update</button>
+      </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>
 {% endblock %}
+
+
+

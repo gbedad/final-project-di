@@ -3,6 +3,7 @@ import datetime
 from app import db, login_manager
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
+import app.course.models as mod
 
 
 @login_manager.user_loader
@@ -23,6 +24,15 @@ users_table = db.Table('all_users',
                               db.Column('subject_id', db.Integer, db.ForeignKey('subjects.id')))
 
 
+tutor_course_table = db.Table('association_tutor_course',
+                              db.Column('tutor_id', db.ForeignKey('user.id')),
+                              db.Column('course_id', db.ForeignKey('course.id')))
+
+student_course_table = db.Table('association_student_course',
+                              db.Column('student_id', db.ForeignKey('students.id')),
+                              db.Column('course_id', db.ForeignKey('course.id')))
+
+
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     username = db.Column(db.String(64), index=True, unique=True)
@@ -38,6 +48,7 @@ class User(UserMixin, db.Model):
     tutoring_exp = db.relationship('Tutoring', backref='user', uselist=False)
     user_subjects = db.relationship('Subjects', secondary=subjects_table, back_populates='all_users')
     my_interviews = db.relationship('Interviews', backref='user', uselist=False)
+    courses = db.relationship('Course', secondary=tutor_course_table, back_populates='tutor')
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
@@ -169,6 +180,7 @@ class Students(db.Model):
     modality = db.Column(db.String(32), default='')
     student_subjects = db.relationship('SubjectToStudy', backref='student')
     student_availabilities = db.relationship('Availabilities', backref='student')
+    courses = db.relationship('Course', secondary=student_course_table, back_populates='student')
 
     def __repr__(self):
         return f'<Student : {self.first_name} {self.last_name}>'
@@ -226,5 +238,19 @@ class Availabilities(db.Model):
 
     def __repr__(self):
         return f'<Availabilities : {self.day_possible} from {self.day_time_from} to {self.day_time_to}>'
+
+
+class Course(db.Model):
+    id = db.Column(db.Integer, primary_key=True, unique=True, autoincrement=True)
+    student = db.relationship('Students', secondary=student_course_table, back_populates='courses')
+    tutor = db.relationship('User', secondary=tutor_course_table, back_populates='courses')
+    subject = db.Column(db.String(32))
+    selected_day = db.Column(db.String(32))
+    start_time = db.Column(db.String(10))
+    end_time = db.Column(db.String(10))
+    status = db.Column(db.String(32), default='created')
+
+    def __repr__(self):
+        return f'<Course ID: {self.subject} {self.selected_day}>'
 
 

@@ -1,10 +1,11 @@
-from flask import render_template, redirect, url_for, flash, request
+from flask import render_template, redirect, url_for, flash, request, render_template_string
 from flask_login import current_user, login_user, logout_user, login_required
 from flask import request
 from werkzeug.urls import url_parse
 from app.auth import models
 
 from app.admin import forms
+from app.course import forms
 from flask.blueprints import Blueprint
 from app import db
 from datetime import datetime, time
@@ -277,11 +278,15 @@ def tutor_detailed_view(tutor_id):
 @admin_bp.route('/admin/student/<int:student_id>/search_tutor', methods=['GET', 'POST'])
 @login_required
 def search_tutor(student_id):
+
     student_selected = models.Students.query.filter_by(id=student_id).first()
     tutors = models.User.query.filter_by(role='supervisor')
     filtered_grade = student_selected.grade
     filtered_subjects = [x.subject_name for x in student_selected.student_subjects]
     student_filtered_days = [(y.day_possible, y.day_time_from, y.day_time_to) for y in student_selected.student_availabilities]
+
+    create_course_form = forms.CreateCourseForm()
+    create_course_form.student.data = student_selected.id
 
     print(filtered_subjects, student_filtered_days)
     tutors_list = []
@@ -302,11 +307,35 @@ def search_tutor(student_id):
                         print(tutor_filtered_days)
                         test_days = check_tuple_in_list(tutor, availability, tutor_filtered_days)
                         print("test_days", test_days)
-                        if len(test_days[0]):
+                        if len(test_days[0]) > 0:
                             tutors_list.append(tutor)
             print(tutors_list)
-    if len(tutors_list) == 0:
-        flash('No tutor available for this student', 'warning')
-                #return redirect(url_for('admin.search_tutor', student_id=student_selected.id))
 
-    return render_template('admin/adequate_tutor_for_student.html', student=student_selected, data=tutors_list, title='Show list of possible tutors', legend=f'Find Tutor for {student_selected.first_name} {student_selected.last_name}')
+    create_course_form.student.data = student_id
+    create_course_form.tutor.choices = [(tutor.id, f'{tutor.first_name} {tutor.last_name}') for tutor in tutors_list]
+
+    if request.method == 'POST' and create_course_form.validate_on_submit():
+        stud = create_course_form.student.data
+        tut = create_course_form.tutor.data
+        subj = create_course_form.subject.data
+        day = create_course_form.selected_day.data
+        start = create_course_form.start_time.data
+        end = create_course_form.end_time.data
+        print("student id", stud)
+        created_course = models.Course(subject=subj, selected_day=day, start_time=start, end_time=end)
+        print(created_course)
+        selected_tutor = models.User.query.filter_by(id=tut).first()
+        created_course.student.append(student_selected)
+        created_course.tutor.append(selected_tutor)
+        db.session.add(created_course)
+        print(selected_tutor)
+        try:
+
+            db.session.commit()
+            flash('Course saved to database', 'info')
+            return redirect(url_for('course.course_list'))
+        except:
+            flash('Something wrong happened', 'warning')
+            return redirect(url_for('course.course_list'))
+
+    return render_template('admin/adequate_tutor_for_student.html', student=student_selected, data=tutors_list, form=create_course_form, title='Show list of possible tutors', legend=f'Matching Tutor(s) for {student_selected.first_name} {student_selected.last_name}')

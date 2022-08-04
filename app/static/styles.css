@@ -1,6 +1,11 @@
 body {
     margin: 0 auto;
     padding: 0;
+    background: #314478;
+}
+.container {
+    background:#E5E1E6;
+    padding: 10px;
 }
 a.navbar-brand {
     font-family: 'Caveat', cursive;
