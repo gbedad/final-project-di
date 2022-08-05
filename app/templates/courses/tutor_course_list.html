@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% from "_macros.html" import render_field, render_fields, switch_status %}
+
+{% block content %}
+<div class="row mb-4">
+  <div class="col-10 me-0"><h3>{{ legend }}</h3></div>
+  {% include 'auth/breadcrumb_user.html' %}
+    <a href="{{url_for('admin.student_list')}}" class="text-decoration-none desc">Back to Students List</a>
+</div>
+<hr>
+<table class="table table-sm">
+  <thead>
+    <tr>
+      <th>Student</th>
+      <th>Subject</th>
+      <th>Day</th>
+      <th>Start Time</th>
+      <th>End Time</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for course in data %}
+    <tr>
+      {% for student in course.student %}
+      <td>{{ student.first_name}} {{student.last_name}}</td>
+      {% endfor  %}
+      <td>{{ course.subject}}</td>
+      <td>{{ course.selected_day}}</td>
+      <td>{{ course.start_time}}</td>
+      <td>{{ course.end_time}}</td>
+      <td>{{ course.status}}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

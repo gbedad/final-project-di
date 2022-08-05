@@ -33,5 +33,9 @@ li.active > a {
 }
 
 .btn-primary {
-    background-color: purple;
+    background-color: #693C5E;
+}
+.btn-primary:hover {
+    background-color: #9873AC;
+    color: white;
 }

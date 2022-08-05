@@ -9,23 +9,20 @@
     <a href="{{url_for('admin.student_list')}}" class="text-decoration-none desc">Back to Student List</a>
 </div>
 <hr>
-<table class="table">
+<table class="table table-sm">
   <thead>
     <tr>
-      <th>Student</th>
       <th>Tutor</th>
       <th>Subject</th>
       <th>Day</th>
       <th>Start Time</th>
       <th>End Time</th>
+      <th>Status</th>
     </tr>
   </thead>
   <tbody>
   {% for course in data %}
     <tr>
-      {% for student in course.student %}
-      <td>{{ student.first_name}} {{student.last_name}}</td>
-      {% endfor  %}
       {% for tutor in course.tutor %}
       <td>{{ tutor.first_name}} {{tutor.last_name}}</td>
       {% endfor %}
@@ -33,6 +30,8 @@
       <td>{{ course.selected_day}}</td>
       <td>{{ course.start_time}}</td>
       <td>{{ course.end_time}}</td>
+      <td>{{ course.status}}</td>
+      <td><i class="bi bi-pencil-square"></i></td>
     </tr>
   {% endfor %}
   </tbody>

@@ -48,7 +48,7 @@
       </table>
     <p><span class="desc mb-0">Modality</span><br>{{student.modality}}</p>
     <a href="{{url_for('admin.search_tutor', student_id=student.id)}}" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Create Course</a>
-    <a href="#" class="card-link">Another link</a>
+    <a href="{{url_for('course.course_list', student_id=student.id)}}" class="btn btn-info">Course List</a>
   </div>
         </div>
 
@@ -111,8 +111,7 @@
       </table>
       {% endif %}
             <div class="card-footer">
-                <a href="#" class="card-link">Card link</a>
-                <a href="#" class="card-link">Another link</a>
+                <a href="{{url_for('course.tutor_course_list', tutor_id=tutor.id)}}" class="btn btn-info">Course List</a>
             </div>
 
           </div>

@@ -333,9 +333,9 @@ def search_tutor(student_id):
 
             db.session.commit()
             flash('Course saved to database', 'info')
-            return redirect(url_for('course.course_list'))
+            return redirect(url_for('course.course_list', student_id=student_selected.id))
         except:
             flash('Something wrong happened', 'warning')
-            return redirect(url_for('course.course_list'))
+            return redirect(url_for('course.course_list', student_id=student_selected.id))
 
     return render_template('admin/adequate_tutor_for_student.html', student=student_selected, data=tutors_list, form=create_course_form, title='Show list of possible tutors', legend=f'Matching Tutor(s) for {student_selected.first_name} {student_selected.last_name}')
