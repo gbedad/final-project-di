@@ -39,3 +39,24 @@ li.active > a {
     background-color: #9873AC;
     color: white;
 }
+
+.btn-primary:visited {
+    background-color: #A6517E;
+    color: white;
+}
+
+.btn-info {
+    background-color: #AFEEEE;
+}
+.btn-info:hover {
+    background-color: #00A4B4;
+    color: white;
+}
+
+.bg-dark-purple {
+    background-color: #693C5E;
+}
+
+.legend-color {
+    color: #005EB8;
+}

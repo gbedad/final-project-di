@@ -3,7 +3,7 @@
 
 {% block content %}
 <div class="row mb-4">
-  <div class="col-10 me-0"><h3>{{ legend }}</h3></div>
+  <div class="col-10 me-0"><h3 class="legend-color">{{ legend }}</h3></div>
   {% include 'auth/breadcrumb_user.html' %}
 </div>
 <hr>
@@ -11,17 +11,17 @@
   <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3">
     <a href="{{url_for('admin.show_tutors')}}" class="text-decoration-none text-center text-info">
     <div class="col">
-      <div class="p-3 border bg-dark">Manage Tutors</div>
+      <div class="p-3 border bg-dark-purple">Manage Tutors</div>
     </div>
     </a>
     <a href="{{url_for('admin.create_student')}}" class="text-decoration-none text-center text-info">
       <div class="col">
-        <div class="p-3 border bg-dark">Create Students</div>
+        <div class="p-3 border bg-dark-purple">Create Students</div>
       </div>
     </a>
     <a href="{{url_for('admin.student_list')}}" class="text-decoration-none text-center text-info">
     <div class="col">
-      <div class="p-3 border bg-dark">Manage Students</div>
+      <div class="p-3 border bg-dark-purple">Manage Students</div>
     </div>
     </a>
     <a href="" class="text-decoration-none text-center text-info">
@@ -29,6 +29,7 @@
       <div class="p-3 border bg-dark">Create Course</div>
     </div>
     </a>
+    <!--
     <div class="col">
       <div class="p-3 border bg-light">Row column</div>
     </div>
@@ -47,6 +48,7 @@
     <div class="col">
       <div class="p-3 border bg-light">Row column</div>
     </div>
+    -->
   </div>
 </div>
 </div>

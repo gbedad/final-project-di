@@ -4,8 +4,8 @@ from flask import request
 from werkzeug.urls import url_parse
 from app.auth import models
 
-from app.admin import forms
-from app.course import forms
+from app.admin import forms as ad_forms
+from app.course import forms as crs_forms
 from flask.blueprints import Blueprint
 from app import db
 from datetime import datetime, time
@@ -44,8 +44,8 @@ def get_tutor_by_id(tutor_id):
     if current_user.role not in ['superadmin', 'admin']:
         flash('Sorry, you have to be an admin', 'warning')
         return redirect(url_for('auth.login'))
-    status_form = forms.ChangeTutorStatus()
-    interview_form = forms.PlanInterview()
+    status_form = ad_forms.ChangeTutorStatus()
+    interview_form = ad_forms.PlanInterview()
     selected_tutor = models.User.query.filter_by(id=tutor_id).first_or_404()
     tutor_interviews = selected_tutor.my_interviews
 
@@ -102,7 +102,7 @@ def create_student():
         flash('Sorry, you have to be an admin', 'warning')
         return redirect(url_for('auth.login'))
 
-    form = forms.CreateStudentForm()
+    form = ad_forms.CreateStudentForm()
 
     if form.validate_on_submit():
         first_name = form.first_name.data
@@ -152,7 +152,7 @@ def student_list():
 @admin_bp.route('/admin/student/add_subject/<int:student_id>', methods=['GET', 'POST'])
 @login_required
 def add_subject(student_id):
-    form = forms.AddSubjectToStudent()
+    form = ad_forms.AddSubjectToStudent()
     student = models.Students.query.filter_by(id=student_id).first()
     subjects_for_student = []
 
@@ -181,7 +181,7 @@ def add_subject(student_id):
 @admin_bp.route('/admin/student/<int:student_id>/update', methods=['GET', 'POST'])
 @login_required
 def update_student(student_id):
-    form = forms.UpdateStudentForm()
+    form = ad_forms.UpdateStudentForm()
     student = models.Students.query.filter_by(id=student_id).first()
 
     if form.validate_on_submit():
@@ -231,7 +231,7 @@ def delete_subject(subject_id):
 @admin_bp.route('/admin/student/add_availabilities/<int:student_id>', methods=['GET', 'POST'])
 @login_required
 def add_availabilities(student_id):
-    form = forms.AddAvailabilitiesToStudent()
+    form = ad_forms.AddAvailabilitiesToStudent()
     student = models.Students.query.filter_by(id=student_id).first()
 
     days_list = []
@@ -280,15 +280,18 @@ def tutor_detailed_view(tutor_id):
 def search_tutor(student_id):
 
     student_selected = models.Students.query.filter_by(id=student_id).first()
+    for c in student_selected.courses:
+        for i in c.tutor:
+            check_course = (student_id, i.id, c.subject, c.selected_day)
+            #print(student_id, i.id, c.subject)
     tutors = models.User.query.filter_by(role='supervisor')
     filtered_grade = student_selected.grade
     filtered_subjects = [x.subject_name for x in student_selected.student_subjects]
     student_filtered_days = [(y.day_possible, y.day_time_from, y.day_time_to) for y in student_selected.student_availabilities]
 
-    create_course_form = forms.CreateCourseForm()
+    create_course_form = crs_forms.CreateCourseForm()
     create_course_form.student.data = student_selected.id
 
-    print(filtered_subjects, student_filtered_days)
     tutors_list = []
     for tutor in tutors:
 
@@ -298,18 +301,18 @@ def search_tutor(student_id):
         if tutor.tutoring_exp:
             tutor_filtered_days = [(y.day_possible, y.day_time_from, y.day_time_to) for y in
                                    tutor.tutoring_exp.tutor_availabilities]
-            print(tutor_filtered_days)
+            #print(tutor_filtered_days)
             for subj in tutor.tutoring_exp.tutor_subjects:
                 grade_list = get_grade_from_range(subj.grade_from,  subj.grade_to)
                 if subj.subject in filtered_subjects and filtered_grade in grade_list:
                     for availability in student_filtered_days:
-                        print(student_filtered_days)
-                        print(tutor_filtered_days)
+                        #print(student_filtered_days)
+                        #print(tutor_filtered_days)
                         test_days = check_tuple_in_list(tutor, availability, tutor_filtered_days)
-                        print("test_days", test_days)
+                        #print("test_days", test_days)
                         if len(test_days[0]) > 0:
                             tutors_list.append(tutor)
-            print(tutors_list)
+            #print(tutors_list)
 
     create_course_form.student.data = student_id
     create_course_form.tutor.choices = [(tutor.id, f'{tutor.first_name} {tutor.last_name}') for tutor in tutors_list]
@@ -321,14 +324,19 @@ def search_tutor(student_id):
         day = create_course_form.selected_day.data
         start = create_course_form.start_time.data
         end = create_course_form.end_time.data
-        print("student id", stud)
+
         created_course = models.Course(subject=subj, selected_day=day, start_time=start, end_time=end)
-        print(created_course)
+
         selected_tutor = models.User.query.filter_by(id=tut).first()
+        new_course_t = (student_id, selected_tutor.id, subj, day)
+        if new_course_t == check_course:
+            flash('Course already exist for subject/student/tutor', 'danger')
+            return redirect(url_for('course.course_list', student_id=student_selected.id))
         created_course.student.append(student_selected)
         created_course.tutor.append(selected_tutor)
+
         db.session.add(created_course)
-        print(selected_tutor)
+
         try:
 
             db.session.commit()

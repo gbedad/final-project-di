@@ -250,6 +250,10 @@ class Course(db.Model):
     end_time = db.Column(db.String(10))
     status = db.Column(db.String(32), default='created')
 
+    @property
+    def set_course_id(self):
+        return f"{self.student}-{self.tutor}-{self.subject}"
+
     def __repr__(self):
         return f'<Course ID: {self.subject} {self.selected_day}>'
 

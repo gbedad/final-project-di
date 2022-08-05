@@ -7,12 +7,12 @@ Add Availabilities
 
 {% block content %}
 <div class="row mb-4">
-  <div class="col-10 me-0"><h3>{{ legend }}</h3></div>
+  <div class="col-10 me-0"><h3 class="legend-color">{{ legend }}</h3></div>
   {% include 'auth/breadcrumb_user.html' %}
     <a href="{{url_for('admin.student_list')}}" class="text-decoration-none desc">Back to Student List</a>
 </div>
 <hr>
-        <div class="row">
+<div class="row">
             <form action="" method="post">
                 {{ form.hidden_tag() }}
                 <div class="row mb-3">
