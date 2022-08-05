@@ -42,11 +42,9 @@
             </tbody>
         </table>
     </div>
-    <!-- Button trigger modal -->
-    <button type="button" class="btn bg-dark-purple" data-bs-toggle="modal" data-bs-target="#exampleModal">
-      Update this Course
-    </button>
 
+    <!-- Button trigger modal -->
+    <a href="{{url_for('course.course_update', course_id=data.id)}}" class="btn bg-dark-purple" data-bs-toggle="modal" data-bs-target="#exampleModal">Update this Course</a>
 
 </div>
 
@@ -55,21 +53,21 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Create a Course</h5>
+        <h5 class="modal-title" id="exampleModalLabel">Update this Course</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form method="post">
+        <form method="post" novalidate>
             {{ form.hidden_tag() }}
             <div  class="row">
                 <div class="col">
                     <div class="form-outline">
-                        {{ render_field(form.student) }}
+                        <p>{{ student.first_name }} {{ student.last_name }}</p>
                     </div>
                 </div>
                 <div class="col">
                     <div class="form-outline">
-                        {{ render_field(form.tutor) }}
+                        <p>{{ tutor.first_name }} {{ tutor.last_name }}</p>
                     </div>
                 </div>
             </div>
@@ -113,15 +111,10 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 <p> {{ form.submit(class="btn btn-primary btn-block") }}</p>
-<!--                <button type="button" class="btn btn-primary">Create</button>
-                <button type="button" class="btn btn-info">Update</button>
--->
-      </div>
+            </div>
         </form>
       </div>
-
     </div>
   </div>
 </div>

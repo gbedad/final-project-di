@@ -35,6 +35,16 @@ class CreateCourseForm(FlaskForm):
     submit = SubmitField('Create Course')
 
 
+class UpdateCourseForm(FlaskForm):
+    subject = SelectField('Field', coerce=str, choices=SubjectsChoice())
+    selected_day = SelectField('Day', coerce=str, choices=DAYS)
+    start_time = TimeField('Start Time', format='%H:%M', validators=[DataRequired()])
+    end_time = TimeField('End Time', format='%H:%M', validators=[DataRequired()])
+    status = SelectField('Status', coerce=str, choices=COURSE_STATUS)
+
+    submit = SubmitField('Update Course')
+
+
 
 
 
