@@ -47,6 +47,7 @@ li.active > a {
 
 .btn-info {
     background-color: #AFEEEE;
+    color: #005EB8;
 }
 .btn-info:hover {
     background-color: #00A4B4;
@@ -55,6 +56,7 @@ li.active > a {
 
 .bg-dark-purple {
     background-color: #693C5E;
+    color: white;
 }
 
 .legend-color {

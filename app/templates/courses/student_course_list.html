@@ -31,7 +31,8 @@
       <td>{{ course.start_time}}</td>
       <td>{{ course.end_time}}</td>
       <td>{{ course.status}}</td>
-      <td><i class="bi bi-pencil-square desc"></i></td>
+      <td><a href="{{url_for('course.course_update', course_id=course.id)}}"><i class="bi bi-pencil-square desc"></i></a></td>
+      <td><a href="{{url_for('course.course_delete', course_id=course.id)}}"><i class="bi bi-trash desc"></i></a></td>
     </tr>
   {% endfor %}
   </tbody>

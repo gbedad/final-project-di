@@ -1,0 +1,128 @@
+{% extends 'base.html' %}
+
+{% from "_macros.html" import render_field, render_fields, switch_status %}
+
+{% block content %}
+<div class="row mb-4">
+  <div class="col-10 me-0"><h3 class="legend-color">{{ legend }}</h3></div>
+  {% include 'auth/breadcrumb_user.html' %}
+    <a href="{{url_for('admin.student_list')}}" class="text-decoration-none desc">Back to Student List</a>
+</div>
+<hr>
+<div class="container">
+    <div class="row mb-4">
+        <table class="table-sm">
+            <thead>
+                <tr>
+                    <th>Course Id</th>
+                    <th>Student</th>
+                    <th>Tutor</th>
+                    <th>Subject</th>
+                    <th>Day</th>
+                    <th>Start Time</th>
+                    <th>End Time</th>
+                    <th>Course Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{data.id}}</td>
+                    {% for stud in data.student %}
+                    <td>{{stud.first_name}} {{stud.last_name}}</td>
+                    {% endfor %}
+                    {% for tut in data.tutor %}
+                    <td>{{tut.first_name}} {{tut.last_name}}</td>
+                    {% endfor %}
+                    <td>{{data.subject}}</td>
+                    <td>{{data.selected_day}}</td>
+                    <td>{{data.start_time}}</td>
+                    <td>{{data.end_time}}</td>
+                    <td>{{data.status}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <!-- Button trigger modal -->
+    <button type="button" class="btn bg-dark-purple" data-bs-toggle="modal" data-bs-target="#exampleModal">
+      Update this Course
+    </button>
+
+
+</div>
+
+<!-- Modal Create Course -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Create a Course</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form method="post">
+            {{ form.hidden_tag() }}
+            <div  class="row">
+                <div class="col">
+                    <div class="form-outline">
+                        {{ render_field(form.student) }}
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-outline">
+                        {{ render_field(form.tutor) }}
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="form-outline">
+                        {{ render_field(form.selected_day) }}
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-outline">
+                        {{ form.start_time.label(class="form-label desc mb-0") }}<br>
+                        {{ form.start_time(size=10, class="form-control") }}
+                        {% for error in form.start_time.errors %}
+                        <span class="danger">[{{ error }}]</span>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="form-outline">
+                        {{ form.end_time.label(class="form-label desc mb-0") }}<br>
+                        {{ form.end_time(size=10, class="form-control") }}
+                        {% for error in form.end_time.errors %}
+                        <span class="danger">[{{ error }}]</span>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col">
+                    <div class="form-outline">
+                        {{ render_field(form.subject) }}
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="form-outline">
+                        {{ render_field(form.status) }}
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <p> {{ form.submit(class="btn btn-primary btn-block") }}</p>
+<!--                <button type="button" class="btn btn-primary">Create</button>
+                <button type="button" class="btn btn-info">Update</button>
+-->
+      </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>
+{% endblock %}
