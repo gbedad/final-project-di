@@ -18,12 +18,17 @@ admin_bp = Blueprint('admin',  __name__, template_folder='templates', static_fol
 @admin_bp.route('/admin/dashboard')
 @login_required
 def admin_dashboard():
-    print(current_user.role)
     if current_user.role not in ['superadmin', 'admin']:
         flash('Sorry, you have to be an admin', 'warning')
         return redirect(url_for('auth.login'))
 
-    return render_template('admin/admin_dashboard.html', title='Show tutors', legend='Admin Dashboard')
+    students_in_db = db.session.query(models.Students).count()
+    tutors_in_db = models.User.query.filter(models.User.role == 'supervisor').count()
+    courses_created = models.Course.query.filter(models.Course.status == 'created').count()
+    courses_accepted = models.Course.query.filter(models.Course.status == 'accepted').count()
+    courses_total = courses_accepted + courses_created
+
+    return render_template('admin/admin_dashboard.html',tutors=tutors_in_db, students=students_in_db, courses_t=courses_created, courses_a=courses_accepted, total=courses_total, title='Show tutors', legend='Admin Dashboard')
 
 
 @admin_bp.route('/admin/show_tutors')
