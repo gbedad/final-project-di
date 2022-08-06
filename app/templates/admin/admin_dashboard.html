@@ -44,7 +44,7 @@
     <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3 mt-3 mb-3">
       <a href="{{url_for('admin.show_tutors')}}" class="text-decoration-none text-center text-info">
       <div class="col">
-        <div class="p-3 border bg-dark-purple">Manage Tutors</div>
+        <div class="p-3 border bg-secondary">Manage Tutors</div>
       </div>
       </a>
       <a href="{{url_for('admin.create_student')}}" class="text-decoration-none text-center text-info">
@@ -57,9 +57,9 @@
         <div class="p-3 border bg-dark-purple">Manage Students</div>
       </div>
       </a>
-      <a href="" class="text-decoration-none text-center text-info">
+      <a href="{{url_for('admin.show_all_courses')}}" class="text-decoration-none text-center text-info">
       <div class="col">
-        <div class="p-3 border bg-dark">Create Course</div>
+        <div class="p-3 border btn-info">All Course List</div>
       </div>
       </a>
         <!--

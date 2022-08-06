@@ -46,12 +46,12 @@ li.active > a {
 }
 
 .btn-info {
-    background-color: #AFEEEE;
-    color: #005EB8;
-}
-.btn-info:hover {
     background-color: #00A4B4;
     color: white;
+}
+.btn-info:hover {
+    background-color: #AFEEEE;
+    color: #005EB8;
 }
 
 .bg-dark-purple {

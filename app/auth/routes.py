@@ -1,4 +1,4 @@
-from flask import render_template, redirect, url_for, flash
+from flask import render_template, render_template_string, redirect, url_for, flash
 from flask_login import current_user, login_user, logout_user, login_required
 from flask import request
 from werkzeug.urls import url_parse
@@ -336,3 +336,21 @@ def profile_5(user_name):
             db.session.add(upload_id)
         db.session.commit()
     return render_template('auth/profile_5.html', data=user, form=form, legend='My Commitment')
+
+
+@auth_bp.route('/user/<int:tutor_id>/dashboard')
+@login_required
+def tutor_dashboard(tutor_id):
+    tutor_sel = models.User.query.filter_by(id=tutor_id).first()
+    print(tutor_sel)
+    tutor_courses = tutor_sel.courses
+    course_num = len(tutor_courses)
+    courses = models.Course.query.all()
+    my_students = [c.student for c in courses if c.tutor[0] == tutor_sel]
+    my_subjects = [c.subject for c in courses if c.tutor[0] == tutor_sel]
+    my_students_list = set([s[0].id for s in my_students])
+    my_students_num = len(my_students_list)
+    my_subjects_num = len(set(my_subjects))
+    print(my_subjects_num)
+
+    return render_template('auth/tutor_dashboard.html', data=(tutor_sel, course_num, my_students_num, my_subjects_num, tutor_courses), title='Tutor Dashboard', legend=f'{tutor_sel.first_name} {tutor_sel.last_name} dashboard')

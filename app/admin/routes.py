@@ -285,10 +285,14 @@ def tutor_detailed_view(tutor_id):
 def search_tutor(student_id):
 
     student_selected = models.Students.query.filter_by(id=student_id).first()
-    for c in student_selected.courses:
-        for i in c.tutor:
-            check_course = (student_id, i.id, c.subject, c.selected_day)
-            #print(student_id, i.id, c.subject)
+    if student_selected.courses:
+        for c in student_selected.courses:
+            for i in c.tutor:
+                check_course = (student_id, i.id, c.subject, c.selected_day)
+                # print(student_id, i.id, c.subject)
+    else:
+        check_course = None
+
     tutors = models.User.query.filter_by(role='supervisor')
     filtered_grade = student_selected.grade
     filtered_subjects = [x.subject_name for x in student_selected.student_subjects]
@@ -327,16 +331,17 @@ def search_tutor(student_id):
         tut = create_course_form.tutor.data
         subj = create_course_form.subject.data
         day = create_course_form.selected_day.data
-        start = create_course_form.start_time.data
-        end = create_course_form.end_time.data
+        start = create_course_form.start_time.data.strftime('%H:%M')
+        end = create_course_form.end_time.data.strftime('%H:%M')
 
         created_course = models.Course(subject=subj, selected_day=day, start_time=start, end_time=end)
 
         selected_tutor = models.User.query.filter_by(id=tut).first()
         new_course_t = (student_id, selected_tutor.id, subj, day)
-        if new_course_t == check_course:
-            flash('Course already exist for subject/student/tutor', 'danger')
-            return redirect(url_for('course.course_list', student_id=student_selected.id))
+        if check_course is not None:
+            if new_course_t == check_course:
+                flash('Course already exist for subject/student/tutor', 'danger')
+                return redirect(url_for('course.course_list', student_id=student_selected.id))
         created_course.student.append(student_selected)
         created_course.tutor.append(selected_tutor)
 
@@ -352,3 +357,11 @@ def search_tutor(student_id):
             return redirect(url_for('course.course_list', student_id=student_selected.id))
 
     return render_template('admin/adequate_tutor_for_student.html', student=student_selected, data=tutors_list, form=create_course_form, title='Show list of possible tutors', legend=f'Matching Tutor(s) for {student_selected.first_name} {student_selected.last_name}')
+
+
+@admin_bp.route('/admin/courses/show_all')
+@login_required
+def show_all_courses():
+    all_courses = models.Course.query.all()
+
+    return render_template('courses/all_course_list.html', data=all_courses, title ='All Courses', legend='All Courses View')
