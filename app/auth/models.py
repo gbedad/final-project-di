@@ -119,7 +119,7 @@ class Upload(db.Model):
     b3_data = db.Column(db.LargeBinary)
     id_filename = db.Column(db.String(100))
     id_data = db.Column(db.LargeBinary)
-    users = db.relationship('User', backref='upload', lazy='dynamic')
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
 
 class Subjects(db.Model):

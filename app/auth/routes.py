@@ -9,6 +9,7 @@ from app import db
 from datetime import datetime
 from collections import namedtuple
 from app.utils import check_field_validity
+from werkzeug.utils import secure_filename
 
 auth_bp = Blueprint('auth',  __name__, template_folder='templates', static_folder='static')
 
@@ -320,22 +321,56 @@ def profile_4(user_name):
 @login_required
 def profile_5(user_name):
     form = forms.ProfilePage5Form()
-    if form.validate_on_submit():
-        pass
+    cv_uploaded = False
+    b3_uploaded = False
+    id_uploaded = False
     user = models.User.query.filter_by(username=user_name).first_or_404()
+    user_uploads = models.Upload.query.filter_by(user_id=user.id).first()
+    if user_uploads:
+        if user_uploads.cv_filename:
+            cv_uploaded = True
+        if user_uploads.b3_filename:
+            b3_uploaded = True
+        if user_uploads.id_filename:
+            id_uploaded = True
+
     if request.method == 'POST':
+
         cv_file = request.files['cv_file']
         b3_file = request.files['b3_file']
         id_file = request.files['id_file']
-        if cv_file or b3_file or id_file:
-            upload_cv = models.Upload(cv_filename=cv_file.filename, cv_data=cv_file.read())
-            db.session.add(upload_cv)
-            upload_b3 = models.Upload(b3_filename=b3_file.filename, b3_data=b3_file.read())
-            db.session.add(upload_b3)
-            upload_id = models.Upload(id_filename=id_file.filename, b3_data=id_file.read())
-            db.session.add(upload_id)
-        db.session.commit()
-    return render_template('auth/profile_5.html', data=user, form=form, legend='My Commitment')
+
+        if user_uploads:
+            if cv_file:
+                user_uploads.cv_filename = secure_filename(cv_file.filename)
+            elif b3_file:
+                user_uploads.b3_filename = secure_filename(b3_file.filename)
+            elif id_file:
+                user_uploads.id_filename = secure_filename(id_file.filename)
+            try:
+                db.session.commit()
+                flash('File(s) successfully uploaded', 'success')
+                return redirect(url_for('auth.profile_5', user_name=user.username))
+            except:
+                flash('Something wrong happened', 'warning')
+                return redirect(url_for('auth.profile_5', user_name=user.username))
+
+        if user_uploads is None:
+            uploads = models.Upload(cv_filename=cv_file.filename, cv_data=cv_file.read(),
+                                    b3_filename=b3_file.filename, b3_data=b3_file.read(),
+                                    id_filename=id_file.filename, id_data=id_file.read(),
+                                    user_id=user.id)
+
+            db.session.add(uploads)
+            try:
+                db.session.commit()
+                flash('Files successfully uploaded', 'success')
+                return redirect(url_for('auth.profile_5', user_name=user.username))
+            except:
+                flash('Something wrong  happened or one or more files are missing! Try again.', 'warning')
+                return redirect(url_for('auth.profile_5', user_name=user.username))
+
+    return render_template('auth/profile_5.html', data=user, files=user_uploads, form=form, cv=cv_uploaded, b3=b3_uploaded, id=id_uploaded, legend='My Commitment')
 
 
 @auth_bp.route('/user/<int:tutor_id>/dashboard')

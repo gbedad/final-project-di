@@ -15,15 +15,22 @@
     <div class="col">
             <h5 class="mb-4">To finalize the validation process : </h5>
     <div class="row mb-4">
+
         <div class="col">
             <span>Please upload your CV </span>
         </div>
         <div class="col mb-4">
             <input type=file name=cv_file>
-            <input type=submit value=Upload>
         </div>
         <div class="col mb-4">
-            <p>{{ data.upload_id.cv_filename }}</p>
+            <p>{{ files.cv_filename }}</p>
+        </div>
+        <div class="col-1 mb-4">
+            {% if cv %}
+            <i class="bi bi-check-circle text-success"></i>
+            {% else %}
+            <i class="bi bi-circle"></i>
+            {% endif %}
         </div>
         <br>
     </div>
@@ -33,7 +40,16 @@
         </div>
         <div class="col mb-4">
             <input type=file name=b3_file>
-            <input type=submit value=Upload>
+        </div>
+        <div class="col mb-4">
+            <p>{{ files.b3_filename }}</p>
+        </div>
+        <div class="col-1 mb-4">
+            {% if b3 %}
+            <i class="bi bi-check-circle text-success"></i>
+            {% else %}
+            <i class="bi bi-circle"></i>
+            {% endif %}
         </div>
         <br>
     </div>
@@ -43,9 +59,25 @@
         </div>
         <div class="col mb-4">
             <input type=file name=id_file>
-            <input type=submit value=Upload>
+        </div>
+        <div class="col mb-4">
+            <p>{{ files.id_filename }}</p>
+        </div>
+        <div class="col-1 mb-4">
+            {% if id %}
+            <i class="bi bi-check-circle text-success"></i>
+            {% else %}
+            <i class="bi bi-circle"></i>
+            {% endif %}
         </div>
         <br>
+        <div class="row">
+            <div class="col-6"></div>
+            <div class="col-4">
+                <input class="bg-dark-purple" type=submit value=Upload>
+            </div>
+        </div>
+
     </div>
     </div>
 </div>
