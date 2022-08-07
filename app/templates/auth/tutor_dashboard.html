@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% from "_macros.html" import render_field, render_fields, switch_status %}
+
+{% block content %}
+<div class="row mb-4">
+  <div class="col-10 me-0"><h3 class="legend-color">{{ legend }}</h3></div>
+  {% include 'auth/breadcrumb_user.html' %}
+</div>
+<hr>
+  <div class="container d-flex flex-column justify-content-center align-center">
+    <div class="row row-cols-1 row-cols-lg-5 g-2 g-lg-3">
+      <div class="col d-flex flex-column align-items-center" >
+        <span class="info-circle-legend">Course Number</span>
+        <div class="info-circle">
+          <span class="info-circle-text" >{{ data[1] }}</span>
+        </div>
+      </div>
+      <div class="col d-flex flex-column align-items-center" >
+        <span class="info-circle-legend">Students Number</span>
+        <div class="info-circle">
+          <span class="info-circle-text" >{{data[2]}}</span>
+        </div>
+      </div>
+      <div class="col d-flex flex-column align-items-center" >
+        <span class="info-circle-legend">Subjects Number</span>
+        <div class="info-circle">
+          <span class="info-circle-text" >{{data[3]}}</span>
+        </div>
+      </div>
+    </div>
+    <hr>
+    <div class="row">
+      <h5>My Courses</h5>
+      <div class="col">
+        <table class="table table-sm">
+          <thead>
+            <tr>
+              <th>Student</th>
+              <th>Subject</th>
+              <th>Day</th>
+              <th>start Time</th>
+              <th>End Time</th>
+              <th>Status</th>
+            </tr>
+
+          </thead>
+          <tbody>
+          {% for course in data[4] %}
+            <tr>
+              {% for stud in course.student %}
+              <td>{{stud.first_name}} {{stud.last_name}}</td>
+              {% endfor %}
+              <td>{{course.subject}}</td>
+              <td>{{course.selected_day}}</td>
+              <td>{{course.start_time}}</td>
+              <td>{{course.end_time}}</td>
+              <td>{{course.status}}</td>
+            </tr>
+          {% endfor %}
+
+          </tbody>
+        </table>
+      </div>
+
+      </div>
+  </div>
+
+{% endblock %}

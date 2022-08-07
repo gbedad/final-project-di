@@ -1,0 +1,46 @@
+<div class="row">
+    <form action="" method="post">
+        {{ subjects_form.hidden_tag() }}
+        <div class="row mb-0">
+            <div class="col-2">
+           {{ render_field(subjects_form.subject)}}
+        </div>
+            <div class="col-2">
+                {{render_field(subjects_form.grade_from)}}
+            </div>
+            <div class="col-2">
+                {{render_field(subjects_form.grade_to)}}
+            </div>
+            <div class="col">
+                <div class="mb-0 mt-1 desc">Action</div>
+                <div> {{ subjects_form.submit(class="btn btn-info text-light") }}</div>
+            </div>
+    </form>
+</div>
+
+<div class="row mb-0">
+    <div class="col d-flex justify-content-start">
+        <div class="col-5" >
+        <div class="row  g-1 g-lg-1">
+        <table>
+            <thead>
+                <tr>
+                <th class="desc">Subject</th>
+                <th class="desc">Grade from</th>
+                <th class="desc">Grade to</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for subj in data.tutoring_exp.tutor_subjects %}
+            <tr>
+                <td class="desc">{{ subj.subject }}</td>
+                <td class="desc">{{ subj.grade_from}}</td>
+                <td class="desc">{{ subj.grade_to}}</td>
+                <td class="desc"><a href="{{url_for('auth.delete_subject', subject_id=subj.id)}}"><i class="bi bi-trash ml-4 text-danger"></i></a></td>
+            </tr>
+            {% endfor  %}
+            </tbody>
+        </table>
+        </div>
+    </div>
+</div>

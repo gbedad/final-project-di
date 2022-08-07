@@ -1,0 +1,55 @@
+
+<div class="row">
+    <form action="" method="post">
+        {{ avail_form.hidden_tag() }}
+        <div class="row mb-0">
+            <div class="col-2">
+           {{ render_field(avail_form.day_possible)}}
+        </div>
+            <div class="col-2">
+           {{ avail_form.day_time_from.label(class="form-label desc mb-0") }}<br>
+                {{ avail_form.day_time_from(size=16, class="form-control") }}
+                {% for error in avail_form.day_time_from.errors %}
+                <span class="danger">[{{ error }}]</span>
+            {% endfor %}
+        </div>
+            <div class="col-2">
+                {{ avail_form.day_time_to.label(class="form-label desc mb-0") }}<br>
+                {{ avail_form.day_time_to(size=16, class="form-control") }}
+                {% for error in avail_form.day_time_to.errors %}
+                <span class="danger">[{{ error }}]</span>
+                {% endfor %}
+            </div>
+            <div class="col">
+                <div class="mb-0 mt-1 desc">Action</div>
+                <div> {{ avail_form.submit(class="btn btn-info text-light") }}</div>
+            </div>
+    </form>
+</div>
+
+<div class="row mb-0">
+    <div class="col d-flex justify-content-start">
+        <div class="col-5" >
+        <div class="row  g-1 g-lg-1">
+        <table>
+            <thead>
+                <tr>
+                <th class="desc">Day</th>
+                <th class="desc">From</th>
+                <th class="desc">To</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for avail in data.tutoring_exp.tutor_availabilities %}
+            <tr>
+                <td class="desc">{{ avail.day_possible }}</td>
+                <td class="desc">{{ avail.day_time_from}}</td>
+                <td class="desc">{{ avail.day_time_to}}</td>
+                <td class="desc"><a href="{{url_for('auth.delete_availability', availability_id=avail.id)}}"><i class="bi bi-trash ml-4 text-danger"></i></a></td>
+            </tr>
+            {% endfor  %}
+            </tbody>
+        </table>
+        </div>
+    </div>
+</div>

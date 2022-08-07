@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% from "_macros.html" import render_field, render_fields, switch_status %}
+
+{% block title %}
+Create Student
+{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+  <div class="col-10 me-0"><h3 class="legend-color">{{ legend }}</h3></div>
+  {% include 'auth/breadcrumb_user.html' %}
+</div>
+<hr>
+
+<div class="row mb-2">
+  <div class="col-12 d-flex justify-content-center">
+    <table class="table table-hover">
+      <thead>
+    <tr>
+      <th scope="col">First</th>
+      <th scope="col">Last</th>
+      <th scope="col">Phone</th>
+      <th scope="col">Email</th>
+      <th scope="col">Grade</th>
+      <th scope="col">Modality</th>
+      <th scope="col">Update</th>
+      <th scope="col">Subjects</th>
+      <th scope="col">When</th>
+      <th scope="col">Search</th>
+
+    </tr>
+  </thead>
+      <tbody>
+  {% for student in data %}
+    <tr>
+      <td>{{ student.first_name }}</td>
+      <td>{{ student.last_name }}</td>
+      <td>{{ student.phone }}</td>
+      <td>{{ student.email }}</td>
+      <td>{{ student.grade }}</td>
+      <td>{{ student.modality }}</td>
+      <td><a href="{{url_for('admin.update_student', student_id=student.id)}}"><i class="bi bi-pencil-square text-decoration-none desc"></i></a></td>
+      <td><a href="{{url_for('admin.add_subject', student_id=student.id)}}"><i class="bi bi-file-earmark-plus text-decoration-none desc"></i></a></td>
+      <td><a href="{{url_for('admin.add_availabilities', student_id=student.id)}}"><i class="bi bi-calendar-day text-decoration-none desc"></i></a></td>
+      <td><a href="{{url_for('admin.search_tutor', student_id=student.id)}}"><i class="bi bi-binoculars text-decoration-none desc"></i></a></td>
+    </tr>
+  {% endfor %}
+  </tbody>
+    </table>
+  </div>
+</div>
+
+{% endblock %}

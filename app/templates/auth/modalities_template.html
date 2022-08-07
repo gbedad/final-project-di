@@ -1,0 +1,39 @@
+
+
+<div class="row">
+     <form action="" method="post">
+         {{ mod_form.hidden_tag() }}
+         <div class="row mb-0">
+            <div class="col-7">
+               {{ render_field(mod_form.modality)}}
+            </div>
+             <div class="col-1">
+                <div class="mb-0 mt-1 desc">Action</div>
+                <div> {{ mod_form.submit(class="btn btn-info text-light") }}</div>
+            </div>
+         </div>
+     </form>
+</div>
+
+<div class="row mb-2">
+    <div class="col d-flex justify-content-around">
+        <div class="col" >
+            <table>
+                <thead>
+                    <tr>
+                    <th class="desc">Modality</th>
+                    <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for mod in current_user.tutoring_exp.tutor_modalities %}
+                    <tr>
+                        <td class="desc">{{ mod.modality }}</td>
+                        <td></td>
+                        <td class="desc"><a href="{{url_for('auth.delete_modality', modality_id=mod.id)}}"><i class="bi bi-trash ml-4 text-danger"></i></a></td>
+                    </tr>
+                {% endfor  %}
+                </tbody>
+            </table>
+    </div>
+</div>

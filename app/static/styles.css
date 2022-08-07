@@ -1,0 +1,98 @@
+body {
+    margin: 0 auto;
+    padding: 0;
+    background: #314478;
+}
+.container {
+    background:#E5E1E6;
+    padding: 10px;
+}
+a.navbar-brand {
+    font-family: 'Caveat', cursive;
+    color: purple;
+    font-size: 2em;
+    padding:  0;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+.login-register {
+  max-width: 400px;
+}
+
+li.active > a {
+	background-color: #333;
+	color: #fff;
+}
+.table-dark {
+    color: cyan;
+}
+
+.desc {
+    font-size:0.8rem;
+    color: purple
+}
+
+.btn-primary {
+    background-color: #693C5E;
+}
+.btn-primary:hover {
+    background-color: #9873AC;
+    color: white;
+}
+
+.btn-primary:visited {
+    background-color: #A6517E;
+    color: white;
+}
+
+.btn-info {
+    background-color: #00A4B4;
+    color: white;
+}
+.btn-info:hover {
+    background-color: #AFEEEE;
+    color: #005EB8;
+}
+
+.bg-dark-purple {
+    background-color: #693C5E;
+    color: white;
+}
+
+.bg-light-blue-nav {
+    background-color: #C8E9E9;
+}
+
+.nav-text-color {
+    color: #005EB8;
+}
+
+.legend-color {
+    color: #005EB8;
+}
+
+.info-circle {
+    border: 2px solid #005EB8;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.info-circle-text {
+    color: #005EB8;
+    font-size: 3rem;
+    font-weight: 600;
+}
+
+.info-circle-legend {
+    color: #693C5E;
+    font-size: 0.8rem;
+}
+
+p {
+    margin-bottom: 0px;
+}

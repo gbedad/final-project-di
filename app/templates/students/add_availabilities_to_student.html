@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% from "_macros.html" import render_field, render_field_wo_label, render_fields, switch_status %}
+
+{% block title %}
+Add Availabilities
+{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+  <div class="col-10 me-0"><h3 class="legend-color">{{ legend }}</h3></div>
+  {% include 'auth/breadcrumb_user.html' %}
+    <a href="{{url_for('admin.student_list')}}" class="text-decoration-none desc">Back to Student List</a>
+</div>
+<hr>
+<div class="row">
+            <form action="" method="post">
+                {{ form.hidden_tag() }}
+                <div class="row mb-3">
+                <div class="col-2">
+               {{ render_field(form.day_possible)}}
+            </div>
+                <div class="col-2">
+               {{ form.day_time_from.label(class="form-label desc mb-0") }}<br>
+                    {{ form.day_time_from(size=64, class="form-control") }}
+                    {% for error in form.day_time_from.errors %}
+                    <span class="danger">[{{ error }}]</span>
+                {% endfor %}
+            </div>
+                <div class="col-2">
+               {{ form.day_time_to.label(class="form-label desc mb-0") }}<br>
+                    {{ form.day_time_to(size=64, class="form-control") }}
+                    {% for error in form.day_time_to.errors %}
+                    <span class="danger">[{{ error }}]</span>
+                {% endfor %}
+            </div>
+                <div class="col-2">
+                <div class="mb-0 mt-1 desc">Action</div>
+                <div> {{ form.submit(class="btn btn-info text-light") }}</div>
+            </div>
+            </form>
+        </div>
+
+<hr>
+<div class="row mb-2">
+    <div class="col d-flex justify-content-start">
+        <div class="col-6" >
+        <div class="row  g-1 g-lg-3">
+        <table>
+            <thead>
+                <tr>
+                <th>Day</th>
+                <th>From</th>
+                <th>To</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for avail in student.student_availabilities %}
+            <tr>
+                <td>{{ avail.day_possible }}</td>
+                <td>{{ avail.day_time_from}}</td>
+                <td>{{ avail.day_time_to}}</td>
+                <td><a href="{{url_for('admin.delete_availability', availability_id=avail.id)}}"><i class="bi bi-trash ml-4 text-danger"></i></a></td>
+            </tr>
+            {% endfor  %}
+            </tbody>
+        </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

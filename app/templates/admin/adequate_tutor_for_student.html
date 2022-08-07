@@ -1,0 +1,208 @@
+{% extends 'base.html' %}
+{% from "_macros.html" import render_field, render_fields, switch_status %}
+
+{% block content %}
+<div class="row mb-4">
+  <div class="col-10 me-0"><h3 class="legend-color">{{ legend }}</h3></div>
+  {% include 'auth/breadcrumb_user.html' %}
+    <a href="{{url_for('admin.student_list')}}" class="text-decoration-none desc">Back to Student List</a>
+</div>
+<hr>
+<div class="row mb-3">
+  <div class="col-4">
+      <div class="card" style="width: 18rem;">
+        <div class="card-body">
+    <h5 class="card-title"><span class="desc mb-0">Student</span><br>{{student.first_name}} {{student.last_name}}</h5>
+    <h6 class="card-subtitle mb-2 text-muted"><span class="desc mb-0">Grade</span><br>{{student.grade}}</h6>
+      <table class="table table-sm desc">
+        <thead>
+           <tr>
+              <th scope="col">Subject</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for subject in student.student_subjects %}
+          <tr>
+            <td>{{subject.subject_name}}</td
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    <table class="table table-sm desc">
+        <thead>
+           <tr>
+              <th scope="col">Day</th>
+              <th scope="col">From</th>
+              <th scope="col">To</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for avail in student.student_availabilities %}
+          <tr>
+            <td>{{avail.day_possible}}</td>
+            <td>{{avail.day_time_from}}</td>
+            <td>{{avail.day_time_to}}</td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    <p><span class="desc mb-0">Modality</span><br>{{student.modality}}</p>
+    <a href="{{url_for('admin.search_tutor', student_id=student.id)}}" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Create Course</a>
+    <a href="{{url_for('course.course_list', student_id=student.id)}}" class="btn btn-info">Course List</a>
+  </div>
+        </div>
+
+  </div>
+
+  <div class="col-8">
+    <div class="row row-cols-1 row-cols-md-2 g-4">
+        {% if data ==[] %}
+        <div class="card" style="width: 18rem;">
+            <i class="bi bi-emoji-frown text-warning text-center fs-1"></i>
+            <div class="card-body">
+            <p class="card-text">There is no Tutor matching requests of {{student.first_name}} {{student.last_name}}. Check with tutors and student if they can change availabilities for days and hours.</p>
+        </div>
+    </div>
+        <p></p>
+        {% else %}
+
+      {% for tutor in data %}
+        <div class="col">
+        <div class="card h-100" style="width: 18rem;">
+            <div class="card-body">
+            <h5 class="card-title">Tutor <i class="bi bi-emoji-smile ms-3 text-success"></i></h5>
+            <h6 class="card-subtitle mb-2 text-muted"><span class="desc mb-0">Name</span><br>{{ tutor.first_name }} {{ tutor.last_name }}</h6>
+                <table class="table table-sm desc">
+        <thead>
+           <tr>
+              <th scope="col">Subject</th>
+              <th scope="col">Grade From</th>
+              <th scope="col">Grade To</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for subj in tutor.tutoring_exp.tutor_subjects %}
+          <tr>
+            <td>{{subj.subject}}</td>
+            <td>{{subj.grade_from}}</td>
+            <td>{{subj.grade_to}}</td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    {% if tutor %}
+      <table class="table table-sm desc">
+        <thead>
+           <tr>
+              <th scope="col">Day</th>
+              <th scope="col">From</th>
+              <th scope="col">To</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for daytime in tutor.tutoring_exp.tutor_availabilities %}
+          <tr>
+            <td>{{daytime.day_possible}}</td>
+            <td>{{daytime.day_time_from}}</td>
+            <td>{{daytime.day_time_to}}</td>
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+      {% endif %}
+            <div class="card-footer">
+                <a href="{{url_for('course.tutor_course_list', tutor_id=tutor.id)}}" class="btn btn-info">Course List</a>
+            </div>
+
+          </div>
+        </div>
+            </div>
+        {% endfor %}
+        {% endif %}
+
+    </div>
+  </div>
+</div>
+
+
+
+
+<!-- Modal Create Course -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Create a Course</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form method="post">
+            {{ form.hidden_tag() }}
+            <div  class="row">
+                <div class="col">
+                    <div class="form-outline">
+                        {{ render_field(form.student) }}
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-outline">
+                        {{ render_field(form.tutor) }}
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="form-outline">
+                        {{ render_field(form.selected_day) }}
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-outline">
+                        {{ form.start_time.label(class="form-label desc mb-0") }}<br>
+                        {{ form.start_time(size=10, class="form-control") }}
+                        {% for error in form.start_time.errors %}
+                        <span class="danger">[{{ error }}]</span>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="form-outline">
+                        {{ form.end_time.label(class="form-label desc mb-0") }}<br>
+                        {{ form.end_time(size=10, class="form-control") }}
+                        {% for error in form.end_time.errors %}
+                        <span class="danger">[{{ error }}]</span>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col">
+                    <div class="form-outline">
+                        {{ render_field(form.subject) }}
+                    </div>
+                </div>
+
+                <div class="col">
+                    <div class="form-outline">
+                        {{ render_field(form.status) }}
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <p> {{ form.submit(class="btn btn-primary btn-block") }}</p>
+<!--                <button type="button" class="btn btn-primary">Create</button>
+                <button type="button" class="btn btn-info">Update</button>
+-->
+      </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+
+

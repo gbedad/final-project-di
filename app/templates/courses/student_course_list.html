@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% from "_macros.html" import render_field, render_fields, switch_status %}
+
+{% block content %}
+<div class="row mb-4">
+  <div class="col-10 me-0"><h3 class="legend-color">{{ legend }}</h3></div>
+  {% include 'auth/breadcrumb_user.html' %}
+    <a href="{{url_for('admin.student_list')}}" class="text-decoration-none desc">Back to Student List</a>
+</div>
+<hr>
+<table class="table table-sm">
+  <thead>
+    <tr>
+      <th>Tutor</th>
+      <th>Subject</th>
+      <th>Day</th>
+      <th>Start Time</th>
+      <th>End Time</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for course in data %}
+    <tr>
+      {% for tutor in course.tutor %}
+      <td>{{ tutor.first_name}} {{tutor.last_name}}</td>
+      {% endfor %}
+      <td>{{ course.subject}}</td>
+      <td>{{ course.selected_day}}</td>
+      <td>{{ course.start_time}}</td>
+      <td>{{ course.end_time}}</td>
+      <td>{{ course.status}}</td>
+      <td><a href="{{url_for('course.course_update', course_id=course.id)}}"><i class="bi bi-pencil-square desc"></i></a></td>
+      <td><a href="{{url_for('course.course_delete', course_id=course.id)}}"><i class="bi bi-trash desc"></i></a></td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% from "_macros.html" import render_field, render_fields, switch_status %}
+
+{% block content %}
+<div class="row mb-4">
+  <div class="col-10 me-0"><h3 class="legend-color">{{ legend }}</h3></div>
+  {% include 'auth/breadcrumb_user.html' %}
+</div>
+<hr>
+<div  class="table-responsive">
+<table class="table table-hover">
+  <thead>
+    <tr style="font-size:0.8rem">
+      <th scope="col" >First</th>
+      <th scope="col">Last</th>
+      <th scope="col">Handle</th>
+      <th scope="col">Email</th>
+      <th scope="col">Phone</th>
+      <th scope="col">Birth Date</th>
+      <th scope="col">Source</th>
+      <th scope="col" class="col-1">From</th>
+      <th scope="col" class="col-1">To</th>
+      <th scope="col">Eng.</th>
+      <th scope="col" class="col-2">Mods.</th>
+      <th scope="col">Status</th>
+      <th scope="col">Select</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for tutor in data %}
+
+    <tr style="font-size:0.8rem">
+
+      <td >{{tutor.first_name}}</td>
+      <td>{{tutor.last_name}}</td>
+      <td>{{tutor.username}}
+      <td>{{tutor.email}}</td>
+      <td>{{tutor.my_info.phone}}</td>
+      <td>{{tutor.my_info.birth_date}}</td>
+      <td>{{tutor.more.inquiry}}</td>
+      <td>{{tutor.tutoring_exp.start_date}}</td>
+      <td>{{tutor.tutoring_exp.end_date}}</td>
+      <td>{{tutor.tutoring_exp.engagement}}</td>
+      <td>
+        {% for mod in tutor.tutoring_exp.tutor_modalities %}
+        <p class="mb-0">{{mod.modality}}</p>
+        {% endfor %}
+      </td>
+      <td>{{switch_status(tutor.status)}}</td>
+      <td><a href="{{url_for('admin.get_tutor_by_id', tutor_id=tutor.id)}}"><i class="bi bi-gear-fill text-decoration-none text-info"></i></a></td>
+
+    </tr>
+
+  {% endfor %}
+  </tbody>
+</table>
+</div>
+{% endblock %}

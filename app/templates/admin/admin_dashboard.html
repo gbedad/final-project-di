@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% from "_macros.html" import render_field, render_fields, switch_status %}
+
+{% block content %}
+<div class="row mb-4">
+  <div class="col-10 me-0"><h3 class="legend-color">{{ legend }}</h3></div>
+  {% include 'auth/breadcrumb_user.html' %}
+</div>
+<hr>
+  <div class="container d-flex flex-column justify-content-center align-center">
+    <div class="row row-cols-1 row-cols-lg-5 g-2 g-lg-3">
+      <div class="col d-flex flex-column align-items-center" >
+        <span class="info-circle-legend">Tutor Number</span>
+        <div class="info-circle">
+          <span class="info-circle-text" >{{tutors}}</span>
+        </div>
+      </div>
+      <div class="col d-flex flex-column align-items-center" >
+        <span class="info-circle-legend">Students Number</span>
+        <div class="info-circle">
+          <span class="info-circle-text" >{{students}}</span>
+        </div>
+      </div>
+      <div class="col d-flex flex-column align-items-center" >
+        <span class="info-circle-legend">Courses created</span>
+        <div class="info-circle">
+          <span class="info-circle-text" >{{courses_t}}</span>
+        </div>
+      </div>
+      <div class="col d-flex flex-column align-items-center" >
+        <span class="info-circle-legend">Courses Accepted</span>
+        <div class="info-circle">
+          <span class="info-circle-text" >{{courses_a}}</span>
+        </div>
+      </div>
+      <div class="col d-flex flex-column align-items-center">
+          <div class="info-circle-legend">Total</div>
+          <div class="info-circle bg-light z-2">
+            <span class="info-circle-text text-success" >{{total}}</span>
+          </div>
+      </div>
+    </div>
+    <hr>
+    <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3 mt-3 mb-3">
+      <a href="{{url_for('admin.show_tutors')}}" class="text-decoration-none text-center text-info">
+      <div class="col">
+        <div class="p-3 border bg-secondary">Manage Tutors</div>
+      </div>
+      </a>
+      <a href="{{url_for('admin.create_student')}}" class="text-decoration-none text-center text-info">
+        <div class="col">
+          <div class="p-3 border bg-dark-purple">Create Students</div>
+        </div>
+      </a>
+      <a href="{{url_for('admin.student_list')}}" class="text-decoration-none text-center text-info">
+      <div class="col">
+        <div class="p-3 border bg-dark-purple">Manage Students</div>
+      </div>
+      </a>
+      <a href="{{url_for('admin.show_all_courses')}}" class="text-decoration-none text-center text-info">
+      <div class="col">
+        <div class="p-3 border btn-info">All Course List</div>
+      </div>
+      </a>
+        <!--
+        <div class="col">
+          <div class="p-3 border bg-light">Row column</div>
+        </div>
+        <div class="col">
+          <div class="p-3 border bg-light">Row column</div>
+        </div>
+        <div class="col">
+          <div class="p-3 border bg-light">Row column</div>
+        </div>
+        <div class="col">
+          <div class="p-3 border bg-light">Row column</div>
+        </div>
+        <div class="col">
+          <div class="p-3 border bg-light">Row column</div>
+        </div>
+        <div class="col">
+          <div class="p-3 border bg-light">Row column</div>
+        </div>
+        -->
+      </div>
+  </div>
+
+{% endblock %}
