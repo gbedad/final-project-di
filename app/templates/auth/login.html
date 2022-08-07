@@ -31,23 +31,22 @@ Login
 
     <!-- 2 column grid layout for inline styling -->
     <div class="row mb-4">
-    <div class="col d-flex justify-content-center">
-      <!-- Checkbox -->
+        <div class="col">
+            <p class="col" >{{ form.submit(class="btn btn-primary btn-block mb-4") }}</p>
+        </div>
 
+        <small class="col">
+          <!-- Simple link -->
+          <a href="{{ url_for('auth.reset_password_request') }}" class="legend-color">Forgot password?</a>
+        </small>
     </div>
-
-    <div class="col">
-      <!-- Simple link -->
-      <a href="{{ url_for('auth.reset_password_request') }}">Forgot password?</a>
-    </div>
-  </div>
 
     <!-- Submit button -->
-    <p class="col" >{{ form.submit(class="btn btn-primary btn-block mb-4") }}</p>
+
 
       <!-- Register buttons -->
       <div class="text-center">
-        <p>Not a member? <a href="{{url_for('auth.register')}}">Register</a></p>
+        <p class="desc">Not a member? <a href="{{url_for('auth.register')}}" class="legend-color">Register</a></p>
       </div>
     </form>
     </div>
