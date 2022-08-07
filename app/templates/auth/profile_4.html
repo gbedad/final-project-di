@@ -17,19 +17,20 @@
         <div class="col-5">
             <div>
                 <span class="fw-lighter desc">Scheduled: </span><span>{{data.my_interviews.interview_date}} at {{data.my_interviews.interview_time}}</span><br>
-                <span class="fw-lighter desc">With: </span><span>{{data.my_interviews.interviewer}}</span>
+                <span class="fw-lighter desc">With: </span><span>{{data.my_interviews.interviewer}}</span><br>
+                <span class="fw-lighter desc">Message: </span><p>{{data.my_interviews.message}}</p>
             </div>
         </div>
         <div class="col-1">
             <div class="col">
                 <span>Accept?</span><br>
-                <form method="'post">
+                <!--<form method="'post">-->
                     {{ form.hidden_tag() }}
                     <div class="form-check">
                         {{ form.is_accepted() }}
                     </div>
-                    <p>{{form.submit()}}</p>
-                </form>
+                  <!--  <p>{{form.submit()}}</p>
+                </form>-->
             </div>
         </div>
         <div class="col-4">
@@ -44,7 +45,7 @@
                     </div>
                     <div class="col">
                         <div class="row">Done</div>
-                        <div class="row">{{show_icon('Yes') if data.my_interviews.message else show_icon('Not Yet') }}</div>
+                        <div class="row">{{show_icon('Yes') if data.my_interviews.is_done else show_icon('Not Yet') }}</div>
                     </div>
                 </div>
         </div>
@@ -52,7 +53,7 @@
 
 
     <hr>
-        <div class="row mb-2">
+       <!-- <div class="row mb-2">
         <div class="col-2">Interview 2</div>
 
         <div class="col-5">

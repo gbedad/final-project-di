@@ -165,3 +165,15 @@ class AddSubjectGradesToTutor(FlaskForm):
         subject_sel = SubjectsGrades.query.filter_by(subject=self.subject.data).filter_by(user_subjects_owner=Tutoring.id).first()
         if subject_sel is not None:
             raise ValidationError('Subject already selected.')"""
+
+
+class ResetPasswordRequestForm(FlaskForm):
+    email = StringField('Email', validators=[DataRequired(), Email()])
+    submit = SubmitField('Request Password Reset')
+
+
+class ResetPasswordForm(FlaskForm):
+    password = PasswordField('Password', validators=[DataRequired()])
+    password2 = PasswordField(
+        'Repeat Password', validators=[DataRequired(), EqualTo('password')])
+    submit = SubmitField('Request Password Reset')

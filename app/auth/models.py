@@ -1,9 +1,12 @@
 import datetime
 
-from app import db, login_manager
+from app import db, login_manager, flask_app
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 import app.course.models as mod
+
+import time
+import jwt
 
 
 @login_manager.user_loader
@@ -55,6 +58,33 @@ class User(UserMixin, db.Model):
 
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
+
+    def get_reset_password_token(self, expires_in=600):
+        timeout = time.time() + expires_in
+        payload = {
+            'reset_password': self.id,
+            'exp': timeout
+        }
+
+        # Get the secret key from config
+        secret_key = flask_app.config['SECRET_KEY']
+
+        # Create the token
+        token = jwt.encode(payload, secret_key, algorithm="HS256")
+
+        # Turn it to string
+        s_token = token
+
+        return s_token
+
+    @staticmethod
+    def verify_reset_password_token(token):
+        try:
+            id = jwt.decode(token, flask_app.config['SECRET_KEY'],
+                            algorithms=['HS256'])['reset_password']
+        except:
+            return
+        return User.query.get(id)
 
     def __repr__(self):
         return f'<User : {self.username}>'
@@ -149,7 +179,8 @@ class Interviews(db.Model):
     interview_time = db.Column(db.String(32))
     interviewer = db.Column(db.String(32))
     is_accepted = db.Column(db.Boolean)
-    message = db.Column(db.String(500))
+    message = db.Column(db.String(100))
+    is_done = db.Column(db.String(500))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), unique=True)
 
     def accepted(self):
@@ -161,7 +192,7 @@ class Interviews(db.Model):
             return True
 
     def done(self):
-        if self.message is not None:
+        if self.is_done is not None:
             return True
 
 

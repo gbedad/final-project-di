@@ -3,7 +3,7 @@ from config import Config
 from flask_migrate import Migrate
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
-
+import flask_mail
 
 import os
 
@@ -18,7 +18,17 @@ flask_app.config.from_object(CONFIG_TYPE)
 flask_app.config.from_object(Config)
 flask_app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
+flask_app.config["MAIL_SERVER"] = 'smtp.gmail.com'
+flask_app.config["MAIL_PORT"] = 587
+flask_app.config["MAIL_USE_TLS"] = True
+flask_app.config["MAIL_USE_SSL"] = False
+flask_app.config["MAIL_USERNAME"] = os.getenv("MAIL_USERNAME", None)
+flask_app.config["MAIL_PASSWORD"] = os.getenv("MAIL_PASSWORD", None)
+
+
 migrate = Migrate()
+
+mail = flask_mail.Mail(flask_app)
 
 login_manager = LoginManager()
 login_manager.init_app(flask_app)

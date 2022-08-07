@@ -59,6 +59,14 @@ li.active > a {
     color: white;
 }
 
+.bg-light-blue-nav {
+    background-color: #C8E9E9;
+}
+
+.nav-text-color {
+    color: #005EB8;
+}
+
 .legend-color {
     color: #005EB8;
 }
@@ -83,4 +91,8 @@ li.active > a {
 .info-circle-legend {
     color: #693C5E;
     font-size: 0.8rem;
+}
+
+p {
+    margin-bottom: 0px;
 }

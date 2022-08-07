@@ -33,14 +33,12 @@ Login
     <div class="row mb-4">
     <div class="col d-flex justify-content-center">
       <!-- Checkbox -->
-      <div class="form-check">
-        {{ form.remember_me() }} {{ form.remember_me.label }}
-      </div>
+
     </div>
 
     <div class="col">
       <!-- Simple link -->
-      <a href="#!">Forgot password?</a>
+      <a href="{{ url_for('auth.reset_password_request') }}">Forgot password?</a>
     </div>
   </div>
 

@@ -1,5 +1,26 @@
 {% extends 'base.html' %}
+{% from "_macros.html" import progress_status %}
 
 {% block content %}
   <h1>Hi, {{ current_user.username }}!</h1>
+
+{% if current_user.role == 'supervisor' %}
+  <h5>Completion of your Profile</h5>
+  <div class="progress">
+    {{progress_status(current_user.status)}}
+  </div>
+    {% if current_user.my_interviews.proposed and not current_user.my_interviews.is_accepted %}
+      <p class="legend-color">You have an interview planned on {{current_user.my_interviews.interview_date}} at {{current_user.my_interviews.interview_time}} with {{current_user.my_interviews.interviewer}}!</p>
+      <p class="desc">Please go to your Profile and My Interviews section to see details and confirm with checkbox.</p>
+    {% endif %}
+{% elif current_user.role in ['admin', 'superadmin'] and num > 0 %}
+<p class="legend-color">{{num}} tutor(s) have registered on the app. Thereafter, you  can find the list:</p>
+    <ul>
+    {% for tutor in data %}
+      <li><span  class="desc">Username: </span>{{tutor.username}}, <span class="desc">Email: </span>{{tutor.email}}</li>
+    {% endfor %}
+    </ul>
+
+{% endif  %}
+
 {% endblock %}

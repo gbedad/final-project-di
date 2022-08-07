@@ -4,6 +4,7 @@ from flask import request
 from werkzeug.urls import url_parse
 from app.auth import models
 from app.auth import forms
+from app.helpers import email
 from flask.blueprints import Blueprint
 from app import db
 from datetime import datetime
@@ -60,15 +61,36 @@ def register():
     return render_template('auth/register.html', form=form, legend='Welcome to signup page')
 
 
-# TODO forgot and reset password features
-@auth_bp.route('/reset_request_password')
-def reset_request():
-    return render_template('auth/reset_request_password.html', legend='Request Reset Password')
+@auth_bp.route('/reset_password_password', methods=['GET', 'POST'])
+def reset_password_request():
+    if current_user.is_authenticated:
+        return redirect(url_for('auth.index'))
+    form = forms.ResetPasswordRequestForm()
+    if form.validate_on_submit():
+        user = models.User.query.filter_by(email=form.email.data).first()
+        if user:
+            email.send_password_reset_email(user)
+        flash('Check your email for the instructions to reset your password', 'info')
+        return redirect(url_for('auth.login'))
+    return render_template('auth/reset_password_request.html', form=form, legend='Request Reset Password')
 
 
-@auth_bp.route('/reset_password')
-def reset_password():
-    return render_template('auth/reset_password.html', legend='Reset Password')
+@auth_bp.route('/reset_password/<token>', methods=['GET', 'POST'])
+def reset_password(token):
+
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
+
+    user = models.User.verify_reset_password_token(token)
+    if not user:
+        return redirect(url_for('auth.index'))
+    form = forms.ResetPasswordForm()
+    if form.validate_on_submit():
+        user.set_password(form.password.data)
+        db.session.commit()
+        flash('Your password has been reset.', 'info')
+        return redirect(url_for('auth.login'))
+    return render_template('auth/reset_password.html', form=form, legend='Reset Password')
 
 
 @auth_bp.route('/user/<user_name>')

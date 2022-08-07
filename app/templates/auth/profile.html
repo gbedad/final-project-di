@@ -9,48 +9,39 @@
 <hr>
 <div class="row">
   <div class="col">
-    <p><span>Username:</span>{{data.username}}</p>
-    <p><span>Email:</span>{{data.email}}</p>
-    <p><span>Role:</span>{{data.role}}</p>
-    <p><span>First Name:</span>{{data.first_name}}</p>
-    <p><span>Last Name:</span>{{data.last_name}}</p>
+    <p><span class="desc">Username:</span><br>{{data.username}}</p>
+    <p><span class="desc">Email:</span><br>{{data.email}}</p>
+    <p><span class="desc">Role:</span><br>{{data.role}}</p>
+    <p><span class="desc">First Name:</span><br>{{data.first_name}}</p>
+    <p><span class="desc">Last Name:</span><br>{{data.last_name}}</p>
   </div>
 
   <div class="col">
-    <p><span>Street: </span>{{data.my_info.address}}</p>
-    <p><span>City: </span>{{data.my_info.city}}</p>
-    <p><span>Zipcode: </span>{{data.my_info.zipcode}}</p>
-
-<p><span>Phone: </span>{{data.my_info.phone}}</p>
-<p><span>Email 2: </span>{{data.my_info.email2}}</p>
+    <p><span class="desc">Street: </span><br>{{data.my_info.address}}</p>
+    <p><span class="desc">City: </span><br>{{data.my_info.city}}</p>
+    <p><span class="desc">Zipcode: </span><br>{{data.my_info.zipcode}}</p>
+    <p><span class="desc">Phone: </span><br>{{data.my_info.phone}}</p>
+    <p><span class="desc">Email 2: </span><br>{{data.my_info.email2}}</p>
   </div>
 
   <div class="col">
-    <p><span>Date of Birth: </span>{{data.my_info.birth_date}}</p>
-    <p><span>Short text: </span>{{data.my_info.short_text}}</p>
-    <p><span>Short text: </span>{{data.more.when}}</p>
-    <p><span>Inquiry: </span>{{data.more.inquiry}}</p>
-  </div>
-</div>
-<div class="row">
-  <div class="col">
-    <p><span>Engagement: </span>{{data.tutoring_exp.engagement}}</p>
+    <p><span class="desc">Date of Birth: </span><br>{{data.my_info.birth_date}}</p>
+    <p><span class="desc">Short text: </span><br>{{data.my_info.short_text}}</p>
+    <p><span class="desc">Short text: </span><br>{{data.more.when}}</p>
+    <p><span class="desc">Inquiry: </span><br>{{data.more.inquiry}}</p>
   </div>
   <div class="col">
-    <p><span>From: </span>{{data.tutoring_exp.start_date}}</p>
-  </div>
-  <div class="col">
-    <p><span>To: </span>{{data.tutoring_exp.end_date}}</p>
-  </div>
-  <div class="col">
-    <p><span>Frequency: </span>{{data.tutoring_exp.frequency}} h/week</p>
+    <p><span class="desc">Engagement: </span><br>{{data.tutoring_exp.engagement}}</p>
+    <p><span class="desc">From: </span><br>{{data.tutoring_exp.start_date}}</p>
+    <p><span class="desc">To: </span><br>{{data.tutoring_exp.end_date}}</p>
+    <p><span class="desc">Frequency: </span><br>{{data.tutoring_exp.frequency}} h/week</p>
   </div>
 </div>
 <hr>
 <div class="row">
   <div class="col-4">
     <h6 class="mb-0">Availabilities</h6>
-    <table class="table">
+    <table class="table table-sm">
     <thead>
       <tr>
         <th scope="col" class="desc mb-0">day</th>
@@ -72,7 +63,7 @@
   </div>
   <div class="col-4">
     <h6 class="mb-0">Subjects</h6>
-    <table class="table">
+    <table class="table table-sm">
     <thead>
       <tr>
         <th scope="col" class="desc mb-0">Subject</th>
@@ -94,7 +85,7 @@
   </div>
   <div class="col-2">
     <h6 class="mb-0">Modalities</h6>
-    <table class="table">
+    <table class="table table-sm">
     <thead>
       <tr>
         <th scope="col" class="desc mb-0">Modality</th>

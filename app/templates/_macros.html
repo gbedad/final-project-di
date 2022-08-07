@@ -57,5 +57,22 @@
 {% endif %}
 {% endmacro %}
 
+{% macro progress_status(st) %}
+ {% if (st=='1') %}
+  <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+{% elif (st=='2') %}
+  <div class="progress-bar" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">20%</div>
+{% elif (st=='3') %}
+  <div class="progress-bar" role="progressbar" style="width: 40%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100">40%</div>
+{% elif (st=='4') %}
+  <div class="progress-bar" role="progressbar" style="width: 60%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100">60%</div>
+{% elif (st=='5') %}
+  <div class="progress-bar" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100">80%</div>
+{% elif (st=='6') %}
+  <div class="progress-bar" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100">100
+    %</div>
+{% endif %}
+{% endmacro %}
+
 
 
