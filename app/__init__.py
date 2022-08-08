@@ -13,7 +13,7 @@ import os
 
 flask_app = Flask(__name__)
 db = SQLAlchemy()
-CONFIG_TYPE = os.getenv('CONFIG_TYPE', default='config.DevelopmentConfig')
+CONFIG_TYPE = os.getenv('CONFIG_TYPE', default='config.ProductionConfig')
 flask_app.config.from_object(CONFIG_TYPE)
 flask_app.config.from_object(Config)
 flask_app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
