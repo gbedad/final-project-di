@@ -39,6 +39,6 @@ class DevelopmentConfig(Config):
 
 class ProductionConfig(Config):
     FLASK_ENV = 'production'
-    SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL', default="DEV_DATABASE_URI")
+    SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL')
 
 
