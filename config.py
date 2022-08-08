@@ -9,7 +9,7 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 
 class Config:
     # Default settings
-    FLASK_ENV = 'development'
+    FLASK_ENV = 'production'
     DEBUG = False
     TESTING = False
     WTF_CSRF_ENABLED = True
