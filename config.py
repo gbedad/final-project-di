@@ -36,6 +36,9 @@ class DevelopmentConfig(Config):
 
 class ProductionConfig(Config):
     FLASK_ENV = 'production'
-    SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL')
+    uri = os.getenv("DATABASE_URL")  # or other relevant config var
+    if uri and uri.startswith("postgres://"):
+        uri = uri.replace("postgres://", "postgresql://", 1)
+    SQLALCHEMY_DATABASE_URI = uri
 
 
