@@ -1,7 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, SelectField, SubmitField, DateTimeField, DateField, TimeField
 from wtforms.validators import ValidationError, DataRequired
-from ..auth.models import User, Modalities, Students, SubjectPossible, Availabilities, SubjectToStudy
+from ..auth.models import User, Modalities, Students, SubjectPossible, Availabilities, SubjectToStudy, ModalitiesPossible
 from ..auth.forms import SubjectsChoice, GradesChoice
 
 
@@ -33,7 +33,7 @@ class PlanInterview(FlaskForm):
 
 class ModalitiesChoice(object):
     def __iter__(self):
-        sel_modalities = Modalities.query.all()
+        sel_modalities = ModalitiesPossible.query.all()
         choices = [(item.modality, f'{item.modality}') for item in sel_modalities]
         for choice in choices:
             yield choice
