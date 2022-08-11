@@ -347,7 +347,7 @@ def profile_5(user_name):
     b3_uploaded = False
     id_uploaded = False
     user = models.User.query.filter_by(username=user_name).first_or_404()
-    user_uploads = models.Upload.query.filter_by(user_id=user.id).first()
+    user_uploads = models.Upload.query.filter_by(users=user.id).first()
     if user_uploads:
         if user_uploads.cv_filename:
             cv_uploaded = True
@@ -381,7 +381,7 @@ def profile_5(user_name):
             uploads = models.Upload(cv_filename=cv_file.filename, cv_data=cv_file.read(),
                                     b3_filename=b3_file.filename, b3_data=b3_file.read(),
                                     id_filename=id_file.filename, id_data=id_file.read(),
-                                    user_id=user.id)
+                                    users=user.id)
 
             db.session.add(uploads)
             try:
