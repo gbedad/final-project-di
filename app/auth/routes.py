@@ -368,11 +368,11 @@ def profile_5(user_name):
 
         if user_uploads:
             if cv_file:
-                user_uploads.cv_filename = secure_filename(cv_file.filename)
+                user_u.cv_filename = secure_filename(cv_file.filename)
             elif b3_file:
-                user_uploads.b3_filename = secure_filename(b3_file.filename)
+                user_u.b3_filename = secure_filename(b3_file.filename)
             elif id_file:
-                user_uploads.id_filename = secure_filename(id_file.filename)
+                user_u.id_filename = secure_filename(id_file.filename)
             try:
                 db.session.commit()
                 flash('File(s) successfully uploaded', 'success')
