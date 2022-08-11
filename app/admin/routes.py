@@ -343,10 +343,10 @@ def search_tutor(student_id):
             flash('Course already exist for subject/student/tutor', 'danger')
             return redirect(url_for('course.course_list', student_id=student_selected.id))
         new_course_t = (student_id, selected_tutor.id, subj, day)
-        if check_course is not None:
-            if new_course_t == check_course:
-                flash('Course already exist for subject/student/tutor', 'danger')
-                return redirect(url_for('course.course_list', student_id=student_selected.id))
+        #if check_course is not None:
+        if new_course_t == check_course:
+            flash('Course already exist for subject/student/tutor', 'danger')
+            return redirect(url_for('course.course_list', student_id=student_selected.id))
         created_course.student.append(student_selected)
         created_course.tutor.append(selected_tutor)
 
