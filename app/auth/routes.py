@@ -347,8 +347,9 @@ def profile_5(user_name):
     b3_uploaded = False
     id_uploaded = False
     user = models.User.query.filter_by(username=user_name).first_or_404()
+    user_uploads = models.Upload.query.all()
     #user_uploads = models.Upload.query.filter_by(users=user.id).first()
-    user_uploads = models.Upload.query.join(user.upload_id).filter_by(user_id=user.id).all()
+    #user_uploads = models.Upload.query.join(user.upload_id).filter_by(user_id=user.id).all()
     if user_uploads:
         if user_uploads.cv_filename:
             cv_uploaded = True
