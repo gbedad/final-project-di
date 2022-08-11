@@ -334,14 +334,12 @@ def search_tutor(student_id):
         start = create_course_form.start_time.data.strftime('%H:%M')
         end = create_course_form.end_time.data.strftime('%H:%M')
 
-
-
         created_course = models.Course(subject=subj, selected_day=day, start_time=start, end_time=end)
 
         selected_tutor = models.User.query.filter_by(id=tut).first()
 
         check_existing_course = models.Course.query.filter_by(selected_day=day).filter_by(start_time=start).filter(tutor == selected_tutor)
-        if check_existing_course:
+        if check_existing_course is not None:
             flash('Course already exist for subject/student/tutor', 'danger')
             return redirect(url_for('course.course_list', student_id=student_selected.id))
         new_course_t = (student_id, selected_tutor.id, subj, day)
