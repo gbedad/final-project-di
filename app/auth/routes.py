@@ -381,7 +381,7 @@ def profile_5(user_name):
                 flash('Something wrong happened', 'warning')
                 return redirect(url_for('auth.profile_5', user_name=user.username))
 
-        if not user_uploads:
+        if user_uploads is None:
             uploads = models.Upload(cv_filename=cv_file.filename, cv_data=cv_file.read(),
                                     b3_filename=b3_file.filename, b3_data=b3_file.read(),
                                     id_filename=id_file.filename, id_data=id_file.read(),
