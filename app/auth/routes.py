@@ -368,11 +368,11 @@ def profile_5(user_name):
 
         if user_uploads:
             if cv_file:
-                user_u.cv_filename = secure_filename(cv_file.filename)
+                user_uploads.cv_filename = secure_filename(cv_file.filename)
             elif b3_file:
-                user_u.b3_filename = secure_filename(b3_file.filename)
+                user_uploads.b3_filename = secure_filename(b3_file.filename)
             elif id_file:
-                user_u.id_filename = secure_filename(id_file.filename)
+                user_uploads.id_filename = secure_filename(id_file.filename)
             try:
                 db.session.commit()
                 flash('File(s) successfully uploaded', 'success')
@@ -381,7 +381,7 @@ def profile_5(user_name):
                 flash('Something wrong happened', 'warning')
                 return redirect(url_for('auth.profile_5', user_name=user.username))
 
-        if user_uploads is None:
+        if not user_uploads:
             uploads = models.Upload(cv_filename=cv_file.filename, cv_data=cv_file.read(),
                                     b3_filename=b3_file.filename, b3_data=b3_file.read(),
                                     id_filename=id_file.filename, id_data=id_file.read(),
