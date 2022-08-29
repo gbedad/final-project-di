@@ -379,20 +379,14 @@ def create_user():
         flash('Sorry, you have to be an admin', 'warning')
         return redirect(url_for('auth.login'))
 
-    form = ad_forms.CreateUserForm()
-    if form.validate_on_submit():
-        username = form.username.data
-        first_name = form.first_name.data
-        last_name = form.last_name.data
-        email = form.email.data
-        role = form.role.data if form.role.data else "supervisor"
-        source = form.source.data if form.source.data else None
-        address = form.address.data
-        city = form.city.data
-        zipcode = form.zipcode.data
-        phone = form.phone.data
+    user_form = ad_forms.CreateUserForm()
+    if user_form.validate_on_submit():
+        username = user_form.username.data
+        first_name = user_form.first_name.data
+        last_name = user_form.last_name.data
+        email = user_form.email.data
+        role = user_form.role.data if user_form.role.data else "supervisor"
 
         new_user = models.User()
 
-
-    return render_template('admin/create_user.html', form=form, title='Create User', legend='Create New User')
+    return render_template('admin/create_user.html', user_form=user_form, title='Create User', legend='Create New Tutor')
