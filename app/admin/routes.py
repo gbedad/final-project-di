@@ -381,6 +381,17 @@ def create_user():
 
     form = ad_forms.CreateUserForm()
     if form.validate_on_submit():
-        pass
+        username = form.username.data
+        first_name = form.first_name.data
+        last_name = form.last_name.data
+        email = form.email.data
+        role = form.role.data
+        source = form.source.data
+        address = form.address.data
+        city = form.city.data
+        zipcode = form.zipcode.data
+        phone = form.phone.data
+
+
 
     return render_template('admin/create_user.html', form=form, title='Create User', legend='Create New User')
