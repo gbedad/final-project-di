@@ -3,7 +3,6 @@
   <li class="nav-item">
     <a class='nav-link link-info' href="{{url_for('admin.create_user', user_name=current_user.username)}}"><i class="bi bi-1-circle m-1"></i>Information</a>
   </li>
-  {% if email  %}
   <li class="nav-item">
     <a class='nav-link link-info' href="{{url_for('auth.profile_2', user_name=current_user.username)}}"><i class="bi bi-2-circle m-1"></i>How he/she can Help</a>
   </li>
@@ -16,7 +15,6 @@
   <li class="nav-item">
     <a class='nav-link link-info' href="{{url_for('auth.profile_5', user_name=current_user.username)}}"><i class="bi bi-5-circle m-1"></i>Commitments</a>
   </li>
-  {% endif %}
 </ul>
 </div>
 
