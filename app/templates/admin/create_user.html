@@ -57,60 +57,16 @@ Create User
                         {% endfor %}
                     </div>
             </div>
-            <div class="col-2">
-                    <div class="form-outline">
-                        {{ form.phone.label(class="form-label desc mb-0") }}<br>
-                        {{ form.phone(size=64, class="form-control") }}
-                        {% for error in form.phone.errors %}
-                        <span class="danger">[{{ error }}]</span>
-                        {% endfor %}
-                    </div>
-            </div>
+
         </div>
             <div class="row mb-4">
-                <div class="col-4">
-                    <div class="form-outline">
-                        {{ form.street.label(class="form-label desc mb-0") }}<br>
-                        {{ form.street(size=64, class="form-control") }}
-                        {% for error in form.street.errors %}
-                        <span class="danger">[{{ error }}]</span>
-                        {% endfor %}
-                    </div>
-                </div>
-                <div class="col-2">
-                        <div class="form-outline">
-                            {{ form.city.label(class="form-label desc mb-0") }}<br>
-                            {{ form.city(size=64, class="form-control") }}
-                            {% for error in form.city.errors %}
-                            <span class="danger">[{{ error }}]</span>
-                            {% endfor %}
-                        </div>
-                </div>
-                <div class="col-2">
-                        <div class="form-outline">
-                            {{ form.zipcode.label(class="form-label desc mb-0") }}<br>
-                            {{ form.zipcode(size=64, class="form-control") }}
-                            {% for error in form.zipcode.errors %}
-                            <span class="danger">[{{ error }}]</span>
-                            {% endfor %}
-                        </div>
-                </div>
                 <div class="col-3">
                     <div class="form-outline">
                         {{ render_field(form.role) }}
                     </div>
                 </div>
             </div>
-            <div class="row mb-4">
-                <div class="col-2">
-                        <div class="form-outline">
-                            {{ render_field(form.source) }}
-                        </div>
-                </div>
 
-
-            </div>
-            </div>
         <p class="text-center mt-4">{{ form.submit(class="btn btn-primary btn-block mb-4") }}</p>
         </form>
     </div>
