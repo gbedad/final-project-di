@@ -385,8 +385,8 @@ def create_user():
         first_name = form.first_name.data
         last_name = form.last_name.data
         email = form.email.data
-        role = form.role.data
-        source = form.source.data
+        role = form.role.data or "supervisor"
+        source = form.source.data or None
         address = form.address.data
         city = form.city.data
         zipcode = form.zipcode.data
