@@ -390,10 +390,8 @@ def create_user():
         role = user_form.role.data if user_form.role.data else "supervisor"
 
         new_user = models.User()
-        if email:
-            user_email = email
 
-    return render_template('admin/create_user.html', user_email=user_email,  user_form=user_form, page1_form=page1_form, title='Create User', legend='Create New Tutor')
+    return render_template('admin/create_user.html', user_form=user_form, page1_form=page1_form, title='Create User', legend='Create New Tutor')
 
 
 @admin_bp.route('/admin/user/create/<user_email>', methods=['GET', 'POST'])
