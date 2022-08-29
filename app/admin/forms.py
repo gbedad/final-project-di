@@ -2,7 +2,7 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, SelectField, SubmitField, DateTimeField, DateField, TimeField
 from wtforms.validators import ValidationError, DataRequired
 from ..auth.models import User, Modalities, Students, SubjectPossible, Availabilities, SubjectToStudy, ModalitiesPossible
-from ..auth.forms import SubjectsChoice, GradesChoice
+from ..auth.forms import SubjectsChoice, GradesChoice, INQUIRIES
 
 
 STATUS = [('1','created'), ('2','proposed'), ('3', 'documented'), ('4', 'preselected'), ('5', 'selected'), ('6', 'validated')]
@@ -100,4 +100,31 @@ class AddAvailabilitiesToStudent(FlaskForm):
     day_time_to = TimeField('Day To', format='%H:%M', validators=[DataRequired()])
 
     submit = SubmitField('Add Availability')
+
+
+class CreateUserForm(FlaskForm):
+    username = StringField('Username', validators=[DataRequired()])
+    first_name = StringField('First Name', validators=[DataRequired()])
+    last_name = StringField('Last Name', validators=[DataRequired()])
+    role = SelectField('Role', choices=['admin', 'supervisor'])
+    email = StringField('Email')
+    phone = StringField("Student's Phone")
+    street = StringField('Street')
+    city = StringField('City')
+    zipcode = StringField('Zipcode')
+    source = SelectField('Source', choices=INQUIRIES)
+
+    submit = SubmitField('Create User')
+
+    def validate(self):
+        rv = FlaskForm.validate(self)
+        if not rv:
+            return False
+
+        new_user = User.query.filter_by(email=self.email.data).first()
+        if new_user is not None:
+            self.email.errors.append(f'{self.email.data} already exist in database')
+            return False
+
+        return True
 

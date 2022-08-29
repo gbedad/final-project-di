@@ -370,3 +370,17 @@ def show_all_courses():
     all_courses = models.Course.query.all()
 
     return render_template('courses/all_course_list.html', data=all_courses, title ='All Courses', legend='All Courses View')
+
+
+@admin_bp.route('admin/user/create', methods=['GET', 'POST'])
+@login_required
+def create_user():
+    if current_user.role not in ['superadmin', 'admin']:
+        flash('Sorry, you have to be an admin', 'warning')
+        return redirect(url_for('auth.login'))
+
+    form = ad_forms.CreateUserForm()
+    if form.validate_on_submit():
+        pass
+
+    return render_template('admin/create_user.html', form=form, title='Create User', legend='Create New User')
