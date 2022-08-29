@@ -389,4 +389,4 @@ def create_user():
 
         new_user = models.User()
 
-    return render_template('admin/create_user.html',  email=email, user_form=user_form, title='Create User', legend='Create New Tutor')
+    return render_template('admin/create_user.html', user_form=user_form, title='Create User', legend='Create New Tutor')
