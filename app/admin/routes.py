@@ -390,5 +390,55 @@ def create_user():
         role = user_form.role.data if user_form.role.data else "supervisor"
 
         new_user = models.User()
+        if email:
+            user_email = email
 
-    return render_template('admin/create_user.html', user_form=user_form, page1_form=page1_form, title='Create User', legend='Create New Tutor')
+    return render_template('admin/create_user.html', user_email=user_email,  user_form=user_form, page1_form=page1_form, title='Create User', legend='Create New Tutor')
+
+
+@admin_bp.route('/admin/user/create/<str:user_email>', methods=['GET', 'POST'])
+@login_required
+def create_user_info(user_email):
+    if current_user.role not in ['superadmin', 'admin']:
+        flash('Sorry, you have to be an admin', 'warning')
+        return redirect(url_for('auth.login'))
+
+    form = auth_forms.ProfilePage1Form()
+
+    selected_user = models.User.query.filter_by(email=user_email)
+    user_infos = selected_user.my_info
+
+    if request.method == 'POST':
+        if user_infos is not None:
+            user_infos.address = request.form["address"]
+            user_infos.city = request.form["city"]
+            user_infos.zipcode = request.form["zipcode"]
+            user_infos.email2 = request.form["email2"]
+            user_infos.phone = request.form["phone"]
+            user_infos.birth_date = request.form["birth_date"]
+            user_infos.short_text = request.form["short_text"]
+            try:
+                db.session.commit()
+                flash('Update successful', 'info')
+                return render_template('auth/profile_1.html', form=form, data=selected_user)
+            except:
+                flash('Something went wrong, try again!', 'warning')
+                return render_template('auth/profile_1.html', form=form)
+        else:
+            personal_info = models.MyInformation(address=form.address.data, city=form.city.data,
+                                             zipcode=form.zipcode.data, email2=form.email2.data,
+                                             phone=form.phone.data, birth_date=form.birth_date.data,
+                                             short_text=form.short_text.data, user=selected_user)
+            db.session.add(personal_info)
+            db.session.commit()
+    if user_infos is not None:
+        form.address.data = user_infos.address
+        form.city.data = user_infos.city
+        form.zipcode.data = user_infos.zipcode
+        form.email2.data = user_infos.email2
+        form.phone.data = user_infos.phone
+        form.birth_date.data = datetime.strptime(user_infos.birth_date,'%Y-%m-%d')
+        form.short_text.data = user_infos.short_text
+
+    return render_template('admin/user_profile_1.html', form=form, title='Create User',
+                           legend='Information')
