@@ -23,36 +23,36 @@ Create User
         <div  class="row mb-4">
             <div class="col-2">
                 <div class="form-outline">
-                        {{ form.username.label(class="form-label desc mb-0") }}<br>
-                        {{ form.username(size=64, class="form-control") }}
-                        {% for error in form.username.errors %}
+                        {{ user_form.username.label(class="form-label desc mb-0") }}<br>
+                        {{ user_form.username(size=64, class="form-control") }}
+                        {% for error in user_form.username.errors %}
                         <span class="danger">[{{ error }}]</span>
                         {% endfor %}
                     </div>
             </div>
             <div class="col-2">
                 <div class="form-outline">
-                        {{ form.first_name.label(class="form-label desc mb-0") }}<br>
-                        {{ form.first_name(size=64, class="form-control") }}
-                        {% for error in form.first_name.errors %}
+                        {{ user_form.first_name.label(class="form-label desc mb-0") }}<br>
+                        {{ user_form.first_name(size=64, class="form-control") }}
+                        {% for error in user_form.first_name.errors %}
                         <span class="danger">[{{ error }}]</span>
                         {% endfor %}
                     </div>
             </div>
             <div class="col-2">
                     <div class="form-outline">
-                        {{ form.last_name.label(class="form-label desc mb-0") }}<br>
-                        {{ form.last_name(size=64, class="form-control") }}
-                        {% for error in form.last_name.errors %}
+                        {{ user_form.last_name.label(class="form-label desc mb-0") }}<br>
+                        {{ user_form.last_name(size=64, class="form-control") }}
+                        {% for error in user_form.last_name.errors %}
                         <span class="danger">[{{ error }}]</span>
                         {% endfor %}
                     </div>
             </div>
             <div class="col-3">
                     <div class="form-outline">
-                        {{ form.email.label(class="form-label desc mb-0") }}<br>
-                        {{ form.email(size=64, class="form-control") }}
-                        {% for error in form.email.errors %}
+                        {{ user_form.email.label(class="form-label desc mb-0") }}<br>
+                        {{ user_form.email(size=64, class="form-control") }}
+                        {% for error in user_form.email.errors %}
                         <span class="danger">[{{ error }}]</span>
                         {% endfor %}
                     </div>
@@ -62,12 +62,12 @@ Create User
             <div class="row mb-4">
                 <div class="col-3">
                     <div class="form-outline">
-                        {{ render_field(form.role) }}
+                        {{ render_field(user_form.role) }}
                     </div>
                 </div>
             </div>
 
-        <p class="text-center mt-4">{{ form.submit(class="btn btn-primary btn-block mb-4") }}</p>
+        <p class="text-center mt-4">{{ user_form.submit(class="btn btn-primary btn-block mb-4") }}</p>
         </form>
     </div>
     <hr>
