@@ -392,4 +392,7 @@ def create_user():
         zipcode = form.zipcode.data
         phone = form.phone.data
 
+        new_user = models.User()
+
+
     return render_template('admin/create_user.html', form=form, title='Create User', legend='Create New User')
