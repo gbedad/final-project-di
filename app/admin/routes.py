@@ -396,7 +396,7 @@ def create_user():
     return render_template('admin/create_user.html', user_email=user_email,  user_form=user_form, page1_form=page1_form, title='Create User', legend='Create New Tutor')
 
 
-@admin_bp.route('/admin/user/create/<str:user_email>', methods=['GET', 'POST'])
+@admin_bp.route('/admin/user/create/<user_email>', methods=['GET', 'POST'])
 @login_required
 def create_user_info(user_email):
     if current_user.role not in ['superadmin', 'admin']:
