@@ -6,6 +6,7 @@ from app.auth import models
 
 from app.admin import forms as ad_forms
 from app.course import forms as crs_forms
+from app.auth import forms as auth_forms
 from flask.blueprints import Blueprint
 from app import db
 from datetime import datetime, time
@@ -380,6 +381,7 @@ def create_user():
         return redirect(url_for('auth.login'))
 
     user_form = ad_forms.CreateUserForm()
+    page1_form = auth_forms.ProfilePage1Form()
     if user_form.validate_on_submit():
         username = user_form.username.data
         first_name = user_form.first_name.data
@@ -389,4 +391,4 @@ def create_user():
 
         new_user = models.User()
 
-    return render_template('admin/create_user.html', user_form=user_form, title='Create User', legend='Create New Tutor')
+    return render_template('admin/create_user.html', user_form=user_form, page1_form=page1_form, title='Create User', legend='Create New Tutor')

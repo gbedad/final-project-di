@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-10"><h3>{{ legend }}</h3></div>
+    {% include 'auth/breadcrumb_user.html' %}
+</div>
+{% include 'auth/nav_profile.html' %}
+<hr>
+<div class="row mb-2">
+    <div class="col-2"></div>
+    <div class="col-8 d-flex justify-content-center">
+        <form method="post">
+        {{ page1_form.hidden_tag() }}
+            <div class="row mb-2">
+                <div class="col-6">
+                <div class="form-outline">
+                {{ page1_form.address.label(class="form-label") }}<br>
+                {{ page1_form.address(size=64, class="form-control") }}
+                {% for error in page1_form.address.errors %}
+                <span class="danger">[{{ error }}]</span>
+                {% endfor %}
+            </div>
+            </div>
+            <div class="col">
+                <div class="form-outline">
+                {{ page1_form.city.label(class="form-label") }}<br>
+                {{ page1_form.city(size=64, class="form-control") }}
+                {% for error in page1_form.city.errors %}
+                <span class="danger">[{{ error }}]</span>
+                {% endfor %}
+                </div>
+            </div>
+            <div class="col">
+            <div class="form-outline">
+                {{ page1_form.zipcode.label(class="form-label") }}<br>
+                {{ page1_form.zipcode(size=64, class="form-control") }}
+                {% for error in page1_form.zipcode.errors %}
+                <span class="danger">[{{ error }}]</span>
+                {% endfor %}
+            </div>
+            </div>
+        </div>
+            <div class="row mb-2">
+                <div class="col-6">
+                    <div class="form-outline">
+                        {{ page1_form.email2.label(class="form-label") }}<br>
+                        {{ page1_form.email2(size=64, class="form-control") }}
+                        {% for error in page1_form.email2.errors %}
+                        <span class="danger">[{{ error }}]</span>
+                        {% endfor %}
+              </div>
+                </div>
+                <div class="col">
+                    <div class="form-outline">
+                        {{ page1_form.phone.label(class="form-label") }}<br>
+                        {{ page1_form.phone(size=64, class="form-control") }}
+                        {% for error in page1_form.phone.errors %}
+                        <span class="danger">[{{ error }}]</span>
+                        {% endfor %}
+              </div>
+                </div>
+                <div class="col">
+                    <div class="form-outline">
+                        {{ page1_form.birth_date.label(class="form-label") }}<br>
+                        {{ page1_form.birth_date(size=10, class="form-control") }}
+                        {% for error in page1_form.birth_date.errors %}
+                        <span class="danger">[{{ error }}]</span>
+                        {% endfor %}
+              </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="form-outline">
+                        {{ page1_form.short_text.label(class="form-label") }}<br>
+                        {{ page1_form.short_text(size=64, class="form-control") }}
+                        {% for error in page1_form.short_text.errors %}
+                        <span class="danger">[{{ error }}]</span>
+                        {% endfor %}
+              </div>
+                </div>
+            </div>
+            <div class="row mb-4">
+            <div class="col d-flex justify-content-center">
+    </div>
+  </div>
+    <!-- Submit button -->
+        <p class="text-center mt-4" >{{ page1_form.submit(class="btn btn-success btn-block mb-4") }}</p>
+        </form>
+    </div>
+</div>
+{% endblock %}
