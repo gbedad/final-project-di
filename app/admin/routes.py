@@ -372,7 +372,7 @@ def show_all_courses():
     return render_template('courses/all_course_list.html', data=all_courses, title ='All Courses', legend='All Courses View')
 
 
-@admin_bp.route('admin/user/create', methods=['GET', 'POST'])
+@admin_bp.route('/admin/user/create', methods=['GET', 'POST'])
 @login_required
 def create_user():
     if current_user.role not in ['superadmin', 'admin']:
@@ -391,7 +391,5 @@ def create_user():
         city = form.city.data
         zipcode = form.zipcode.data
         phone = form.phone.data
-
-
 
     return render_template('admin/create_user.html', form=form, title='Create User', legend='Create New User')
