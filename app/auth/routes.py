@@ -159,7 +159,10 @@ def add_item_to_list(d, ls):
 @auth_bp.route('/user/<user_name>/profile_2', methods=['GET', 'POST'])
 @login_required
 def profile_2(user_name):
-    user = models.User.query.filter_by(username=user_name).first_or_404()
+    if current_user.role in ['admin', 'superadmin']:
+        user = models.User.query.filter_by(username=user_name).first_or_404()
+    else:
+        user = current_user.query.filter_by(username=user_name).first_or_404()
     my_tutorate = user.tutoring_exp
     form = forms.ProfilePage2Form()
     availability_form = forms.AddAvailabilitiesToTutor()
@@ -291,7 +294,10 @@ def delete_subject(subject_id):
 @login_required
 def profile_3(user_name):
     form = forms.ProfilePage3Form()
-    user = models.User.query.filter_by(username=user_name).first_or_404()
+    if current_user.role in ['admin', 'superadmin']:
+        user = models.User.query.filter_by(username=user_name).first_or_404()
+    else:
+        user = current_user.query.filter_by(username=user_name).first_or_404()
     more_about = user.more
     print(more_about)
     if request.method == 'POST' and form.validate_on_submit():
@@ -328,7 +334,11 @@ def profile_3(user_name):
 @login_required
 def profile_4(user_name):
     form = forms.ValidateInterviewDateForm()
-    user = models.User.query.filter_by(username=user_name).first_or_404()
+    if current_user.role in ['admin', 'superadmin']:
+        user = models.User.query.filter_by(username=user_name).first_or_404()
+    else:
+        user = current_user.query.filter_by(username=user_name).first_or_404()
+
     if form.validate_on_submit():
         user.my_interviews.is_accepted = form.is_accepted.data
         db.session.commit()
@@ -349,7 +359,10 @@ def profile_5(user_name):
     cv_uploaded = False
     b3_uploaded = False
     id_uploaded = False
-    user = models.User.query.filter_by(username=user_name).first_or_404()
+    if current_user.role in ['admin', 'superadmin']:
+        user = models.User.query.filter_by(username=user_name).first_or_404()
+    else:
+        user = current_user.query.filter_by(username=user_name).first_or_404()
     user_uploads = models.Upload.query.all()
     user_u = [u for u in user_uploads if u.users == user.id]
     #user_uploads = models.Upload.query.filter_by(users=user.id).first()
