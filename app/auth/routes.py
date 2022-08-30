@@ -267,7 +267,7 @@ def profile_2(user_name):
 @login_required
 def delete_availability(availability_id):
     day_selected = models.Availabilities.query.filter_by(id=availability_id).first()
-    avail_owner = day_selected.user_availability_owner
+    avail_owner = day_selected.user_avail_owner
     assoc_tutoring = models.Tutoring.query.filter_by(id=avail_owner).first()
     user = models.User.query.filter_by(id=assoc_tutoring.user_id).first()
     db.session.delete(day_selected)
