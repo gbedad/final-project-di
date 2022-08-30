@@ -283,7 +283,7 @@ def delete_modality(modality_id):
     user = models.User.query.filter_by(id=user_getid)
     db.session.delete(mod_selected)
     db.session.commit()
-    return redirect(url_for('auth.profile_2', user_name=current_user.username if current_user.role =='supervisor' else user.username))
+    return redirect(url_for('auth.profile_2', owner=mod_owner, user_name=current_user.username if current_user.role =='supervisor' else user.username))
 
 
 @auth_bp.route('/tutor/subjects/<int:subject_id>/cancel', methods=['GET', 'POST'])
