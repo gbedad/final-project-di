@@ -159,6 +159,7 @@ def add_item_to_list(d, ls):
 @auth_bp.route('/user/<user_name>/profile_2', methods=['GET', 'POST'])
 @login_required
 def profile_2(user_name):
+    print(user_name)
     if current_user.role in ['admin', 'superadmin']:
         user = models.User.query.filter_by(username=user_name).first_or_404()
     else:
