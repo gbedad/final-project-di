@@ -6,6 +6,7 @@
   {% include 'auth/breadcrumb_user.html' %}
   <a href="{{url_for('admin.get_tutor_by_id', tutor_id=data.id)}}" class="text-decoration-none desc">Back to Tutor View</a>
 </div>
+{%  include 'admin/admin_nav_profile_user.html' %}
 <hr>
 <div class="row">
   <div class="col">
