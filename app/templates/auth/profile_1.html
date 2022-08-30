@@ -2,7 +2,7 @@
 
 {% block content %}
 <div class="row mb-4">
-    <div class="col-10"><h3>{{ legend }}</h3></div>
+    <div class="col-10"><h3>{{ legend }}{{data.username}}</h3></div>
     {% include 'auth/breadcrumb_user.html' %}
 </div>
 {% include 'auth/nav_profile.html' %}
