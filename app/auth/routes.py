@@ -277,10 +277,7 @@ def delete_availability(availability_id):
 def delete_modality(modality_id):
     mod_selected = models.Modalities.query.filter_by(id=modality_id).first()
     mod_owner = mod_selected.user_modality_owner
-    tutorate = models.Tutoring.query.filter_by(id=mod_owner).first()
-    user_getid = tutorate.user_id
-
-    user = models.User.query.filter_by(id=user_getid)
+    user = models.User.query.filter_by(id=6)
     db.session.delete(mod_selected)
     db.session.commit()
     return redirect(url_for('auth.profile_2', owner=mod_owner, user_name=current_user.username if current_user.role =='supervisor' else user.username))
