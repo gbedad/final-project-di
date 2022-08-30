@@ -57,12 +57,19 @@ Create User
                         {% endfor %}
                     </div>
             </div>
+
+        </div>
+        <div class="row">
             <div class="col-3">
                     <div class="form-outline">
                         {{ render_field(user_form.role) }}
                     </div>
             </div>
-
+            <div class="col-3">
+                    <div class="form-outline">
+                        {{ render_field(user_form.status) }}
+                    </div>
+            </div>
         </div>
 
         <p class="text-center mt-4">{{ user_form.submit(class="btn btn-primary btn-block mb-4") }}</p>
