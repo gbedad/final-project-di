@@ -1,7 +1,7 @@
 <div id="process_header">
 <ul class="nav justify-content-center">
   <li class="nav-item">
-    <a class="nav-link active link-info" aria-current="page" href="{{url_for('admin.get_tutor_by_id', tutor_id=data.id)}}">View Profile</a>
+    <a class="nav-link active link-info" aria-current="page" href="{{url_for('admin.tutor_detailed_view', tutor_id=data.id)}}">View Profile</a>
   </li>
   <li class="nav-item">
     <a class='nav-link link-info' href="{{url_for('auth.profile_1', user_name=data.username)}}"><i class="bi bi-1-circle m-1"></i>Information</a>
