@@ -1,10 +1,10 @@
 <div id="process_header">
 <ul class="nav justify-content-center">
   <li class="nav-item">
-    <a class='nav-link link-info' href="{{url_for('admin.create_user', user_email=current_user.username)}}"><i class="bi bi-1-circle m-1"></i>Information</a>
+    <a class='nav-link link-info' href="{{url_for('admin.create_user', user_email=data.email)}}"><i class="bi bi-1-circle m-1"></i>Information</a>
   </li>
   <li class="nav-item">
-    <a class='nav-link link-info' href="{{url_for('auth.profile_2', user_name=current_user.username)}}"><i class="bi bi-2-circle m-1"></i>How he/she can Help</a>
+    <a class='nav-link link-info' href="{{url_for('auth.profile_2', user_email=data.email)}}"><i class="bi bi-2-circle m-1"></i>How he/she can Help</a>
   </li>
   <li class="nav-item">
     <a class='nav-link link-info' href="{{url_for('auth.profile_3', user_name=current_user.username)}}"><i class="bi bi-3-circle m-1"></i>More About him/her</a>
