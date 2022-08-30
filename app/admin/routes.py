@@ -389,7 +389,7 @@ def create_user():
         role = user_form.role.data if user_form.role.data else "supervisor"
         status = user_form.status.data
 
-        new_user = models.User(username=username, first_name=first_name, last_name=last_name,email=email, role=role, status=status)
+        new_user = models.User(username=username, first_name=first_name, last_name=last_name, email=email, role=role, status=status)
         db.session.add(new_user)
 
         try:
