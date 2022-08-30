@@ -104,7 +104,10 @@ def profile(user_name):
 @login_required
 def profile_1(user_name):
     form = forms.ProfilePage1Form()
-    user = current_user.query.filter_by(username=user_name).first_or_404()
+    if current_user.role in ['admin', 'superadmin']:
+        user = models.User.query.filter_by(username=user_name).first_or_404()
+    else:
+        user = current_user.query.filter_by(username=user_name).first_or_404()
     my_infos = user.my_info
 
     if request.method == 'POST':
