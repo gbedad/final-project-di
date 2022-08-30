@@ -6,7 +6,11 @@
   <div class="col-10"><h3>{{ legend }}</h3></div>
   {% include 'auth/breadcrumb_user.html' %}
 </div>
+{% if current_user_role == 'supervisor' %}
 {% include 'auth/nav_profile.html' %}
+{% else %}
+{% include 'admin/admin_nav_profile_user.html' %}
+{% endif %}
 <hr>
 <div class="row mb-2">
 
