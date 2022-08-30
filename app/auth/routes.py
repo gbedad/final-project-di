@@ -278,7 +278,7 @@ def delete_modality(modality_id):
     mod_selected = models.Modalities.query.filter_by(id=modality_id).first()
     mod_owner = mod_selected.user_modality_owner
     assoc_tutoring = models.Tutoring.query.filter_by(id=mod_owner).first()
-    user = models.User.query.filter(models.User.tutoring_exp.has(user_id=assoc_tutoring.id))
+    user = models.User.query.filter(models.User.tutoring_exp.id == assoc_tutoring.id)
     db.session.delete(mod_selected)
     db.session.commit()
     return redirect(url_for('auth.profile_2', user_name=current_user.username if current_user.role =='supervisor' else user.username))
