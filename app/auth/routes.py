@@ -371,16 +371,16 @@ def profile_5(user_name):
         user = models.User.query.filter_by(username=user_name).first_or_404()
     else:
         user = current_user.query.filter_by(username=user_name).first_or_404()
-    user_uploads =models.Upload.query.all()
+    user_uploads = models.Upload.query.all()
     user_u = [u for u in user_uploads if u.users == user.id]
     #user_uploads = models.Upload.query.filter_by(users=user.id).first()
     #user_uploads = models.Upload.query.join(user.upload_id).filter_by(user_id=user.id).all()
-    if user_uploads:
-        if user_uploads.cv_filename:
+    if user_u:
+        if user_u.cv_filename:
             cv_uploaded = True
-        if user_uploads.b3_filename:
+        if user_u.b3_filename:
             b3_uploaded = True
-        if user_uploads.id_filename:
+        if user_u.id_filename:
             id_uploaded = True
 
     if request.method == 'POST':
@@ -389,12 +389,12 @@ def profile_5(user_name):
         b3_file = request.files['b3_file']
         id_file = request.files['id_file']
 
-        if user_uploads:
+        if user_u:
             if cv_file:
                 user_uploads.cv_filename = secure_filename(cv_file.filename)
-            elif b3_file:
+            if b3_file:
                 user_uploads.b3_filename = secure_filename(b3_file.filename)
-            elif id_file:
+            if id_file:
                 user_uploads.id_filename = secure_filename(id_file.filename)
             try:
                 db.session.commit()
@@ -404,7 +404,7 @@ def profile_5(user_name):
                 flash('Something wrong happened', 'warning')
                 return redirect(url_for('auth.profile_5', user_name=user.username))
 
-        if not user_uploads:
+        if not user_u:
             uploads = models.Upload(cv_filename=cv_file.filename, cv_data=cv_file.read(),
                                     b3_filename=b3_file.filename, b3_data=b3_file.read(),
                                     id_filename=id_file.filename, id_data=id_file.read(),
