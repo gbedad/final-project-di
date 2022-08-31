@@ -380,9 +380,17 @@ def profile_5(user_name):
         b3_file = request.files['b3_file']
         id_file = request.files['id_file']
 
-        uploads = models.Upload(cv_filename=cv_file.filename, cv_data=cv_file.read(),
-                                b3_filename=b3_file.filename, b3_data=b3_file.read(),
-                                id_filename=id_file.filename, id_data=id_file.read(),
+        if not cv_file or not b3_file or not id_file:
+            flash('Something wrong  happened or one or more files are missing! Try again.', 'warning')
+            return redirect(url_for('auth.profile_5', user_name=user.username))
+
+        cv_f = secure_filename(cv_file.filename)
+        b3_f = secure_filename(b3_file.filename)
+        id_f = secure_filename(id_file.filename)
+
+        uploads = models.Upload(cv_filename=cv_f, cv_data=cv_file.read(),
+                                b3_filename=b3_f, b3_data=b3_file.read(),
+                                id_filename=id_f, id_data=id_file.read(),
                                 users=user.id)
 
         db.session.add(uploads)
