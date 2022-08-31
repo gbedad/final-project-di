@@ -371,18 +371,8 @@ def profile_5(user_name):
         user = models.User.query.filter_by(username=user_name).first_or_404()
     else:
         user = current_user.query.filter_by(username=user_name).first_or_404()
-    user_uploads = models.Upload.query.all()
-    '''if user_uploads is not None:
-        user_u = [u for u in user_uploads if u.users == user.id]
-        if user_u is not None:
-            if user_u.cv_file:
-                cv_uploaded = True
-            if user_u.b3_file:
-                b3_uploaded = True
-            if user_u.id_file:
-                id_uploaded = True
-    else:
-        user_u = None'''
+    #user_uploads = models.Upload.query.all()
+
 
     if request.method == 'POST':
 
@@ -390,35 +380,19 @@ def profile_5(user_name):
         b3_file = request.files['b3_file']
         id_file = request.files['id_file']
 
-        if user_uploads:
-            if cv_file:
-                user_uploads.cv_filename = secure_filename(cv_file.filename)
-            if b3_file:
-                user_uploads.b3_filename = secure_filename(b3_file.filename)
-            if id_file:
-                user_uploads.id_filename = secure_filename(id_file.filename)
-            try:
-                db.session.commit()
-                flash('File(s) successfully uploaded', 'success')
-                return redirect(url_for('auth.profile_5', user_name=user.username))
-            except:
-                flash('Something wrong happened', 'warning')
-                return redirect(url_for('auth.profile_5', user_name=user.username))
+        uploads = models.Upload(cv_filename=cv_file.filename, cv_data=cv_file.read(),
+                                b3_filename=b3_file.filename, b3_data=b3_file.read(),
+                                id_filename=id_file.filename, id_data=id_file.read(),
+                                users=user.id)
 
-        else:
-            uploads = models.Upload(cv_filename=cv_file.filename, cv_data=cv_file.read(),
-                                    b3_filename=b3_file.filename, b3_data=b3_file.read(),
-                                    id_filename=id_file.filename, id_data=id_file.read(),
-                                    users=user.id)
-
-            db.session.add(uploads)
-            try:
-                db.session.commit()
-                flash('Files successfully uploaded', 'success')
-                return redirect(url_for('auth.profile_5', user_name=user.username))
-            except:
-                flash('Something wrong  happened or one or more files are missing! Try again.', 'warning')
-                return redirect(url_for('auth.profile_5', user_name=user.username))
+        db.session.add(uploads)
+        try:
+            db.session.commit()
+            flash('Files successfully uploaded', 'success')
+            return redirect(url_for('auth.profile_5', user_name=user.username))
+        except:
+            flash('Something wrong  happened or one or more files are missing! Try again.', 'warning')
+            return redirect(url_for('auth.profile_5', user_name=user.username))
 
     return render_template('auth/profile_5.html', data=user, files=user_uploads, cv=cv_uploaded, b3=b3_uploaded, id=id_uploaded, legend='My Commitment')
 
