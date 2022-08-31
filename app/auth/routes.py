@@ -374,13 +374,13 @@ def profile_5(user_name):
     user_uploads = models.Upload.query.all()
     if user_uploads is not None:
         user_u = [u for u in user_uploads if u.users == user.id]
-
-        if user_u.cv_filename:
-            cv_uploaded = True
-        if user_u.b3_filename:
-            b3_uploaded = True
-        if user_u.id_filename:
-            id_uploaded = True
+        if user_u is not None:
+            if user_u.cv_filename:
+                cv_uploaded = True
+            if user_u.b3_filename:
+                b3_uploaded = True
+            if user_u.id_filename:
+                id_uploaded = True
     else:
         user_u = None
 
