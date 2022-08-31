@@ -372,7 +372,8 @@ def profile_5(user_name):
     else:
         user = current_user.query.filter_by(username=user_name).first_or_404()
     user_uploads = models.Upload.query.all()
-    user_u = [u for u in user_uploads if u.users == user.id]
+    if user_uploads:
+        user_u = [u for u in user_uploads if u.users == user.id]
     #user_uploads = models.Upload.query.filter_by(users=user.id).first()
     #user_uploads = models.Upload.query.join(user.upload_id).filter_by(user_id=user.id).all()
     if user_u:
@@ -404,7 +405,7 @@ def profile_5(user_name):
                 flash('Something wrong happened', 'warning')
                 return redirect(url_for('auth.profile_5', user_name=user.username))
 
-        if not user_u:
+        if not user_uploads:
             uploads = models.Upload(cv_filename=cv_file.filename, cv_data=cv_file.read(),
                                     b3_filename=b3_file.filename, b3_data=b3_file.read(),
                                     id_filename=id_file.filename, id_data=id_file.read(),
