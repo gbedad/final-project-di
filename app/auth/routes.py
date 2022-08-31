@@ -389,8 +389,6 @@ def profile_5(user_name):
         id_f = secure_filename(id_file.filename)
 
         uploads = models.Upload(cv_filename=cv_f, cv_data=cv_file.read(),
-                                b3_filename=b3_f, b3_data=b3_file.read(),
-                                id_filename=id_f, id_data=id_file.read(),
                                 users=user.id)
 
         db.session.add(uploads)
