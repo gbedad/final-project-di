@@ -57,7 +57,7 @@
     </thead>
     <tbody>
     {% for time in data.tutoring_exp.tutor_availabilities %}
-      <tr>
+      <tr class="mb-0">
         <td>{{time.day_possible}}</td>
         <td>{{time.day_time_from}}</td>
         <td>{{time.day_time_to}}</td>
@@ -78,10 +78,10 @@
     </thead>
     <tbody>
     {% for subj in data.tutoring_exp.tutor_subjects %}
-      <tr>
-        <td class="mb-0">{{subj.subject}}</td>
-        <td class="mb-0">{{subj.grade_from}}</td>
-        <td class="mb-0">{{subj.grade_to}}</td>
+      <tr  class="mb-0">
+        <td>{{subj.subject}}</td>
+        <td>{{subj.grade_from}}</td>
+        <td>{{subj.grade_to}}</td>
       </tr>
     {% endfor  %}
     </tbody>
@@ -97,8 +97,8 @@
     </thead>
     <tbody>
     {% for mod in data.tutoring_exp.tutor_modalities %}
-      <tr>
-        <td class="mb-0">{{mod.modality}}</td>
+      <tr class="mb-0">
+        <td>{{mod.modality}}</td>
       </tr>
     {% endfor  %}
     </tbody>
