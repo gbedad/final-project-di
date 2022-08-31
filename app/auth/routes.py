@@ -375,11 +375,11 @@ def profile_5(user_name):
     if user_uploads is not None:
         user_u = [u for u in user_uploads if u.users == user.id]
         if user_u is not None:
-            if user_u.cv_filename:
+            if user_u.cv_file:
                 cv_uploaded = True
-            if user_u.b3_filename:
+            if user_u.b3_file:
                 b3_uploaded = True
-            if user_u.id_filename:
+            if user_u.id_file:
                 id_uploaded = True
     else:
         user_u = None
