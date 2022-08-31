@@ -9,7 +9,7 @@
 </div>
 <hr>
 <div class="row mb-3">
-  <div class="col-4">
+  <div class="col-3">
       <div class="card" style="width: 18rem;">
         <div class="card-body">
     <h5 class="card-title"><span class="desc mb-0">Student</span><br>{{student.first_name}} {{student.last_name}}</h5>
@@ -54,7 +54,7 @@
 
   </div>
 
-  <div class="col-8">
+  <div class="col-9">
     <div class="row row-cols-1 row-cols-md-2 g-4">
         {% if not data %}
         <div class="card" style="width: 18rem;">
@@ -68,7 +68,7 @@
 
       {% for tutor in data %}
         <div class="col">
-        <div class="card h-100" style="width: 18rem;">
+        <div class="card h-100" style="max-width: 18rem;">
             <div class="card-body">
             <h5 class="card-title">Tutor <i class="bi bi-emoji-smile ms-3 text-success"></i></h5>
             <h6 class="card-subtitle mb-2 text-muted"><span class="desc mb-0">Name</span><br>{{ tutor.first_name }} {{ tutor.last_name }}</h6>
