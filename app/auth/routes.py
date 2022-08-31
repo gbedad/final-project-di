@@ -372,7 +372,7 @@ def profile_5(user_name):
     else:
         user = current_user.query.filter_by(username=user_name).first_or_404()
     user_uploads = models.Upload.query.all()
-    if user_uploads is not None:
+    '''if user_uploads is not None:
         user_u = [u for u in user_uploads if u.users == user.id]
         if user_u is not None:
             if user_u.cv_file:
@@ -382,7 +382,7 @@ def profile_5(user_name):
             if user_u.id_file:
                 id_uploaded = True
     else:
-        user_u = None
+        user_u = None'''
 
     if request.method == 'POST':
 
@@ -390,13 +390,13 @@ def profile_5(user_name):
         b3_file = request.files['b3_file']
         id_file = request.files['id_file']
 
-        if user_u:
+        if user_uploads:
             if cv_file:
-                user_u.cv_filename = secure_filename(cv_file.filename)
+                user_uploads.cv_filename = secure_filename(cv_file.filename)
             if b3_file:
-                user_u.b3_filename = secure_filename(b3_file.filename)
+                user_uploads.b3_filename = secure_filename(b3_file.filename)
             if id_file:
-                user_u.id_filename = secure_filename(id_file.filename)
+                user_uploads.id_filename = secure_filename(id_file.filename)
             try:
                 db.session.commit()
                 flash('File(s) successfully uploaded', 'success')
@@ -420,7 +420,7 @@ def profile_5(user_name):
                 flash('Something wrong  happened or one or more files are missing! Try again.', 'warning')
                 return redirect(url_for('auth.profile_5', user_name=user.username))
 
-    return render_template('auth/profile_5.html', data=user, files=user_u, cv=cv_uploaded, b3=b3_uploaded, id=id_uploaded, legend='My Commitment')
+    return render_template('auth/profile_5.html', data=user, files=user_uploads, cv=cv_uploaded, b3=b3_uploaded, id=id_uploaded, legend='My Commitment')
 
 
 @auth_bp.route('/user/<int:tutor_id>/dashboard')
