@@ -364,7 +364,6 @@ def profile_4(user_name):
 @auth_bp.route('/user/<user_name>/profile_5', methods=['GET', 'POST'])
 @login_required
 def profile_5(user_name):
-    form = forms.ProfilePage5Form()
     cv_uploaded = False
     b3_uploaded = False
     id_uploaded = False
@@ -405,7 +404,7 @@ def profile_5(user_name):
                 flash('Something wrong happened', 'warning')
                 return redirect(url_for('auth.profile_5', user_name=user.username))
 
-        if user_uploads is None:
+        if not user_uploads:
             uploads = models.Upload(cv_filename=cv_file.filename, cv_data=cv_file.read(),
                                     b3_filename=b3_file.filename, b3_data=b3_file.read(),
                                     id_filename=id_file.filename, id_data=id_file.read(),
