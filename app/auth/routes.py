@@ -404,21 +404,21 @@ def profile_5(user_name):
             except:
                 flash('Something wrong happened', 'warning')
                 return redirect(url_for('auth.profile_5', user_name=user.username))
-        else:
-            if not user_uploads:
-                uploads = models.Upload(cv_filename=cv_file.filename, cv_data=cv_file.read(),
-                                        b3_filename=b3_file.filename, b3_data=b3_file.read(),
-                                        id_filename=id_file.filename, id_data=id_file.read(),
-                                        users=user.id)
 
-                db.session.add(uploads)
-                try:
-                    db.session.commit()
-                    flash('Files successfully uploaded', 'success')
-                    return redirect(url_for('auth.profile_5', user_name=user.username))
-                except:
-                    flash('Something wrong  happened or one or more files are missing! Try again.', 'warning')
-                    return redirect(url_for('auth.profile_5', user_name=user.username))
+        else:
+            uploads = models.Upload(cv_filename=cv_file.filename, cv_data=cv_file.read(),
+                                    b3_filename=b3_file.filename, b3_data=b3_file.read(),
+                                    id_filename=id_file.filename, id_data=id_file.read(),
+                                    users=user.id)
+
+            db.session.add(uploads)
+            try:
+                db.session.commit()
+                flash('Files successfully uploaded', 'success')
+                return redirect(url_for('auth.profile_5', user_name=user.username))
+            except:
+                flash('Something wrong  happened or one or more files are missing! Try again.', 'warning')
+                return redirect(url_for('auth.profile_5', user_name=user.username))
 
     return render_template('auth/profile_5.html', data=user, files=user_uploads, cv=cv_uploaded, b3=b3_uploaded, id=id_uploaded, legend='My Commitment')
 
