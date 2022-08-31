@@ -372,7 +372,7 @@ def profile_5(user_name):
     else:
         user = current_user.query.filter_by(username=user_name).first_or_404()
     user_uploads = models.Upload.query.all()
-    if user_uploads:
+    if user_uploads is not None:
         user_u = [u for u in user_uploads if u.users == user.id]
 
         if user_u.cv_filename:
