@@ -398,7 +398,7 @@ def profile_5(user_name):
             flash('Something wrong  happened or one or more files are missing! Try again.', 'warning')
             return redirect(url_for('auth.profile_5', user_name=user.username))
 
-    return render_template('auth/profile_5.html', data=user, files=user_uploads, legend='My Commitment')
+    return render_template('auth/profile_5.html', legend='My Commitment')
 
 
 @auth_bp.route('/user/<int:tutor_id>/dashboard')
