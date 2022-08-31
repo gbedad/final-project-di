@@ -322,7 +322,7 @@ def search_tutor(student_id):
                         #print("test_days", test_days)
                         if len(test_days[0]) > 0:
                             tutors_list.append(tutor)
-            tutors_list = set(tutors_list)
+            tutors_set = set(tutors_list)
 
     create_course_form.student.data = student_id
     create_course_form.tutor.choices = [(tutor.id, f'{tutor.first_name} {tutor.last_name}') for tutor in tutors_list]
@@ -362,7 +362,7 @@ def search_tutor(student_id):
             flash('Something wrong happened', 'warning')
             return redirect(url_for('course.course_list', student_id=student_selected.id))
 
-    return render_template('admin/adequate_tutor_for_student.html', student=student_selected, data=tutors_list, form=create_course_form, title='Show list of possible tutors', legend=f'Matching Tutor(s) for {student_selected.first_name} {student_selected.last_name}')
+    return render_template('admin/adequate_tutor_for_student.html', student=student_selected, data=tutors_set, form=create_course_form, title='Show list of possible tutors', legend=f'Matching Tutor(s) for {student_selected.first_name} {student_selected.last_name}')
 
 
 @admin_bp.route('/admin/courses/show_all')
