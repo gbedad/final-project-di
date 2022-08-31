@@ -59,13 +59,11 @@ Create User
 
         </div>
         <div class="row">
-            {% if current_user.role == 'superadmin' %}
             <div class="col-3">
                     <div class="form-outline">
                         {{ render_field(user_form.role) }}
                     </div>
             </div>
-            {% endif %}
             <div class="col-3">
                     <div class="form-outline">
                         {{ render_field(user_form.status) }}
