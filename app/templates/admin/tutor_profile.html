@@ -79,9 +79,9 @@
     <tbody>
     {% for subj in data.tutoring_exp.tutor_subjects %}
       <tr>
-        <td>{{subj.subject}}</td>
-        <td>{{subj.grade_from}}</td>
-        <td>{{subj.grade_to}}</td>
+        <td class="mb-0">{{subj.subject}}</td>
+        <td class="mb-0">{{subj.grade_from}}</td>
+        <td class="mb-0">{{subj.grade_to}}</td>
       </tr>
     {% endfor  %}
     </tbody>
@@ -98,7 +98,7 @@
     <tbody>
     {% for mod in data.tutoring_exp.tutor_modalities %}
       <tr>
-        <td>{{mod.modality}}</td>
+        <td class="mb-0">{{mod.modality}}</td>
       </tr>
     {% endfor  %}
     </tbody>

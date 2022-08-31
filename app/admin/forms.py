@@ -5,7 +5,7 @@ from ..auth.models import User, Modalities, Students, SubjectPossible, Availabil
 from ..auth.forms import SubjectsChoice, GradesChoice, INQUIRIES
 
 
-STATUS = [('1','created'), ('2','proposed'), ('3', 'documented'), ('4', 'preselected'), ('5', 'selected'), ('6', 'validated')]
+STATUS = [('0', 'canceled'), ('1','created'), ('2','proposed'), ('3', 'documented'), ('4', 'preselected'), ('5', 'selected'), ('6', 'validated')]
 DAYS = [('Monday', 'Monday'), ('Tuesday', 'Tuesday'), ('Wednesday', 'Wednesday'), ('Thursday', 'Thursday'), ('Friday', 'Friday'), ('Sunday', 'Sunday') ]
 
 
