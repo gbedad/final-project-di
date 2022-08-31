@@ -371,7 +371,7 @@ def profile_5(user_name):
         user = models.User.query.filter_by(username=user_name).first_or_404()
     else:
         user = current_user.query.filter_by(username=user_name).first_or_404()
-    user_uploads = list(models.Upload.query.all())
+    user_uploads =models.Upload.query.all()
     user_u = [u for u in user_uploads if u.users == user.id]
     #user_uploads = models.Upload.query.filter_by(users=user.id).first()
     #user_uploads = models.Upload.query.join(user.upload_id).filter_by(user_id=user.id).all()
