@@ -322,7 +322,7 @@ def search_tutor(student_id):
                         #print("test_days", test_days)
                         if len(test_days[0]) > 0:
                             tutors_list.append(tutor)
-            #print(tutors_list)
+            tutors_list = set(tutors_list)
 
     create_course_form.student.data = student_id
     create_course_form.tutor.choices = [(tutor.id, f'{tutor.first_name} {tutor.last_name}') for tutor in tutors_list]
