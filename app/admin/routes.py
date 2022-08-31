@@ -320,8 +320,8 @@ def search_tutor(student_id):
                         #print(tutor_filtered_days)
                         test_days = check_tuple_in_list(tutor, availability, tutor_filtered_days)
                         #print("test_days", test_days)
-                    if len(test_days[0]) > 0:
-                        tutors_list.append(tutor)
+                        if len(test_days[0]) > 0:
+                            tutors_list.append(tutor)
             #print(tutors_list)
 
     create_course_form.student.data = student_id
