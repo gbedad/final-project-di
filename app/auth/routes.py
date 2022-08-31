@@ -383,7 +383,7 @@ def profile_5(user_name):
         if user_uploads.id_filename:
             id_uploaded = True
 
-    if request.method == 'POST' and form.validate_on_submit():
+    if request.method == 'POST':
 
         cv_file = request.files['cv_file']
         b3_file = request.files['b3_file']
