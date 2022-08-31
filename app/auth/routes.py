@@ -378,7 +378,7 @@ def profile_5(user_name):
 
         cv_file = request.files['cv_file']
 
-        if not cv_file and not b3_file and not id_file:
+        if not cv_file:
             flash('Something wrong  happened or one or more files are missing! Try again.', 'warning')
             return redirect(url_for('auth.profile_5', user_name=user.username))
 
