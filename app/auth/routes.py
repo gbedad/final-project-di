@@ -364,9 +364,7 @@ def profile_4(user_name):
 @auth_bp.route('/user/<user_name>/profile_5', methods=['GET', 'POST'])
 @login_required
 def profile_5(user_name):
-    cv_uploaded = False
-    b3_uploaded = False
-    id_uploaded = False
+
     if current_user.role in ['admin', 'superadmin']:
         user = models.User.query.filter_by(username=user_name).first_or_404()
     else:
@@ -386,8 +384,7 @@ def profile_5(user_name):
         #b3_f = secure_filename(b3_file.filename)
         #id_f = secure_filename(id_file.filename)
 
-        uploads = models.Upload(cv_filename=cv_f, cv_data=cv_file.read(),
-                                users=user.id)
+        uploads = models.Upload(cv_filename=cv_f, cv_data=cv_file.read())
 
         db.session.add(uploads)
         try:
