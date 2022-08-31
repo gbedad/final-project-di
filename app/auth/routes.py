@@ -381,6 +381,8 @@ def profile_5(user_name):
             b3_uploaded = True
         if user_u.id_filename:
             id_uploaded = True
+    else:
+        user_u = None
 
     if request.method == 'POST':
 
