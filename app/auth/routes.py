@@ -376,13 +376,13 @@ def profile_5(user_name):
         user_u = [u for u in user_uploads if u.users == user.id]
     #user_uploads = models.Upload.query.filter_by(users=user.id).first()
     #user_uploads = models.Upload.query.join(user.upload_id).filter_by(user_id=user.id).all()
-    if user_u:
-        if user_u.cv_filename:
-            cv_uploaded = True
-        if user_u.b3_filename:
-            b3_uploaded = True
-        if user_u.id_filename:
-            id_uploaded = True
+        if user_u:
+            if user_u.cv_filename:
+                cv_uploaded = True
+            if user_u.b3_filename:
+                b3_uploaded = True
+            if user_u.id_filename:
+                id_uploaded = True
 
     if request.method == 'POST':
 
