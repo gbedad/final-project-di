@@ -2,7 +2,7 @@ import datetime
 
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, SelectMultipleField, SelectField, widgets,\
-     TextAreaField, validators, IntegerField, IntegerRangeField, TimeField, TelField, FieldList, FormField, Form
+     TextAreaField, validators, IntegerField, IntegerRangeField, TimeField, TelField, FieldList, FormField, Form, FileField
 from wtforms.validators import ValidationError, DataRequired, Email, EqualTo, Regexp, NumberRange
 from wtforms.fields import DateField
 from .models import User, Subjects, Grades, Interviews, Modalities, SubjectsGrades, Availabilities, ModalitiesPossible, SubjectPossible, Tutoring
@@ -126,7 +126,10 @@ class ValidateInterviewDateForm(FlaskForm):
 
 
 class ProfilePage5Form(FlaskForm):
-    pass
+    cv_filename = FileField('CV File')
+    b3_filename = FileField('B3 File')
+    id_filename = FileField('ID File')
+    submit = SubmitField('Upload')
 
 
 class AddAvailabilitiesToTutor(FlaskForm):
