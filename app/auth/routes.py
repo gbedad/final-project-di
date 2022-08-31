@@ -371,7 +371,7 @@ def profile_5(user_name):
         user = models.User.query.filter_by(username=user_name).first_or_404()
     else:
         user = current_user.query.filter_by(username=user_name).first_or_404()
-    user_uploads = models.Upload.query.all()
+    user_uploads = list(models.Upload.query.all())
     user_u = [u for u in user_uploads if u.users == user.id]
     #user_uploads = models.Upload.query.filter_by(users=user.id).first()
     #user_uploads = models.Upload.query.join(user.upload_id).filter_by(user_id=user.id).all()
@@ -419,7 +419,7 @@ def profile_5(user_name):
                 flash('Something wrong  happened or one or more files are missing! Try again.', 'warning')
                 return redirect(url_for('auth.profile_5', user_name=user.username))
 
-    return render_template('auth/profile_5.html', data=user, files=user_uploads, form=form, cv=cv_uploaded, b3=b3_uploaded, id=id_uploaded, legend='My Commitment')
+    return render_template('auth/profile_5.html', data=user, files=user_uploads, cv=cv_uploaded, b3=b3_uploaded, id=id_uploaded, legend='My Commitment')
 
 
 @auth_bp.route('/user/<int:tutor_id>/dashboard')
