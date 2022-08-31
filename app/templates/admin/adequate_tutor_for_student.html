@@ -23,7 +23,7 @@
         <tbody>
         {% for subject in student.student_subjects %}
           <tr>
-            <td>{{subject.subject_name}}</td
+            <td>{{subject.subject_name}}</td>
           </tr>
         {% endfor %}
         </tbody>
@@ -56,7 +56,7 @@
 
   <div class="col-8">
     <div class="row row-cols-1 row-cols-md-2 g-4">
-        {% if data ==[] %}
+        {% if data =={} %}
         <div class="card" style="width: 18rem;">
             <i class="bi bi-emoji-frown text-warning text-center fs-1"></i>
             <div class="card-body">
