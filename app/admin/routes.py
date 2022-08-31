@@ -325,7 +325,7 @@ def search_tutor(student_id):
             tutors_set = set(tutors_list)
 
     create_course_form.student.data = student_id
-    create_course_form.tutor.choices = [(tutor.id, f'{tutor.first_name} {tutor.last_name}') for tutor in tutors_list]
+    create_course_form.tutor.choices = [(tutor.id, f'{tutor.first_name} {tutor.last_name}') for tutor in tutors_set]
 
     if request.method == 'POST' and create_course_form.validate_on_submit():
         stud = create_course_form.student.data
