@@ -17,8 +17,6 @@
       <th scope="col">Phone</th>
       <th scope="col">Birth Date</th>
       <th scope="col">Source</th>
-      <th scope="col" class="col-1">From</th>
-      <th scope="col" class="col-1">To</th>
       <th scope="col">Eng.</th>
       <th scope="col" class="col">Mods.</th>
       <th scope="col">Status</th>
@@ -36,8 +34,6 @@
       <td>{{tutor.my_info.phone}}</td>
       <td>{{tutor.my_info.birth_date}}</td>
       <td>{{tutor.more.inquiry}}</td>
-      <td>{{tutor.tutoring_exp.start_date}}</td>
-      <td>{{tutor.tutoring_exp.end_date}}</td>
       <td>{{tutor.tutoring_exp.engagement}}</td>
       <td>
         {% for mod in tutor.tutoring_exp.tutor_modalities %}
