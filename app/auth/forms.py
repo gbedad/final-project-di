@@ -110,11 +110,11 @@ class ProfilePage3Form(FlaskForm):
 
 
 class ProfilePage4Form(FlaskForm):
-    why = TextAreaField('Why', validators=[DataRequired(), validators.length(max=400)],
+    why = TextAreaField('Why', validators=[DataRequired(), validators.length(max=600)],
                         render_kw={"placeholder": "Why do I apply for such a tutorship mission?"})
-    experience = TextAreaField('Experience', validators=[DataRequired(), validators.length(max=400)],
+    experience = TextAreaField('Experience', validators=[DataRequired(), validators.length(max=600)],
                         render_kw={"placeholder": "Do I have already experience of tutorship in the education field?"})
-    when = TextAreaField('When', validators=[DataRequired(), validators.length(max=400)],
+    when = TextAreaField('When', validators=[DataRequired(), validators.length(max=600)],
                         render_kw={"placeholder": "When do I want to be contacted?"})
     inquiry = SelectField('How did you learn about us', validators=[DataRequired()], choices=INQUIRIES)
     submit = SubmitField('Save')
