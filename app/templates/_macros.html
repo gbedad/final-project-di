@@ -13,11 +13,6 @@
 
 {% macro render_field_wo_label(field) %}
   {{ field(class="form-control", **kwargs)|safe }}
-{% endmacro %}
-
-{% macro render_fields(field) %}
-  {{ field.label(class="form-label") }}<br>
-  {{ field(class="form-control", style="list-style:none", **kwargs)|safe }}
   {% if field.errors %}
     <ul class=errors>
     {% for error in field.errors %}
@@ -25,6 +20,12 @@
     {% endfor %}
     </ul>
   {% endif %}
+{% endmacro %}
+
+{% macro render_fields(field) %}
+  {{ field.label(class="form-label") }}<br>
+  {{ field(class="form-control", style="list-style:none", **kwargs)|safe }}
+
 {% endmacro %}
 
 {% macro switch_status(st) %}
