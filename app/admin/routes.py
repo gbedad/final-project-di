@@ -77,6 +77,7 @@ def get_tutor_by_id(tutor_id):
             update_interviews = models.Interviews(interview_date=interview_form.interview_date.data, interview_time=interview_form.interview_time.data,
                                                   interviewer=interview_form.interviewer.data,
                                                   message=interview_form.message.data, user=selected_tutor)
+            selected_tutor.status = '4'
             db.session.add(update_interviews)
             db.session.commit()
         try:
