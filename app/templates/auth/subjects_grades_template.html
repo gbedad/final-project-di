@@ -33,7 +33,7 @@
             <tbody>
             {% for subj in data.tutoring_exp.tutor_subjects %}
             <tr>
-                {% if sub.subject.data == '' %}
+                {% if subj.subject.data == '' %}
                 <td class="desc"></td>
                 {% else %}
                 <td class="desc">{{ subj.subject }}</td>
