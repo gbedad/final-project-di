@@ -328,7 +328,7 @@ def profile_3(user_name):
             update_more = models.MoreAboutMe(why=request.form["why"], when=request.form["when"],
                                              inquiry=request.form["inquiry"], experience=request.form["experience"], user=user)
 
-            if user.tutoring_exp:
+            if user.tutoring_exp.tutor_availabilities and user.tutoring_exp.tutor_modalities and user.tutoring_exp.tutor_subjects:
                 user.status = '3'
 
             db.session.add(update_more)
