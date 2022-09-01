@@ -58,6 +58,7 @@
     </div>
     <hr>
     {%  if data.tutoring_exp.engagement %}
+    <div class="col-12">
         <div class="row mb-2">
             <div class="col-9">
                 {% include 'auth/subjects_grades_template.html' %}
@@ -72,6 +73,7 @@
                 {% include 'auth/availability_template.html' %}
             </div>
         </div>
+    </div>
     {% endif %}
 
 {% endblock %}
