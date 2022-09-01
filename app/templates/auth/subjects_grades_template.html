@@ -3,8 +3,12 @@
         {{ subjects_form.hidden_tag() }}
         <div class="row mb-0">
             <div class="col-3">
-           {{ render_field(subjects_form.subject)}}
-        </div>
+                {% if subjects_form.subject.data  == '' %}
+                <p>--</p>
+                {% else %}
+                {{ render_field(subjects_form.subject)}}
+                {% endif %}
+            </div>
             <div class="col-2">
                 {{render_field(subjects_form.grade_from)}}
             </div>
@@ -33,11 +37,7 @@
             <tbody>
             {% for subj in data.tutoring_exp.tutor_subjects %}
             <tr>
-                {% if subj.subject.data == '' %}
-                <td class="desc"></td>
-                {% else %}
                 <td class="desc">{{ subj.subject }}</td>
-                {% endif %}
                 <td class="desc">{{ subj.grade_from}}</td>
                 <td class="desc">{{ subj.grade_to}}</td>
                 <td class="desc"><a href="{{url_for('auth.delete_subject', subject_id=subj.id)}}"><i class="bi bi-trash ml-4 text-danger"></i></a></td>
