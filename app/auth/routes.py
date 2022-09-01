@@ -20,8 +20,9 @@ def login():
     if current_user.is_authenticated:
         return redirect(url_for('main.index'))
     form = forms.LoginForm()
+    user = models.User.query.filter_by(email=form.email.data).first()
     if form.validate_on_submit():
-        user = models.User.query.filter_by(email=form.email.data).first()
+
         if user is None or not user.check_password(form.password.data):
             flash('Invalid username or password', 'warning')
             return redirect(url_for('login'))
