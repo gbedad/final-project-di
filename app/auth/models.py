@@ -134,10 +134,10 @@ class Tutoring(db.Model):
 
 class MoreAboutMe(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    why = db.Column(db.String(500))
-    when = db.Column(db.String(500))
-    inquiry = db.Column(db.String(510))
-    experience = db.Column(db.String(500))
+    why = db.Column(db.String(250))
+    when = db.Column(db.String(250))
+    inquiry = db.Column(db.String(64))
+    experience = db.Column(db.String(250))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), unique=True)
 
 
