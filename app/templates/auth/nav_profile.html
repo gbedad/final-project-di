@@ -10,7 +10,7 @@
     <a class="{{'nav-link link-info' if  current_user.status >= '2' else 'nav-link disabled' }}" href="{{url_for('auth.profile_2', user_name=current_user.username)}}"><i class="bi bi-2-circle m-1"></i>How I can Help</a>
   </li>
   <li class="nav-item">
-    <a class="{{'nav-link link-info' if  current_user.status >= '3' else 'nav-link disabled' }}" href="{{url_for('auth.profile_3', user_name=current_user.username)}}"><i class="bi bi-3-circle m-1"></i>More About Me</a>
+    <a class="{{'nav-link link-info' if  current_user.status >= '2' else 'nav-link disabled' }}" href="{{url_for('auth.profile_3', user_name=current_user.username)}}"><i class="bi bi-3-circle m-1"></i>More About Me</a>
   </li>
   <li class="nav-item">
     <a class="{{'nav-link link-info' if  current_user.status >= '4' else 'nav-link disabled' }}" href="{{url_for('auth.profile_4', user_name=current_user.username)}}"><i class="bi bi-4-circle m-1"></i>My Interviews</a>
