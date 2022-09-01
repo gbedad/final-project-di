@@ -97,7 +97,7 @@ def get_tutor_by_id(tutor_id):
 
     return render_template('admin/tutor_view.html', data=selected_tutor, status_form=status_form,
                            interview_form=interview_form, title='View Tutor',
-                           legend=f'{selected_tutor.username} information')
+                           legend=f'{selected_tutor.first_name} {selected_tutor.last_name} information')
 
 
 @admin_bp.route('/admin/students/create', methods=['GET', 'POST'])
