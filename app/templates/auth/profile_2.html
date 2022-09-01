@@ -61,7 +61,7 @@
     </div>
 
 <hr>
-    {%  if data.engagement %}
+    {%  if data.engagement is not None %}
         <div class="row mb-2">
             <div class="col">
                 {% include 'auth/subjects_grades_template.html' %}
