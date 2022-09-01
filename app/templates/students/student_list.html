@@ -41,8 +41,8 @@ Create Student
       <td>{{ student.grade }}</td>
       <td>{{ student.modality }}</td>
       <td><a href="{{url_for('admin.update_student', student_id=student.id)}}"><i class="bi bi-pencil-square text-decoration-none desc"></i></a></td>
-      <td class="{{'text-warning' if not student.student_subjects}}"><a href="{{url_for('admin.add_subject', student_id=student.id)}}"><i class="bi bi-journal-text text-decoration-none desc"></i></a></td>
-      <td class="{{'text-warning' if not student.student_availabilities}}"><a href="{{url_for('admin.add_availabilities', student_id=student.id)}}"><i class="bi bi-calendar-day text-decoration-none desc"></i></a></td>
+      <td><a href="{{url_for('admin.add_subject', student_id=student.id)}}"><i class="{{'bi bi-journal-text text-decoration-none desc' if not student.student_subjects else 'bi bi-journal-text text-decoration-none desc'}}"></i></a></td>
+      <td><a href="{{url_for('admin.add_availabilities', student_id=student.id)}}"><i class="{{'bi bi-journal-text text-decoration-none desc' if not student.student_availabilities else bi bi-calendar-day text-decoration-none desc}}"></i></a></td>
       {% if not student.student_subjects or not student.student_availabilities %}
       <td><i class="bi bi-info-circle desc"></i></td>
       {% else %}
