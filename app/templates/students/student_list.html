@@ -44,7 +44,7 @@ Create Student
       <td><a href="{{url_for('admin.add_subject', student_id=student.id)}}"><i class="bi bi-file-earmark-plus text-decoration-none desc"></i></a></td>
       <td><a href="{{url_for('admin.add_availabilities', student_id=student.id)}}"><i class="bi bi-calendar-day text-decoration-none desc"></i></a></td>
       {% if not student.student_subjects or not student.student_availabilities %}
-      <td>Not</td>
+      <td  class="muted"><i class="bi bi-info-circle"></i><a href="#" data-bs-toggle="tooltip" data-bs-title="Missing Information, subjects or availabilities!"></a></td>
       {% else %}
       <td><a href="{{url_for('admin.search_tutor', student_id=student.id)}}"><i class="bi bi-binoculars text-decoration-none desc"></i></a></td>
       {% endif %}
