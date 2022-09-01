@@ -56,13 +56,7 @@ def get_tutor_by_id(tutor_id):
     tutor_interviews = selected_tutor.my_interviews
 
     if status_form.validate_on_submit():
-
-        if selected_tutor.more:
-            selected_tutor.status = 'documented'
-        elif selected_tutor.my_interviews:
-            selected_tutor.status = 'selected'
-        else:
-            selected_tutor.status = status_form.status.data
+        selected_tutor.status = status_form.status.data
         try:
             db.session.commit()
             flash('Status Updated successfully', 'success')
