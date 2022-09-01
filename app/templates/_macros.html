@@ -1,13 +1,16 @@
 {% macro render_field(field) %}
   {{ field.label(class="form-label desc mb-0") }}<br>
   {{ field(class="form-control", **kwargs)|safe }}
-  {% if field.errors %}
+  {% if field.data == '' %}
+    <span></span>
+  {% elif field.errors %}
     <ul class=errors>
     {% for error in field.errors %}
       <li>{{ error }}</li>
     {% endfor %}
     </ul>
   {% endif %}
+{% endif %}
 {% endmacro %}
 
 {% macro render_field_wo_label(field) %}
