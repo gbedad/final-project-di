@@ -9,7 +9,7 @@
 </div>
 {% if current_user_role == 'supervisor' %}
 {% include 'auth/nav_profile.html' %}
-{% else %}
+{% elif current_user.role in ['admin', 'superadmin'] %}
 {% include 'admin/admin_nav_profile_user.html' %}
 {% endif %}
 <hr>
