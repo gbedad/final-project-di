@@ -141,11 +141,6 @@ class MoreAboutMe(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), unique=True)
 
 
-class TestTable(db.Model):
-    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    check_migrate = db.Column(db.String(500))
-
-
 class Upload(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     cv_filename = db.Column(db.String(100))
