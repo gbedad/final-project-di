@@ -109,17 +109,6 @@ class ProfilePage3Form(FlaskForm):
     submit = SubmitField('Save')
 
 
-class ProfilePage4Form(FlaskForm):
-    why = TextAreaField('Why', validators=[DataRequired(), validators.length(max=600)],
-                        render_kw={"placeholder": "Why do I apply for such a tutorship mission?"})
-    experience = TextAreaField('Experience', validators=[DataRequired(), validators.length(max=600)],
-                        render_kw={"placeholder": "Do I have already experience of tutorship in the education field?"})
-    when = TextAreaField('When', validators=[DataRequired(), validators.length(max=600)],
-                        render_kw={"placeholder": "When do I want to be contacted?"})
-    inquiry = SelectField('How did you learn about us', validators=[DataRequired()], choices=INQUIRIES)
-    submit = SubmitField('Save')
-
-
 class ValidateInterviewDateForm(FlaskForm):
     is_accepted = BooleanField(false_values=(False, 'false', 0, '0'))
     submit = SubmitField('Confirm')
