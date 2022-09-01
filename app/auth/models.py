@@ -136,9 +136,14 @@ class MoreAboutMe(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     why = db.Column(db.String(500))
     when = db.Column(db.String(500))
-    inquiry = db.Column(db.String(500))
+    inquiry = db.Column(db.String(510))
     experience = db.Column(db.String(500))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), unique=True)
+
+
+class TestTable(db.Model):
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    check_migrate = db.Column(db.String(500))
 
 
 class Upload(db.Model):
