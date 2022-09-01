@@ -316,7 +316,6 @@ def profile_3(user_name):
             more_about.when = request.form["when"]
             more_about.inquiry = form.inquiry.data
             more_about.experience = request.form["experience"]
-            user.status = 'documented'
 
             try:
                 db.session.commit()
@@ -328,7 +327,7 @@ def profile_3(user_name):
         else:
             update_more = models.MoreAboutMe(why=request.form["why"], when=request.form["when"],
                                              inquiry=request.form["inquiry"], experience=request.form["experience"], user=user)
-            user.status = 'documented'
+            user.status = '3'
 
             db.session.add(update_more)
             db.session.commit()
