@@ -316,7 +316,7 @@ def profile_3(user_name):
             more_about.when = request.form["when"]
             more_about.inquiry = form.inquiry.data
             more_about.experience = request.form["experience"]
-
+            user.status = 'documented'
 
             try:
                 db.session.commit()
