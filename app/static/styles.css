@@ -106,4 +106,5 @@ p {
 }
 .table-fixed thead tr{
   display:block;
+  width: 100%;
 }
