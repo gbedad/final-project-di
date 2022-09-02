@@ -37,7 +37,7 @@
       <td>{{tutor.more.inquiry}}</td>
       <td>{{tutor.tutoring_exp.subjects}}</td>
             <td>
-        {% for item in tutor.tutoring_exp.tutor_subjects %}
+        {% for item in tutor.tutoring_exp.tutor_subjects[0:1] %}
         <p class="mb-0">{{item.subject}}</p>
         {% endfor %}
       </td>
