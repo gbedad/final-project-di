@@ -97,13 +97,6 @@ p {
     margin-bottom: 0px;
 }
 
-/*
-*
-* ==========================================
-* CUSTOM UTIL CLASSES
-* ==========================================
-*
-*/
 .table-fixed tbody {
     height: 400px;
     overflow-y: auto;
