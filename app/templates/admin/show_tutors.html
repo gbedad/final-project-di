@@ -26,10 +26,10 @@
       <th scope="col">Select</th>
     </tr>
   </thead>
-          <tbody >
-  {% for tutor in data %}
+          <tbody style="height:500px" >
+              {% for tutor in data %}
 
-    <tr style="font-size:0.8rem" >
+              <tr style="font-size:0.8rem" >
 
       <td >{{tutor.first_name}}</td>
       <td>{{tutor.last_name}}</td>
@@ -57,8 +57,8 @@
 
     </tr>
 
-  {% endfor %}
-  </tbody>
+              {% endfor %}
+          </tbody>
       </table>
     </div>
   </div>
