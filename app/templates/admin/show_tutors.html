@@ -18,6 +18,7 @@
       <th scope="col">Birth Date</th>
       <th scope="col">Source</th>
       <th scope="col">Eng.</th>
+      <th scope="col">Subjects</th>
       <th scope="col" class="col">Mods.</th>
       <th scope="col">Status</th>
       <th scope="col">Select</th>
@@ -34,7 +35,12 @@
       <td>{{tutor.my_info.phone}}</td>
       <td>{{tutor.my_info.birth_date}}</td>
       <td>{{tutor.more.inquiry}}</td>
-      <td>{{tutor.tutoring_exp.engagement}}</td>
+      <td>{{tutor.tutoring_exp.subjects}}</td>
+            <td>
+        {% for item in tutor.tutoring_exp.tutor_subjects %}
+        <p class="mb-0">{{item.subject}}</p>
+        {% endfor %}
+      </td>
       <td>
         {% for mod in tutor.tutoring_exp.tutor_modalities %}
         <p class="mb-0">{{mod.modality}}</p>
