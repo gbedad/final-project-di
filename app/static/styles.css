@@ -102,9 +102,7 @@ p {
   display:block;
   overflow:auto;
   height:400px;
-  width:100%;
 }
 .table-fixed thead {
   display:block;
-  width: 100%;
 }
