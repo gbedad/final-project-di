@@ -99,7 +99,7 @@ p {
 
 
 
-tbody {
+.table-fixed tbody {
     display: block;
     height: 500px;
     overflow: auto;
