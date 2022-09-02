@@ -98,7 +98,7 @@ p {
 }
 
 
-.table-fixed tbody {
+.tbody {
     height: 500px;
     overflow: auto;
     width: 100%;
