@@ -27,7 +27,7 @@
   <tbody >
   {% for tutor in data %}
 
-    <tr style="font-size:0.8rem" max-height="50px">
+    <tr style="font-size:0.8rem" max-height="40px">
 
       <td >{{tutor.first_name}}</td>
       <td>{{tutor.last_name}}</td>
@@ -36,12 +36,12 @@
       <td>{{tutor.my_info.birth_date}}</td>
       <td>{{tutor.more.inquiry}}</td>
       <td>{{tutor.more.engagement}}</td>
-      <td>
+      <td class="overflow-hidden">
         {% for item in tutor.tutoring_exp.tutor_subjects %}
         <p class="mb-0">{{item.subject}}</p>
         {% endfor %}
       </td>
-      <td>
+      <td class="overflow-hidden">
         {% for mod in tutor.tutoring_exp.tutor_modalities %}
         <p class="mb-0">{{mod.modality}}</p>
         {% endfor %}
