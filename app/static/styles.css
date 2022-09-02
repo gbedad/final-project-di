@@ -99,6 +99,6 @@ p {
 
 .table-fixed tbody {
     height: 200px;
-    overflow-y: auto;
+    overflow: auto;
     width: 100%;
 }
