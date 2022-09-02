@@ -46,9 +46,11 @@
         </div>
       </td>
       <td>
+        <div style="height: 40px; overflow:scroll;">
         {% for mod in tutor.tutoring_exp.tutor_modalities %}
         <p class="mb-0">{{mod.modality}}</p>
         {% endfor %}
+        </div>
       </td>
       <td>{{switch_status(tutor.status)}}</td>
       <td><a href="{{url_for('admin.get_tutor_by_id', tutor_id=tutor.id)}}"><i class="bi bi-gear-fill text-decoration-none text-info"></i></a></td>
