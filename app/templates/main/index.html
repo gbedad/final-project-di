@@ -14,14 +14,14 @@
       <p class="desc">Please go to your Profile and My Interviews section to see details and confirm with checkbox.</p>
     {% endif %}
 {% elif current_user.role in ['admin', 'superadmin'] and num_new > 0 %}
-<p class="legend-color">{{num_new}} tutor(s) have registered on the app. Thereafter, you  can find the list:</p>
+<p class="legend-color">{{num_new}} tutor(s) have registered on the platform.</p>
     <ul>
     {% for tutor in data %}
       <li><span  class="desc">Username: </span>{{tutor.username}}, <span class="desc">Email: </span>{{tutor.email}}</li>
     {% endfor %}
     </ul>
 
-<p class="legend-color">Some tutor(s) have documented on the app. Thereafter, you  can find the list:</p>
+<p class="legend-color">{{num_documented}} tutor(s) have documented on the platform.</p>
     <ul>
     {% for tutor in doc %}
       <li><span  class="desc">Username: </span>{{tutor.username}}, <span class="desc">Email: </span>{{tutor.email}}</li>
