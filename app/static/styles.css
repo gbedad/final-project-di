@@ -97,12 +97,8 @@ p {
     margin-bottom: 0px;
 }
 
-
 .table-fixed tbody {
-  display:block;
-  overflow:auto;
-  height:400px;
-}
-.table-fixed thead {
-  display:block;
+    height: 300px;
+    overflow-y: auto;
+    width: 100%;
 }
