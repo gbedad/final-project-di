@@ -38,9 +38,9 @@
       <td>{{tutor.my_info.birth_date}}</td>
       <td>{{tutor.more.inquiry}}</td>
       <td>{{tutor.more.engagement}}</td>
-      <td>
+      <td height="40">
         {% for item in tutor.tutoring_exp.tutor_subjects %}
-        <p class="mb-0">{{item.subject}}</p>
+        <p class="mb-0" style="height: 40px; overflow: auto">{{item.subject}}</p>
         {% endfor %}
       </td>
       <td>
