@@ -21,6 +21,13 @@
     {% endfor %}
     </ul>
 
+<p class="legend-color">Some tutor(s) have documented on the app. Thereafter, you  can find the list:</p>
+    <ul>
+    {% for tutor in doc %}
+      <li><span  class="desc">Username: </span>{{tutor.username}}, <span class="desc">Email: </span>{{tutor.email}}</li>
+    {% endfor %}
+    </ul>
+
 {% endif  %}
 
 {% endblock %}
