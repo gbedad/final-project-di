@@ -35,7 +35,7 @@
       <td>{{tutor.my_info.phone}}</td>
       <td>{{tutor.my_info.birth_date}}</td>
       <td>{{tutor.more.inquiry}}</td>
-      {% if tutor.tutoring_exp.subjects is not None %}
+      {% if len(tutor.tutoring_exp.subjects) > 0 %}
       <td>
         {% for item in tutor.tutoring_exp.tutor_subjects[:2] %}
         <p class="mb-0">{{item.subject}}</p>
