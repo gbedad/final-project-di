@@ -27,7 +27,7 @@
     </thead>
     <tbody>
         {% for tutor in data %}
-        <a href="{{url_for('get_tutor_by_id', tutor_id=tutor.id)}}">
+        <a href="{{url_for('admin.get_tutor_by_id', tutor_id=tutor.id)}}">
         <tr>
             <td>{{tutor.first_name}}</td>
             <td>{{tutor.last_name}}</td>
