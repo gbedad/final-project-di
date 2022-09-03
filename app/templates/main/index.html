@@ -15,7 +15,7 @@
     {% endif %}
 {% elif current_user.role in ['admin', 'superadmin'] and num_new > 0 %}
 <p class="legend-color">{{num_new}} tutor(s) have registered on the platform.</p>
-<table class="mb-2 sm">
+<table class="table table-sm mb-2">
     <thead>
         <tr>
             <th scope="col">First Name</th>
