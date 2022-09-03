@@ -24,7 +24,8 @@
             <th scope="col">Created at</th>
         </tr>
     </thead>
-    {% for tutor in data %}
+    <tbody>
+        {% for tutor in data %}
         <tr>
             <td>{{tutor.first_name}}</td>
             <td>{{tutor.last_name}}</td>
@@ -32,15 +33,8 @@
             <td>{{tutor.created_at.strftime('%Y-%m-%d')}}</td>
         </tr>
     {% endfor %}
-    <tbody>
-
     </tbody>
 </table>
-    <ul>
-    {% for tutor in data %}
-      <li><span  class="desc">Username: </span>{{tutor.username}}, <span class="desc">Email: </span>{{tutor.email}} <span class="desc">Date: </span>{{tutor.created_at.strftime('%Y-%m-%d')}}</li>
-    {% endfor %}
-    </ul>
 
 <p class="legend-color">{{num_documented}} tutor(s) have documented on the platform.</p>
     <ul>
