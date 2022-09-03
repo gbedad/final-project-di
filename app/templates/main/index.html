@@ -33,7 +33,7 @@
             <td>{{tutor.last_name}}</td>
             <td>{{tutor.email}}</td>
             <td>{{tutor.created_at.strftime('%Y-%m-%d')}}</td>
-            <td><a href="{{url_for('admin.get_tutor_by_id', tutor_id=tutor.id)}}"><i class="bi bi-box-arrow-up-right"></i></a></td>
+            <td><a href="{{url_for('admin.get_tutor_by_id', tutor_id=tutor.id)}}"><i class="bi bi-box-arrow-right text-secondary"></i></a></td>
         </tr>
 
     {% endfor %}
