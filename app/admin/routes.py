@@ -383,8 +383,8 @@ def create_user():
     user_form = ad_forms.CreateUserForm()
     if user_form.validate_on_submit():
         username = user_form.username.data
-        first_name = user_form.first_name.data
-        last_name = user_form.last_name.data
+        first_name = user_form.first_name.data.title()
+        last_name = user_form.last_name.data.title()
         email = user_form.email.data
         role = user_form.role.data if user_form.role.data else "supervisor"
         status = user_form.status.data
