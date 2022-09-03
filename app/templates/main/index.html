@@ -17,7 +17,7 @@
 <p class="legend-color">{{num_new}} tutor(s) have registered on the platform.</p>
     <ul>
     {% for tutor in data %}
-      <li><span  class="desc">Username: </span>{{tutor.username}}, <span class="desc">Email: </span>{{tutor.email}}</li>
+      <li><span  class="desc">Username: </span>{{tutor.username}}, <span class="desc">Email: </span>{{tutor.email}} <span class="desc">Date: </span>{{tutor.created_at}}</li>
     {% endfor %}
     </ul>
 

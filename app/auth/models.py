@@ -4,6 +4,7 @@ from app import db, login_manager, flask_app
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 import app.course.models as mod
+from sqlalchemy.sql import func
 
 import time
 import jwt
@@ -52,6 +53,7 @@ class User(UserMixin, db.Model):
     user_subjects = db.relationship('Subjects', secondary=subjects_table, back_populates='all_users')
     my_interviews = db.relationship('Interviews', backref='user', uselist=False)
     courses = db.relationship('Course', secondary=tutor_course_table, back_populates='tutor')
+    created_at = db.Column(db.DateTime(timezone=True), server_default=func.now())
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
