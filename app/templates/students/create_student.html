@@ -50,7 +50,7 @@ Create Student
             <div class="col-2">
                     <div class="form-outline">
                         {{ form.phone.label(class="form-label desc mb-0") }}<br>
-                        {{ form.phone(size=64, class="form-control", placeholder="0_________") }}
+                        {{ form.phone(size=64, class="form-control", placeholder="0---------") }}
                         {% for error in form.phone.errors %}
                         <span class="danger">[{{ error }}]</span>
                         {% endfor %}
