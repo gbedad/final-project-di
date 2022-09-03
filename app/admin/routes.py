@@ -111,8 +111,8 @@ def create_student():
     form = ad_forms.CreateStudentForm()
 
     if form.validate_on_submit():
-        first_name = form.first_name.data
-        last_name = form.last_name.data
+        first_name = form.first_name.data.title()
+        last_name = form.last_name.data.title()
         email = form.email.data
         phone = form.phone.data
         phone_parents = form.phone_parents.data
