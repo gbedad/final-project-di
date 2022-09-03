@@ -3,7 +3,7 @@ import datetime
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, SelectMultipleField, SelectField, widgets,\
      TextAreaField, validators, IntegerField, IntegerRangeField, TimeField, TelField, FieldList, FormField, Form, FileField
-from wtforms.validators import ValidationError, DataRequired, Email, EqualTo, Regexp, NumberRange
+from wtforms.validators import ValidationError, DataRequired, Email, EqualTo, Regexp, NumberRange, Length
 from wtforms.fields import DateField
 from .models import User, Subjects, Grades, Interviews, Modalities, SubjectsGrades, Availabilities, ModalitiesPossible, SubjectPossible, Tutoring
 
@@ -78,7 +78,7 @@ class ProfilePage1Form(FlaskForm):
     zipcode = StringField('Zipcode', validators=[DataRequired()])
     city = StringField('City', validators=[DataRequired()])
     email2 = StringField('Email 2')
-    phone = TelField('Phone', validators=[DataRequired()])
+    phone = TelField('Phone', validators=[DataRequired(), Length(min=10, max=10),Regexp(regex='^[+-]?[0-9]$')])
     short_text = TextAreaField(u'Please feel free to add any comment', validators=[validators.optional(), validators.length(max=400)])
     birth_date = DateField('Birth Date', format='%Y-%m-%d')
     submit = SubmitField('Save')
