@@ -40,7 +40,7 @@
     <p class="mb-1"><span class="mb-0 desc">Engagement: </span><br>{{data.tutoring_exp.engagement}}</p>
     <p class="mb-1"><span class="mb-0 desc">From: </span><br>{{data.tutoring_exp.start_date}}</p>
     <p class="mb-1"><span class="mb-0 desc">To: </span><br>{{data.tutoring_exp.end_date}}</p>
-    <p class="mb-1"><span class="mb-0 desc">Frequency: </span><br>{{data.tutoring_exp.frequency}} <span class="desc">{%  'h/week' if data.tutoring_exp.frequency else '' %}</span></p>
+    <p class="mb-1"><span class="mb-0 desc">Frequency: </span><br>{{data.tutoring_exp.frequency}} <span class="desc">{% if data.tutoring_exp.frequency %}h/week {% else %} ''</span></p>
   </div>
 </div>
 
