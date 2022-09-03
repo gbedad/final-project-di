@@ -50,15 +50,11 @@ Create Student
             <div class="col-2">
                     <div class="form-outline">
                         {{ form.phone.label(class="form-label desc mb-0") }}<br>
-                        {{ form.phone(size=64, class="form-control", pattern="[0-9]{2} [0-9]{2} [0-9]{2} [0-9]{2}") }}
+                        {{ form.phone(size=64, class="form-control", placeholder="8888888888") }}
                         {% for error in form.phone.errors %}
                         <span class="danger">[{{ error }}]</span>
                         {% endfor %}
                     </div>
-            </div>
-            <div class="col-2">
-                <input type="tel" name="telphone" placeholder="888 888 8888" pattern="[0-9]{3} [0-9]{3} [0-9]{4}" maxlength="12"  title="Ten digits code" required/>
-      <label style="font-size:9px;padding-left:20px"> Eg : 081 222 2224  </label>
             </div>
             <div class="col-2">
                     <div class="form-outline">
