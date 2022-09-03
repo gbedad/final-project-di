@@ -108,7 +108,7 @@ class CreateUserForm(FlaskForm):
     last_name = StringField('Last Name', validators=[DataRequired()])
     role = SelectField('Role', choices=['supervisor'])
     email = StringField('Email')
-    status = SelectField('Status', choices=STATUS)
+    status = SelectField(u'Status', choices=STATUS, default=('1', "created"))
 
     submit = SubmitField('Create User')
 
