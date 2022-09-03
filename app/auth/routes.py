@@ -53,7 +53,7 @@ def register():
         if check_user:
             flash('This email already existing, login', 'danger')
             return redirect(url_for('auth.register'))
-        user = models.User(first_name=form.first_name.data, last_name=form.last_name.data, username=form.username.data, email=form.email.data)
+        user = models.User(first_name=form.first_name.data.title(), last_name=form.last_name.data.title(), username=form.username.data, email=form.email.data)
         user.set_password(password=form.password.data)
         db.session.add(user)
         db.session.commit()
