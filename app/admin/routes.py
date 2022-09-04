@@ -43,7 +43,7 @@ def show_tutors():
     q_mod = request.args.get('q_modality')
 
     if q_subject:
-        tutors = models.User.query.filter_by(role='supervisor').filter(models.User.tutoring_exp.tutor_subjects.contains(q_subject))
+        tutors = models.User.query.filter_by(role='supervisor').filter(models.User.last_name.contains(q_subject))
     else:
         tutors = models.User.query.filter_by(role='supervisor').order_by(models.User.created_at)
 
