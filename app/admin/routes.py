@@ -42,10 +42,12 @@ def show_tutors():
     q_first = request.args.get('q_first')
     q_last = request.args.get('q_last')
 
-    if q_first or q_last:
+    if q_first:
         q_first = q_first.title()
+        tutors = models.User.query.filter_by(role='supervisor').filter(models.User.last_name.contains(q_first))
+    elif q_last:
         q_last = q_last.title()
-        tutors = models.User.query.filter_by(role='supervisor').filter(models.User.last_name.contains(q_first) | models.User.last_name.contains(q_last))
+        tutors = models.User.query.filter_by(role='supervisor').filter(models.User.last_name.contains(q_last))
     elif q_first and q_last:
         q_first = q_first.title()
         q_last = q_last.title()
