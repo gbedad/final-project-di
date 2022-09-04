@@ -97,11 +97,6 @@ p {
     margin-bottom: 0px;
 }
 
-.table-fixed tbody {
-    height: 300px;
-    overflow-y: auto;
-    width: 100%;
-}
 table .table-fixed tr {
     height: 50px;
 }
