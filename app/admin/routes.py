@@ -39,10 +39,12 @@ def show_tutors():
     if current_user.role not in ['superadmin', 'admin']:
         flash('Sorry, you have to be an admin', 'warning')
         return redirect(url_for('auth.login'))
-    q_first = request.args.get('q_first').title()
-    q_last = request.args.get('q_last').title()
+    q_first = request.args.get('q_first')
+    q_last = request.args.get('q_last')
 
     if q_first or q_last:
+        q_first = q_first.title()
+        q_last = q_last.title()
         tutors = models.User.query.filter_by(role='supervisor').filter(models.User.last_name.contains(q_first)).filter(models.User.last_name.contains(q_last))
     else:
         tutors = models.User.query.filter_by(role='supervisor').order_by(models.User.created_at)
