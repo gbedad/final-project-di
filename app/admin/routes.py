@@ -55,7 +55,7 @@ def show_tutors():
         tutors = models.User.query.filter_by(role='supervisor').filter(models.User.last_name.contains(q_first)).filter(models.User.last_name.contains(q_last))
     elif q_subject:
         q_subject = q_subject.title()
-        tutors = models.User.query.filter_by(role='supervisor').filter(models.User.join(models.Tutoring).engagement.contains(q_subject))
+        tutors = models.User.query.models.User.join(models.Tutoring).filter_by(role='supervisor').filter(engagement.contains(q_subject))
     else:
         tutors = models.User.query.filter_by(role='supervisor').order_by(models.User.created_at)
 
