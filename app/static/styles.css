@@ -102,3 +102,6 @@ p {
     overflow-y: auto;
     width: 100%;
 }
+table .table-fixed tr {
+    height: 50px;
+}
