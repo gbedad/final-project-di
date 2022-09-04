@@ -41,6 +41,7 @@ def show_tutors():
         return redirect(url_for('auth.login'))
     q_first = request.args.get('q_first')
     q_last = request.args.get('q_last')
+    q_subject = request.args.get('q_subject')
 
     if q_first:
         q_first = q_first.title()
@@ -52,6 +53,9 @@ def show_tutors():
         q_first = q_first.title()
         q_last = q_last.title()
         tutors = models.User.query.filter_by(role='supervisor').filter(models.User.last_name.contains(q_first)).filter(models.User.last_name.contains(q_last))
+    elif q_subject:
+        q_subject = q_subject.title()
+        tutors = models.User.query.filter_by(role='supervisor').filter(models.User.tutoring_exp.tutor_subjects.subject.contains(q_subject))
     else:
         tutors = models.User.query.filter_by(role='supervisor').order_by(models.User.created_at)
 
