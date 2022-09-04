@@ -46,6 +46,10 @@ def show_tutors():
         q_first = q_first.title()
         q_last = q_last.title()
         tutors = models.User.query.filter_by(role='supervisor').filter(models.User.last_name.contains(q_first) | models.User.last_name.contains(q_last))
+    elif q_first and q_last:
+        q_first = q_first.title()
+        q_last = q_last.title()
+        tutors = models.User.query.filter_by(role='supervisor').filter(models.User.last_name.contains(q_first) & models.User.last_name.contains(q_last))
     else:
         tutors = models.User.query.filter_by(role='supervisor').order_by(models.User.created_at)
 
