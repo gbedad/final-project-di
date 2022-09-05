@@ -64,6 +64,12 @@ def show_tutors():
         tutors = models.User.query.join(models.Tutoring).filter(models.Tutoring.tutor_modalities.any(modality=q_modality))
     if q_subject and q_modality:
         tutors = models.User.query.join(models.Tutoring).filter(models.Tutoring.tutor_modalities.any(modality=q_modality)).filter(models.Tutoring.tutor_subjects.any(subject=q_subject))
+    if q_subject and q_day:
+        tutors = models.User.query.join(models.Tutoring).filter(models.Tutoring.tutor_availabilities.any(day_possible=q_day)).filter(models.Tutoring.tutor_subjects.any(subject=q_subject))
+    if q_modality and q_day:
+        tutors = models.User.query.join(models.Tutoring).filter(models.Tutoring.tutor_modalities.any(modality=q_modality)).filter(models.Tutoring.tutor_availabilities.any(day_possible=q_day))
+    if q_subject and q_modality and q_day:
+        tutors = models.User.query.join(models.Tutoring).filter(models.Tutoring.tutor_modalities.any(modality=q_modality)).filter(models.Tutoring.tutor_subjects.any(subject=q_subject)).filter(models.Tutoring.tutor_availabilities.any(day_possible=q_day))
     if not q_subject and not q_modality and not q_first and not q_last and not q_day:
         tutors = models.User.query.filter_by(role='supervisor').order_by(models.User.created_at)
 
