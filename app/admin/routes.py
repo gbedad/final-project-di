@@ -73,7 +73,7 @@ def show_tutors():
     if not q_subject and not q_modality and not q_first and not q_last and not q_day:
         tutors = models.User.query.filter_by(role='supervisor').order_by(models.User.created_at)
 
-    return render_template('admin/show_tutors.html', data=tutors, title='Show tutors', legend='List of tutors')
+    return render_template('admin/show_tutors.html', data=tutors, queries=(q_subject, q_modality, q_day, q_first, q_last), title='Show tutors', legend='List of tutors')
 
 
 @admin_bp.route('/admin/tutors/<int:tutor_id>', methods=['GET', 'POST'])
