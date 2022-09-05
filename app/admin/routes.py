@@ -58,7 +58,7 @@ def show_tutors():
         q_last = q_last.title()
         tutors = models.User.query.filter_by(role='supervisor').filter(models.User.last_name.contains(q_first)).filter(models.User.last_name.contains(q_last))
     if q_day:
-        tutors = models.User.query.join(models.Tutoring).filter(models.Tutoring.tutor_vailabilities.any(day_possible=q_day))
+        tutors = models.User.query.join(models.Tutoring).filter(models.Tutoring.tutor_availabilities.any(day_possible=q_day))
     if q_subject:
         tutors = models.User.query.join(models.Tutoring).filter(models.Tutoring.tutor_subjects.any(subject=q_subject))
     if q_modality:
