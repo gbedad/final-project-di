@@ -23,8 +23,8 @@
       <th scope="col">Email</th>
       <th scope="col">Phone</th>
       <th scope="col">Birth Date</th>
-      <th scope="col">Source</th>
       <th scope="col">Eng.</th>
+      <th scope="col">When</th>
       <th scope="col" class="col">Subjects</th>
       <th scope="col" class="col">Mods.</th>
       <th scope="col">Status</th>
@@ -43,6 +43,13 @@
                   <td>{{tutor.my_info.birth_date}}</td>
                   <td>{{tutor.more.inquiry}}</td>
                   <td>{{tutor.tutoring_exp.engagement}}</td>
+                  <td>
+                    <div style="height: 40px; overflow:scroll;">
+                    {% for item in tutor.tutoring_exp.tutor_availabilities %}
+                    <p class="mb-0">{{item.day_possible}}</p>
+                    {% endfor %}
+                    </div>
+                  </td>
                   <td>
                     <div style="height: 40px; overflow:scroll;">
                     {% for item in tutor.tutoring_exp.tutor_subjects %}
