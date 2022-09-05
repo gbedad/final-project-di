@@ -55,13 +55,11 @@ def show_tutors():
         q_last = q_last.title()
         tutors = models.User.query.filter_by(role='supervisor').filter(models.User.last_name.contains(q_first)).filter(models.User.last_name.contains(q_last))
     elif q_subject:
-        if q_subject == q_subject.upper():
-            q_subject = q_subject
-        else:
-            q_subject = q_subject.title()
         tutors = models.User.query.join(models.Tutoring).filter(models.Tutoring.tutor_subjects.any(subject=q_subject))
     elif q_modality:
         tutors = models.User.query.join(models.Tutoring).filter(models.Tutoring.tutor_modalities.any(modality=q_modality))
+    elif q_subject and q_modality:
+        tutors = models.User.query.join(models.Tutoring).filter(models.Tutoring.tutor_subjects.any(subject=q_subject)).filter(models.Tutoring.tutor_modalities.any(modality=q_modality))
     else:
         tutors = models.User.query.filter_by(role='supervisor').order_by(models.User.created_at)
 
