@@ -59,8 +59,9 @@ def show_tutors():
         tutors = models.User.query.join(models.Tutoring).filter(models.Tutoring.tutor_subjects.any(subject=q_subject))
     elif q_modality:
         tutors = models.User.query.join(models.Tutoring).filter(models.Tutoring.tutor_modalities.any(modality=q_modality))
-    elif q_subject != '' and q_modality != '':
-        tutors = db.session.query(models.User).join(models.Tutoring).filter(models.Tutoring.tutor_modalities.any(modality=q_modality)).filter(models.Tutoring.tutor_subjects.any(subject=q_subject))
+    elif q_subject != '' and q_modality != '': Song.query.filter(Song.artist.has(Artist.genres.any(Genre.name == 'rock')))
+
+        tutors = db.session.query(models.User).join(models.Tutoring).filter(models.Tutoring.tutor_modalities.any(modality=q_modality)).filter(models.Tutoring.tutor_subjects.any(models.Tutoring.tutor_subjects.subject == q_subject))
     else:
         tutors = models.User.query.filter_by(role='supervisor').order_by(models.User.created_at)
 
