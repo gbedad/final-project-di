@@ -3,7 +3,7 @@
 
 {% block content %}
 <div class="row mb-2">
-  <div class="col-10 me-0"><h3 class="legend-color">{{ legend }}</h3><span>({{queries[0]}}  {{queries[1]}} {{queries[2]}} {{queries[3]}})</span></div>
+  <div class="col-10 me-0"><h3 class="legend-color">{{ legend }}</h3>{% if queries %}<span>{{queries[0]}} {{queries[1]}} {{queries[2]}} {{queries[3]}}</span>{% endif %}</div>
   {% include 'auth/breadcrumb_user.html' %}
 </div>
 <hr>
