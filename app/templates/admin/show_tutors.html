@@ -41,14 +41,14 @@
                   <td>
                     <div style="height: 40px; overflow:scroll;">
                     {% for item in tutor.tutoring_exp.tutor_availabilities %}
-                    <p class="mb-0">{{item.day_possible}} {{item.day_time_from}} {{item.day_time_to}}</p>
+                    <p class="mb-0">{{item.day_possible}} ({{item.day_time_from}}-{{item.day_time_to}})</p>
                     {% endfor %}
                     </div>
                   </td>
                   <td>
                     <div style="height: 40px; overflow:scroll;">
                     {% for item in tutor.tutoring_exp.tutor_subjects %}
-                    <p class="mb-0">{{item.subject}} {{item.grade_from}}-{{item.grade_to}}</p>
+                    <p class="mb-0">{{item.subject}} ({{item.grade_from}}-{{item.grade_to}})</p>
                     {% endfor %}
                     </div>
                   </td>
