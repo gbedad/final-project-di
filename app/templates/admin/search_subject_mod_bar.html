@@ -3,19 +3,32 @@
   <form class="form-inline my-2 my-lg-2" method="get">
     <div class="row">
       <div class="col">
-<div>
-    <datalist id="suggestions">
+        <datalist id="subj_suggestions">
         <option>Mathématiques</option>
         <option>Physique</option>
         <option>SVT</option>
+        <option>Français</option>
+        <option>Anglais</option>
+        <option>Espagnol</option>
+        <option>Histoire-Géo</option>
+        <option>SES</option>
+        <option>Géopolitique</option>
+        <option>Philosophie</option>
     </datalist>
-    <input class="form-control mr-sm-2" type="search" placeholder="Subject" name="q_subject" autoComplete="on" list="suggestions"/>
-</div>
+        <input class="form-control mr-sm-2" type="search" placeholder="Subject" name="q_subject" autoComplete="on" list="subj_suggestions"/>
+      </div>
+      <div class="col">
+        <datalist id="mod_suggestions">
+        <option>Présentiel MDA Paris 12</option>
+        <option>Présentiel Kiosque Paris 12</option>
+        <option>Présentiel Aubervilliers</option>
+        <option>Présentiel Paris 17ème</option>
+        <option>Présentiel Paris 14ème</option>
+        <option>Distanciel</option>
+        </datalist>
+        <input class="form-control mr-sm-2" type="search" placeholder="Modality" name="q_modality" autoComplete="on" list="mod_suggestions"/>
       </div>
 
-      <div class="col">
-        <input class="form-control mr-sm-2" type="search" placeholder="Modality" name="q_modality">
-      </div>
       <div class="col">
         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Select</button>
       </div>
