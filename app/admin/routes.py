@@ -56,6 +56,7 @@ def show_tutors():
         q_first = q_first.title()
         q_last = q_last.title()
         tutors = models.User.query.filter_by(role='supervisor').filter(models.User.last_name.contains(q_first)).filter(models.User.last_name.contains(q_last))
+        print(tutors)
     elif q_subject:
         tutors = models.User.query.join(models.Tutoring).filter(models.Tutoring.tutor_subjects.any(subject=q_subject))
     elif q_modality:
