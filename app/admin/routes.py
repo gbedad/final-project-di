@@ -64,7 +64,7 @@ def show_tutors():
         tutors = models.User.query.join(models.Tutoring).filter(models.Tutoring.tutor_modalities.any(modality=q_modality))
     if q_subject and q_modality:
         tutors = models.User.query.join(models.Tutoring).filter(models.Tutoring.tutor_modalities.any(modality=q_modality)).filter(models.Tutoring.tutor_subjects.any(subject=q_subject))
-    if not q_subject and not q_modality and not q_first and not q_last:
+    if not q_subject and not q_modality and not q_first and not q_last and not q_day:
         tutors = models.User.query.filter_by(role='supervisor').order_by(models.User.created_at)
 
     return render_template('admin/show_tutors.html', data=tutors, title='Show tutors', legend='List of tutors')
