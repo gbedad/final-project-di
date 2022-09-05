@@ -2,6 +2,7 @@ from flask import render_template, redirect, url_for, flash, request, render_tem
 from flask_login import current_user, login_user, logout_user, login_required
 from flask import request
 from werkzeug.urls import url_parse
+from sqlalchemy import or_, and_
 from app.auth import models
 
 from app.admin import forms as ad_forms
@@ -59,7 +60,7 @@ def show_tutors():
     elif q_modality:
         tutors = models.User.query.join(models.Tutoring).filter(models.Tutoring.tutor_modalities.any(modality=q_modality))
     elif q_subject and q_modality:
-        tutors = models.User.query.join(models.Tutoring).filter(models.Tutoring.tutor_subjects.any(subject=q_subject)).filter(models.Tutoring.tutor_modalities.any(modality=q_modality))
+        tutors = models.User.query.join(models.Tutoring).filter(models.Tutoring.tutor_subjects.any(subject=q_subject), and_(models.Tutoring.tutor_modalities.any(modality=q_modality)))
     else:
         tutors = models.User.query.filter_by(role='supervisor').order_by(models.User.created_at)
 
