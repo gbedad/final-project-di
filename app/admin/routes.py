@@ -45,7 +45,6 @@ def show_tutors():
     q_subject = request.args.get('q_subject')
     q_modality = request.args.get('q_modality')
     q_day = request.args.get('q_day')
-    print(q_first, q_last, q_subject, q_modality)
 
     if q_first:
         q_first = q_first.title()
