@@ -9,6 +9,17 @@
         <input class="form-control mr-sm-2" type="search" placeholder="Lastname" name="q_last">
       </div>
       <div class="col">
+        <datalist id="days_suggestions">
+          <option>Monday</option>
+          <option>Tuesday</option>
+          <option>Wednesday</option>
+          <option>Thursday</option>
+          <option>Friday</option>
+          <option>Sunday</option>
+        </datalist>
+        <input class="form-control mr-sm-2" type="search" placeholder="Day" name="q_day" autoComplete="on" list="days_suggestions"/>
+      </div>
+      <div class="col">
         <datalist id="subj_suggestions">
           <option>Mathématiques</option>
           <option>Physique</option>
