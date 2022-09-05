@@ -22,7 +22,6 @@
       <th scope="col">Last</th>
       <th scope="col">Email</th>
       <th scope="col">Phone</th>
-      <th scope="col">Birth Date</th>
       <th scope="col">When</th>
       <th scope="col" class="col">Subjects</th>
       <th scope="col" class="col">Mods.</th>
@@ -39,7 +38,6 @@
                   <td>{{tutor.last_name}}</td>
                   <td>{{tutor.email}}</td>
                   <td>{{tutor.my_info.phone}}</td>
-                  <td>{{tutor.my_info.birth_date}}</td>
                   <td>
                     <div style="height: 40px; overflow:scroll;">
                     {% for item in tutor.tutoring_exp.tutor_availabilities %}
@@ -50,7 +48,7 @@
                   <td>
                     <div style="height: 40px; overflow:scroll;">
                     {% for item in tutor.tutoring_exp.tutor_subjects %}
-                    <p class="mb-0">{{item.subject}}</p>
+                    <p class="mb-0">{{item.subject}} {{item.grade_from}}-{{item.grade_to}}</p>
                     {% endfor %}
                     </div>
                   </td>
