@@ -60,8 +60,8 @@ def show_tutors():
     elif q_modality:
         tutors = models.User.query.join(models.Tutoring).filter(models.Tutoring.tutor_modalities.any(modality=q_modality))
     elif q_subject != '' and q_modality != '':
-
-        tutors = models.User.query.join(models.Tutoring).filter(models.Tutoring.tutor_modalities.any(modality=q_modality)).filter(models.Tutoring.tutor_subjects.any(subject=q_subject))
+        pre_tutors = models.User.query.join(models.Tutoring).filter(models.Tutoring.tutor_modalities.any(modality=q_modality))
+        tutors = pre_tutors.filter(models.Tutoring.tutor_subjects.any(subject=q_subject))
     else:
         tutors = models.User.query.filter_by(role='supervisor').order_by(models.User.created_at)
 
