@@ -46,8 +46,13 @@ def show_tutors():
     q_modality = request.args.get('q_modality')
     q_day = request.args.get('q_day')
 
-    tutors = models.User.query.filter_by(role='supervisor').filter(models.User.last_name.contains(q_first.title())).filter(
+    if q_day or q_modality or q_subject or q_last or q_first:
+
+        tutors = models.User.query.filter_by(role='supervisor').filter(models.User.last_name.contains(q_first.title())).filter(
         models.User.last_name.contains(q_last.title())).filter(models.Tutoring.tutor_modalities.any(modality=q_modality)).filter(models.Tutoring.tutor_subjects.any(subject=q_subject)).filter(models.Tutoring.tutor_availabilities.any(day_possible=q_day)).order_by(models.User.created_at)
+
+    else:
+        tutors = models.User.query.filter_by(role='supervisor').order_by(models.User.created_at)
 
     return render_template('admin/show_tutors.html', data=tutors, title='Show tutors', legend='List of tutors')
 
