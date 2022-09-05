@@ -46,24 +46,22 @@ def show_tutors():
     q_modality = request.args.get('q_modality')
     print(q_first, q_last, q_subject, q_modality)
 
-    #if q_first:
-        #q_first = q_first.title()
-        #tutors = models.User.query.filter_by(role='supervisor').filter(models.User.first_name.contains(q_first))
-    #if q_last:
-        #q_last = q_last.title()
-        #tutors = models.User.query.filter_by(role='supervisor').filter(models.User.last_name.contains(q_last))
-    #if q_first and q_last:
-        #q_first = q_first.title()
-        #q_last = q_last.title()
-        #tutors = models.User.query.filter_by(role='supervisor').filter(models.User.last_name.contains(q_first)).filter(models.User.last_name.contains(q_last))
-    #if q_subject:
-        #tutors = models.User.query.join(models.Tutoring).filter(models.Tutoring.tutor_subjects.any(subject=q_subject))
-    #if q_modality:
-        #tutors = models.User.query.join(models.Tutoring).filter(models.Tutoring.tutor_modalities.any(modality=q_modality))
-    if q_subject or q_modality or q_first or q_last:
+    if q_first:
+        q_first = q_first.title()
+        tutors = models.User.query.filter_by(role='supervisor').filter(models.User.first_name.contains(q_first))
+    if q_last:
+        q_last = q_last.title()
+        tutors = models.User.query.filter_by(role='supervisor').filter(models.User.last_name.contains(q_last))
+    if q_first and q_last:
         q_first = q_first.title()
         q_last = q_last.title()
-        tutors = models.User.query.join(models.Tutoring).filter(models.Tutoring.tutor_modalities.any(modality=q_modality)).filter(models.Tutoring.tutor_subjects.any(subject=q_subject)).filter(models.User.last_name.contains(q_first)).filter(models.User.last_name.contains(q_last))
+        tutors = models.User.query.filter_by(role='supervisor').filter(models.User.last_name.contains(q_first)).filter(models.User.last_name.contains(q_last))
+    if q_subject:
+        tutors = models.User.query.join(models.Tutoring).filter(models.Tutoring.tutor_subjects.any(subject=q_subject))
+    if q_modality:
+        tutors = models.User.query.join(models.Tutoring).filter(models.Tutoring.tutor_modalities.any(modality=q_modality))
+    if q_subject and q_modality:
+        tutors = models.User.query.join(models.Tutoring).filter(models.Tutoring.tutor_modalities.any(modality=q_modality)).filter(models.Tutoring.tutor_subjects.any(subject=q_subject))
     if not q_subject and not q_modality and not q_first and not q_last:
         tutors = models.User.query.filter_by(role='supervisor').order_by(models.User.created_at)
 
