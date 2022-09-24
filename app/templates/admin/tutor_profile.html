@@ -1,61 +1,55 @@
-{% extends 'base.html' %}
 
-{% block content %}
-<div class="row mb-4">
-  <div class="col-10 me-0"><h3 class="legend-color">{{ legend }}</h3></div>
-  {% include 'auth/breadcrumb_user.html' %}
-  <a href="{{url_for('admin.get_tutor_by_id', tutor_id=data.id)}}" class="text-decoration-none desc">Back to Tutor View</a>
-</div>
-{%  include 'admin/admin_nav_profile_user.html' %}
-<hr>
-<div class="row">
-  <div class="col">
-    <p class="mb-1"><span class="mb-0 desc">Username:</span><br>{{data.username}}</p>
-    <p class="mb-1"><span class="mb-0 desc">Email:</span><br>{{data.email}}</p>
-    <p class="mb-1"><span class="mb-0 desc">Role:</span><br>{{data.role}}</p>
-    <p class="mb-1"><span class="mb-0 desc">First Name:</span><br>{{data.first_name}}</p>
-    <p class="mb-1"><span class="mb-0 desc">Last Name:</span><br>{{data.last_name}}</p>
+  <h5 class="card-title">Profile Details</h5>
+
+  <div class="row">
+    <div class="col-lg-3 col-md-4 label">Username</div>
+    <div class="col-lg-9 col-md-8">{{data.username}}</div>
   </div>
 
-  <div class="col">
-    <p class="mb-1"><span class="mb-0 desc">Street: </span><br>{{data.my_info.address}}</p>
-    <p class="mb-1"><span class="mb-0 desc">City: </span><br>{{data.my_info.city}}</p>
-    <p class="mb-1"><span class="mb-0 desc">Zipcode: </span><br>{{data.my_info.zipcode}}</p>
-
-<p class="mb-1"><span class="mb-0 desc">Phone: </span><br>{{data.my_info.phone}}</p>
-<p class="mb-1"><span class="mb-0 desc">Email 2: </span><br>{{data.my_info.email2}}</p>
+  <div class="row">
+    <div class="col-lg-3 col-md-4 label">Source</div>
+    <div class="col-lg-9 col-md-8">
+      {{data.more.inquiry}}
+    </div>
   </div>
 
-  <div class="col">
-    <p class="mb-1"><span class="mb-0 desc">Date of Birth: </span><br>{{data.my_info.birth_date}}</p>
-    <p class="mb-1"><span class="mb-0 desc">Short text: </span><br>{{data.my_info.short_text}}</p>
-    <p class="mb-1"><span class="mb-0 desc">When: </span><br>{{data.more.when}}
-    <p class="mb-1"><span class="mb-0 desc">Why: </span><br>{{data.more.why}}</p>
-    <p class="mb-1"><span class="mb-0 desc">Experience: </span><br>{{data.more.experience}}</p>
-
-
+  <div class="row">
+    <div class="col-lg-3 col-md-4 label">Zipcode</div>
+    <div class="col-lg-9 col-md-8">{{data.my_info.zipcode}}</div>
   </div>
-  <div class="col">
-    <p class="mb-1"><span class="mb-0 desc">Source: </span><br>{{data.more.inquiry}}</p>
-    <p class="mb-1"><span class="mb-0 desc">Engagement: </span><br>{{data.tutoring_exp.engagement}}</p>
-    <p class="mb-1"><span class="mb-0 desc">From: </span><br>{{data.tutoring_exp.start_date}}</p>
-    <p class="mb-1"><span class="mb-0 desc">To: </span><br>{{data.tutoring_exp.end_date}}</p>
-    <p class="mb-1"><span class="mb-0 desc">Frequency: </span><br>{{data.tutoring_exp.frequency}} <span class="desc">{{ 'h/week' if data.tutoring_exp.frequency else '' }}</span></p>
-  </div>
-</div>
 
-<hr>
-<div class="row">
-  <div class="col-4">
-    <table class="table table-sm">
-    <thead>
-      <tr>
-        <th scope="col" class="desc mb-0">Day</th>
-        <th scope="col" class="desc mb-0">From</th>
-        <th scope="col" class="desc mb-0">To</th>
-      </tr>
-    </thead>
-    <tbody>
+  <div class="row">
+    <div class="col-lg-3 col-md-4 label">City</div>
+    <div class="col-lg-9 col-md-8">{{data.my_info.city}}</div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-3 col-md-4 label">Address</div>
+    <div class="col-lg-9 col-md-8">
+      {{data.my_info.address}}
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-3 col-md-4 label">Phone</div>
+    <div class="col-lg-9 col-md-8">{{data.my_info.phone}}</div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-3 col-md-4 label">Engagement</div>
+    <div class="col-lg-9 col-md-8">
+      {{data.tutoring_exp.engagement}} from {{data.tutoring_exp.start_date}} to {{data.tutoring_exp.end_date}} frequency </span>{{data.tutoring_exp.frequency}} <span>{{ 'h/week' if data.tutoring_exp.frequency else '' }}</span>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-3 col-md-4 label">Date of Birth</div>
+    <div class="col-lg-9 col-md-8">{{data.my_info.birth_date}}</div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-3 col-md-4 label">Availabilities</div>
+    <div class="col-lg-9 col-md-8">
+      <table class="table table-sm">
     {% for time in data.tutoring_exp.tutor_availabilities %}
       <tr class="mb-0">
         <td>{{time.day_possible}}</td>
@@ -63,20 +57,14 @@
         <td>{{time.day_time_to}}</td>
       </tr>
     {% endfor  %}
-    </tbody>
   </table>
-
+    </div>
   </div>
-  <div class="col-4">
-    <table class="table table-sm">
-    <thead>
-      <tr>
-        <th scope="col" class="desc mb-0">Subject</th>
-        <th scope="col" class="desc mb-0">Grade From</th>
-        <th scope="col" class="desc mb-0">Grade To</th>
-      </tr>
-    </thead>
-    <tbody>
+
+  <div class="row">
+    <div class="col-lg-3 col-md-4 label">Subjects</div>
+    <div class="col-lg-9 col-md-8">
+      <table class="table table-sm">
     {% for subj in data.tutoring_exp.tutor_subjects %}
       <tr  class="mb-0">
         <td>{{subj.subject}}</td>
@@ -84,26 +72,46 @@
         <td>{{subj.grade_to}}</td>
       </tr>
     {% endfor  %}
-    </tbody>
   </table>
-
+    </div>
   </div>
-  <div class="col-2">
-    <table class="table table-sm">
-    <thead>
-      <tr>
-        <th scope="col" class="desc mb-0">Modality</th>
-      </tr>
-    </thead>
-    <tbody>
+
+  <div class="row">
+    <div class="col-lg-3 col-md-4 label">Modalities</div>
+    <div class="col-lg-9 col-md-8">
+      <table class="table table-sm">
     {% for mod in data.tutoring_exp.tutor_modalities %}
       <tr class="mb-0">
         <td>{{mod.modality}}</td>
       </tr>
     {% endfor  %}
-    </tbody>
   </table>
-
+    </div>
   </div>
-</div>
-{% endblock %}
+
+
+
+
+  <div class="row">
+    <div class="col-lg-3 col-md-4 label">More information</div>
+    <div class="col-lg-9 col-md-8">{{data.my_info.short_text}}</div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-3 col-md-4 label">When contact me</div>
+    <div class="col-lg-9 col-md-8">{{data.more.when}}</div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-3 col-md-4 label">Why to volunteer</div>
+    <div class="col-lg-9 col-md-8">{{data.more.why}}</div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-3 col-md-4 label">My experience</div>
+    <div class="col-lg-9 col-md-8">{{data.more.experience}}</div>
+  </div>
+
+
+
+

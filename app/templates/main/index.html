@@ -2,13 +2,60 @@
 {% from "_macros.html" import progress_status %}
 
 {% block content %}
-  <h1>Hi, {{ current_user.username }}!</h1>
+  <main id="main" class="main">
 
-{% if current_user.role == 'supervisor' %}
-  <h5>Completion of your Profile</h5>
-  <div class="progress">
-    {{progress_status(current_user.status)}}
-  </div>
+    <div class="pagetitle">
+      <h1>Blank Page</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+          <li class="breadcrumb-item">Pages</li>
+          <li class="breadcrumb-item active">Blank</li>
+        </ol>
+      </nav>
+    </div><!-- End Page Title -->
+
+    <section class="section">
+      <div class="row">
+        <div class="col-lg-6">
+
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Example Card</h5>
+              <p>This is an examle page with no contrnt. You can use it as a starter for your custom pages.</p>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="col-lg-6">
+
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Example Card</h5>
+              <p>This is an examle page with no contrnt. You can use it as a starter for your custom pages.</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+      {% if current_user.role == 'supervisor' %}
+    <section class="section">
+      <div class="row">
+        <div class="col-lg-12">
+
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Profile completion</h5>
+                <!-- Progress Bar -->
+                {{progress_status(current_user.status)}}
+              <!-- End Progress Bar-->
+            </div>
+          </div>
+      </div>
+    </section>
+
     {% if current_user.my_interviews.proposed and not current_user.my_interviews.is_accepted %}
       <p class="legend-color">You have an interview planned on {{current_user.my_interviews.interview_date}} at {{current_user.my_interviews.interview_time}} with {{current_user.my_interviews.interviewer}}!</p>
       <p class="desc">Please go to your Profile and My Interviews section to see details and confirm with checkbox.</p>
@@ -63,7 +110,6 @@
 </table>
 </div>
 
-
 {% endif  %}
-
+</main><!-- End #main -->
 {% endblock %}

@@ -90,9 +90,9 @@ class SelectTimeForm(Form):
 
 
 class ProfilePage2Form(FlaskForm):
-    engagement = SelectField(u'Engagement Type', choices=CONTRACT_TYPES)
-    start_date = DateField('Starting Date', format='%Y-%m-%d')
-    end_date = DateField('Ending Date', format='%Y-%m-%d')
+    engagement = SelectField(u'Engagement', choices=CONTRACT_TYPES)
+    start_date = DateField('Start Date', format='%Y-%m-%d')
+    end_date = DateField('End Date', format='%Y-%m-%d')
     frequency = IntegerField('Freq(h/week)', default=1, validators=[NumberRange(min=1, max=6)])
 
     submit = SubmitField('Save')
@@ -148,8 +148,8 @@ class AddModalityToTutor(FlaskForm):
 
 class AddSubjectGradesToTutor(FlaskForm):
     subject = SelectField(u'Subject', choices=SubjectsChoice(), coerce=str)
-    grade_from = SelectField(u'Grade From', choices=GradesChoice(), coerce=str)
-    grade_to = SelectField(u'Grade To', choices=GradesChoice(), coerce=str)
+    grade_from = SelectField(u'From', choices=GradesChoice(), coerce=str)
+    grade_to = SelectField(u'To', choices=GradesChoice(), coerce=str)
 
     submit = SubmitField('Add Subject')
 

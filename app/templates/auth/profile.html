@@ -1,12 +1,14 @@
 {% extends 'base.html' %}
 
 {% block content %}
+
 <div class="row mb-4">
   <div class="col-10 me-0"><h3>{{ legend }}</h3></div>
   {% include 'auth/breadcrumb_user.html' %}
 </div>
 {% include 'auth/nav_profile.html' %}
 <hr>
+
 <div class="row">
   <div class="col">
     <p><span class="desc">Username:</span><br>{{data.username}}</p>

@@ -1,31 +1,32 @@
-<div class="row">
+
     <form action="" method="post">
         {{ subjects_form.hidden_tag() }}
         <div class="row mb-0">
-            <div class="col-3">
+            <div class="col">
                 {% if subjects_form.subject.data  == '' %}
                 <p>--</p>
                 {% else %}
                 {{ render_field(subjects_form.subject)}}
                 {% endif %}
             </div>
-            <div class="col-2">
+            <div class="col">
                 {{render_field(subjects_form.grade_from)}}
             </div>
-            <div class="col-2">
+            <div class="col">
                 {{render_field(subjects_form.grade_to)}}
             </div>
-            <div class="col-1">
-                <div class="mb-0 mt-1 desc">Action</div>
-                <div> {{ subjects_form.submit(class="btn btn-info text-light") }}</div>
-            </div>
+            <div class="col">
+                <div class="mb-2">Action</div>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="bi bi-plus"></i>
+                    </button>
+                </div>
+        </div>
     </form>
-</div>
 
-<div class="row mb-0">
-    <div class="col d-flex justify-content-start">
-        <div class="col-4" >
-        <div class="row  g-1 g-lg-1">
+
+
+    <div class="row m-2 g-2 g-lg-2">
         <table>
             <thead>
                 <tr>
@@ -45,6 +46,4 @@
             {% endfor  %}
             </tbody>
         </table>
-        </div>
     </div>
-</div>

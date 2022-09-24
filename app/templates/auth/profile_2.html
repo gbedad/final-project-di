@@ -1,80 +1,61 @@
-{% extends 'base.html' %}
-{% from "_macros.html" import render_field, render_fields, render_field_wo_label %}
 
-{% block content %}
-<div class="row mb-4">
-  <div class="col-10"><h3>{{ legend }}</h3></div>
-  {% include 'auth/breadcrumb_user.html' %}
-</div>
-{% if current_user_role == 'supervisor' %}
-{% include 'auth/nav_profile.html' %}
-{% elif current_user.role in ['admin', 'superadmin'] %}
-{% include 'admin/admin_nav_profile_user.html' %}
-{% endif %}
-<hr>
-
-    <div class="col-12">
-        <form method="post">
-            {{ form.hidden_tag() }}
-            <div  class="row">
-                <div class="col-2">
+    <form method="post">
+        {{ form2.hidden_tag() }}
+        <div  class="row">
+             <div class="row mb-3">
+                 <div class="col">
                     <div class="form-outline">
-                        {{ render_field(form.engagement) }}
+                        {{ render_field(form2.engagement) }}
                     </div>
                 </div>
-                <div class="col-2">
+                <div class="col">
                     <div class="form-outline">
-                        {{ form.start_date.label(class="form-label desc mb-0") }}<br>
-                        {{ form.start_date(size=10, class="form-control") }}
-                        {% for error in form.start_date.errors %}
+                        {{ form2.start_date.label(class="form-label") }}<br>
+                        {{ form2.start_date(size=64, class="form-control") }}
+                        {% for error in form2.start_date.errors %}
                         <span class="danger">[{{ error }}]</span>
                         {% endfor %}
                     </div>
                 </div>
-                <div class="col-2">
+                 <div class="col">
                     <div class="form-outline">
-                        {{ form.end_date.label(class="form-label desc mb-0") }}<br>
-                        {{ form.end_date(size=10, class="form-control") }}
-                        {% for error in form.end_date.errors %}
+                        {{ form2.end_date.label(class="form-label") }}<br>
+                        {{ form2.end_date(size=64, class="form-control") }}
+                        {% for error in form2.end_date.errors %}
                         <span class="danger">[{{ error }}]</span>
                         {% endfor %}
                     </div>
                 </div>
-                <div class="col-1">
+                 <div class="col">
                     <div class="form-outline">
-                        {{ form.frequency.label(class="form-label desc mb-0") }}<br>
-                        {{ form.frequency(size=64, class="form-control") }}
-                        {% for error in form.frequency.errors %}
+                        {{ form2.frequency.label(class="form-label") }}<br>
+                        {{ form2.frequency(size=64, class="form-control") }}
+                        {% for error in form2.frequency.errors %}
                         <span class="danger">[{{ error }}]</span>
                         {% endfor %}
                     </div>
-                </div>
-                <div class="col-1">
-                    <div class="mb-0 mt-1 desc">Action</div>
-                    <div> {{ form.submit(class="btn btn-primary btn-block mb-4") }}</div>
                 </div>
             </div>
-        </form>
-    </div>
+                        <!-- Submit button -->
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary">
+                  Save Changes
+                </button>
+            </div>
+
+        </div>
+    </form>
     <hr>
     {%  if data.tutoring_exp.engagement %}
-    <div class="col-12">
         <div class="row mb-2">
-            <div class="col-8">
                 {% include 'auth/subjects_grades_template.html' %}
-            </div>
-            <div class="col-4">
-                {% include 'auth/modalities_template.html' %}
-            </div>
         </div>
-
         <hr>
         <div class="row mb-2">
-            <div class="col">
-                {% include 'auth/availability_template.html' %}
-            </div>
+                {% include 'auth/modalities_template.html' %}
         </div>
-    </div>
+        <hr>
+        <div class="row mb-2">
+                {% include 'auth/availability_template.html' %}
+        </div>
     {% endif %}
-
-{% endblock %}

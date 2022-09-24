@@ -1,23 +1,24 @@
-<div id="process_header">
-<ul class="nav justify-content-center">
+
+<ul class="nav nav-tabs nav-tabs-bordered">
   <li class="nav-item">
-    <a class="nav-link active link-info" aria-current="page" href="{{url_for('admin.tutor_detailed_view', tutor_id=data.id)}}">Profile of {{data.first_name}} {{data.last_name}}</a>
+    <a class="nav-link" href="{{url_for('admin.tutor_detailed_view', tutor_id=data.id)}}">Profile overview</a>
   </li>
   <li class="nav-item">
-    <a class='nav-link link-info' href="{{url_for('auth.profile_1', user_name=data.username)}}"><i class="bi bi-1-circle m-1"></i>Information</a>
+    <a class='nav-link' href="{{url_for('auth.profile_1', user_name=data.username)}}"><i class="bi bi-1-circle m-1"></i>Information</a>
   </li>
   <li class="nav-item">
-    <a class='nav-link link-info' href="{{url_for('auth.profile_2', user_name=data.username)}}"><i class="bi bi-2-circle m-1"></i>How he/she can Help</a>
+    <a class='nav-link' href="{{url_for('auth.profile_2', user_name=data.username)}}"><i class="bi bi-2-circle m-1"></i>How he/she can Help</a>
   </li>
   <li class="nav-item">
-    <a class='nav-link link-info' href="{{url_for('auth.profile_3', user_name=data.username)}}"><i class="bi bi-3-circle m-1"></i>More About him/her</a>
+    <a class='nav-link' href="{{url_for('auth.profile_3', user_name=data.username)}}"><i class="bi bi-3-circle m-1"></i>More About him/her</a>
   </li>
   <li class="nav-item">
-    <a class="{{'nav-link link-info' if data.my_interviews else 'nav-link link-info disabled'}}" href="{{url_for('auth.profile_4', user_name=data.username)}}"><i class="bi bi-4-circle m-1"></i>Interviews</a>
+    <a class="{{'nav-link' if data.my_interviews else 'nav-link disabled'}}" href="{{url_for('auth.profile_4', user_name=data.username)}}"><i class="bi bi-4-circle m-1"></i>Interviews</a>
   </li>
   <li class="nav-item">
-    <a class='nav-link link-info' href="{{url_for('auth.profile_5', user_name=data.username)}}"><i class="bi bi-5-circle m-1"></i>Commitments</a>
+    <a class='nav-link' href="{{url_for('auth.profile_5', user_name=data.username)}}"><i class="bi bi-5-circle m-1"></i>Commitments</a>
   </li>
 </ul>
-</div>
+
+
 

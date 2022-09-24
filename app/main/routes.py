@@ -17,4 +17,5 @@ def index():
     count_new_supervisors = len(list(new_supervisors))
     count_documented_supervisors = len(list(documented_supervisors))
     print(count_new_supervisors)
-    return render_template('main/index.html', data=new_supervisors, doc=documented_supervisors, num_new=count_new_supervisors, num_documented=count_documented_supervisors, title='Home page')
+    return render_template('main/index.html', data=new_supervisors, doc=documented_supervisors, num_new=count_new_supervisors, num_documented=count_documented_supervisors,count_new_supervisors=count_new_supervisors, count_documented_supervisors=count_documented_supervisors,
+                           new_supervisors=new_supervisors, documented_supervisors=documented_supervisors, title='Home page')

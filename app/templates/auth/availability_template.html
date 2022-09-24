@@ -1,36 +1,37 @@
 
-<div class="row">
+
     <form action="" method="post">
         {{ avail_form.hidden_tag() }}
-        <div class="row mb-0">
-            <div class="col-2">
-           {{ render_field(avail_form.day_possible)}}
-        </div>
-            <div class="col-2">
-           {{ avail_form.day_time_from.label(class="form-label desc mb-0") }}<br>
+        <div class="row mb-2">
+            <div class="col">
+                {{ render_field(avail_form.day_possible)}}
+            </div>
+            <div class="col">
+                {{ avail_form.day_time_from.label(class="form-label mb-2") }}<br>
                 {{ avail_form.day_time_from(size=16, class="form-control") }}
                 {% for error in avail_form.day_time_from.errors %}
                 <span class="danger">[{{ error }}]</span>
-            {% endfor %}
-        </div>
-            <div class="col-2">
-                {{ avail_form.day_time_to.label(class="form-label desc mb-0") }}<br>
+                {% endfor %}
+            </div>
+            <div class="col">
+                {{ avail_form.day_time_to.label(class="form-label mb-2") }}<br>
                 {{ avail_form.day_time_to(size=16, class="form-control") }}
                 {% for error in avail_form.day_time_to.errors %}
                 <span class="danger">[{{ error }}]</span>
                 {% endfor %}
             </div>
             <div class="col">
-                <div class="mb-0 mt-1 desc">Action</div>
-                <div> {{ avail_form.submit(class="btn btn-info text-light") }}</div>
+                <div class="mb-2">Action</div>
+                <button type="submit" class="btn btn-primary">
+                        <i class="bi bi-plus"></i>
+                </button>
             </div>
+        </div>
     </form>
-</div>
 
-<div class="row mb-0">
-    <div class="col d-flex justify-content-start">
-        <div class="col-5" >
-        <div class="row  g-1 g-lg-1">
+
+
+    <div class="row m-2 g-2 g-lg-2">
         <table>
             <thead>
                 <tr>
@@ -50,6 +51,4 @@
             {% endfor  %}
             </tbody>
         </table>
-        </div>
     </div>
-</div>

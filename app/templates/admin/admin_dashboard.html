@@ -2,92 +2,353 @@
 {% from "_macros.html" import render_field, render_fields, switch_status %}
 
 {% block content %}
-<div class="row mb-4">
-  <div class="col-10 me-0"><h3 class="legend-color">{{ legend }}</h3></div>
-  {% include 'auth/breadcrumb_user.html' %}
-</div>
-<hr>
-  <div class="container d-flex flex-column justify-content-center align-center">
-    <div class="row row-cols-1 row-cols-lg-5 g-2 g-lg-3">
-      <div class="col d-flex flex-column align-items-center" >
-        <span class="info-circle-legend">Tutor Number</span>
-        <div class="info-circle">
-          <span class="info-circle-text" >{{tutors}}</span>
-        </div>
-      </div>
-      <div class="col d-flex flex-column align-items-center" >
-        <span class="info-circle-legend">Students Number</span>
-        <div class="info-circle">
-          <span class="info-circle-text" >{{students}}</span>
-        </div>
-      </div>
-      <div class="col d-flex flex-column align-items-center" >
-        <span class="info-circle-legend">Courses created</span>
-        <div class="info-circle">
-          <span class="info-circle-text" >{{courses_t}}</span>
-        </div>
-      </div>
-      <div class="col d-flex flex-column align-items-center" >
-        <span class="info-circle-legend">Courses Accepted</span>
-        <div class="info-circle">
-          <span class="info-circle-text" >{{courses_a}}</span>
-        </div>
-      </div>
-      <div class="col d-flex flex-column align-items-center">
-          <div class="info-circle-legend">Total</div>
-          <div class="info-circle bg-light z-2">
-            <span class="info-circle-text text-success" >{{total}}</span>
+<main id="main" class="main" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html"
+      xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
+
+    <div class="pagetitle">
+      <h1>Dashboard</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{{url_for('main.index')}}">Home</a></li>
+          <li class="breadcrumb-item active">Dashboard</li>
+        </ol>
+      </nav>
+    </div><!-- End Page Title -->
+
+    <section class="section dashboard">
+      <div class="row">
+        <!-- Left side columns -->
+        <div class="col-lg-8">
+          <div class="row">
+
+            <!-- Sales Card -->
+            <div class="col-xxl-4 col-md-6">
+              <div class="card info-card sales-card">
+
+                <div class="filter">
+                  <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                    <li class="dropdown-header text-start">
+                      <h6>Filter</h6>
+                    </li>
+
+                    <li><a class="dropdown-item" href="#">Today</a></li>
+                    <li><a class="dropdown-item" href="#">This Month</a></li>
+                    <li><a class="dropdown-item" href="#">This Year</a></li>
+                  </ul>
+                </div>
+
+                <div class="card-body">
+                  <h5 class="card-title">Tutors <span>| Total</span></h5>
+
+                  <div class="d-flex align-items-center">
+                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                      <i class="bi bi-person"></i>
+                    </div>
+                    <div class="ps-3">
+                      <h6>{{tutors}}</h6>
+                      <span class="text-success small pt-1 fw-bold">12%</span> <span class="text-muted small pt-2 ps-1">increase</span>
+
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div><!-- End Sales Card -->
+
+            <!-- Revenue Card -->
+            <div class="col-xxl-4 col-md-6">
+              <div class="card info-card revenue-card">
+
+                <div class="filter">
+                  <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                    <li class="dropdown-header text-start">
+                      <h6>Filter</h6>
+                    </li>
+
+                    <li><a class="dropdown-item" href="#">Today</a></li>
+                    <li><a class="dropdown-item" href="#">This Month</a></li>
+                    <li><a class="dropdown-item" href="#">This Year</a></li>
+                  </ul>
+                </div>
+
+                <div class="card-body">
+                  <h5 class="card-title">Students <span>| Total</span></h5>
+
+                  <div class="d-flex align-items-center">
+                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                      <i class="bi bi-people"></i>
+                    </div>
+                    <div class="ps-3">
+                      <h6>{{students}}</h6>
+                      <span class="text-success small pt-1 fw-bold">8%</span> <span class="text-muted small pt-2 ps-1">increase</span>
+
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div><!-- End Revenue Card -->
+
+            <!-- Courses created Card -->
+            <div class="col-xxl-4 col-md-6">
+
+              <div class="card info-card customers-card">
+
+                <div class="filter">
+                  <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                    <li class="dropdown-header text-start">
+                      <h6>Filter</h6>
+                    </li>
+
+                    <li><a class="dropdown-item" href="#">Today</a></li>
+                    <li><a class="dropdown-item" href="#">This Month</a></li>
+                    <li><a class="dropdown-item" href="#">This Year</a></li>
+                  </ul>
+                </div>
+
+                <div class="card-body">
+                  <h5 class="card-title">Courses <span>| Created</span></h5>
+
+                  <div class="d-flex align-items-center">
+                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                      <i class="bi bi-book"></i>
+                    </div>
+                    <div class="ps-3">
+                      <h6>{{courses_t}}</h6>
+                      <span class="text-success small pt-1 fw-bold">12%</span> <span class="text-muted small pt-2 ps-1">decrease</span>
+
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+            </div><!-- End Courses created Card -->
+
+            <!-- Courses accepted Card -->
+            <div class="col-xxl-4 col-md-6">
+
+              <div class="card info-card customers-card">
+
+                <div class="filter">
+                  <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                    <li class="dropdown-header text-start">
+                      <h6>Filter</h6>
+                    </li>
+
+                    <li><a class="dropdown-item" href="#">Today</a></li>
+                    <li><a class="dropdown-item" href="#">This Month</a></li>
+                    <li><a class="dropdown-item" href="#">This Year</a></li>
+                  </ul>
+                </div>
+
+                <div class="card-body">
+                  <h5 class="card-title">Courses <span>| Accepted</span></h5>
+
+                  <div class="d-flex align-items-center">
+                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                      <i class="bi bi-book-half"></i>
+                    </div>
+                    <div class="ps-3">
+                      <h6>{{courses_a}}</h6>
+                      <span class="text-danger small pt-1 fw-bold">12%</span> <span class="text-muted small pt-2 ps-1">decrease</span>
+
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+            </div><!-- End Courses accepted Card -->
+
+            <!-- Customers Card -->
+            <div class="col-xxl-4 col-xl-12">
+
+              <div class="card info-card customers-card">
+
+                <div class="filter">
+                  <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                    <li class="dropdown-header text-start">
+                      <h6>Filter</h6>
+                    </li>
+
+                    <li><a class="dropdown-item" href="#">Today</a></li>
+                    <li><a class="dropdown-item" href="#">This Month</a></li>
+                    <li><a class="dropdown-item" href="#">This Year</a></li>
+                  </ul>
+                </div>
+
+                <div class="card-body">
+                  <h5 class="card-title">Courses <span>| Total</span></h5>
+
+                  <div class="d-flex align-items-center">
+                    <div class="card-icon rounded-circle d-flex align-items-center justify-content-center">
+                      <i class="bi bi-book-fill"></i>
+                    </div>
+                    <div class="ps-3">
+                      <h6>{{total}}</h6>
+                      <span class="text-danger small pt-1 fw-bold">12%</span> <span class="text-muted small pt-2 ps-1">decrease</span>
+
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+            </div><!-- End Courses total Card -->
+
           </div>
+            <!-- Recent Sales -->
+            <div class="col-12">
+              <div class="card recent-sales overflow-auto">
+
+                <div class="filter">
+                  <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                    <li class="dropdown-header text-start">
+                      <h6>Filter</h6>
+                    </li>
+
+                    <li><a class="dropdown-item" href="#">Today</a></li>
+                    <li><a class="dropdown-item" href="#">This Month</a></li>
+                    <li><a class="dropdown-item" href="#">This Year</a></li>
+                  </ul>
+                </div>
+
+                <div class="card-body">
+                  <h5 class="card-title">Recent Courses<span>| Today</span></h5>
+
+                  <table class="table table-borderless datatable">
+                    <thead>
+                      <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Student</th>
+                        <th scope="col">Tutor</th>
+                        <th scope="col">Subject</th>
+                        <th scope="col">Day</th>
+                        <th scope="col">Status</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    {% for course in l5_courses %}
+                      <tr>
+                        <th scope="row"><a href="{{url_for('course.course_update', course_id=course.id)}}">{{course.id}}</a></th>
+                        <td>{{course.student[0].first_name}} {{course.student[0].last_name}}</td>
+                        <td>{{course.tutor[0].first_name}} {{course.tutor[0].last_name}}</td>
+                        <td>{{course.subject}}</td>
+                        <td>{{course.selected_day}}</td>
+                        <td><span class={% if course.status == 'created' %} "badge bg-warning" {% else %} "badge bg-success" {% endif %} >{{course.status}}</span></td>
+                      </tr>
+                    {% endfor %}
+                    </tbody>
+                  </table>
+
+                </div>
+              </div>
+            </div><!-- End Recent Sales -->
+          </div><!-- End Left side columns -->
+
+        <!-- Right side columns -->
+        <div class="col-lg-4">
+          <!-- Last tutors -->
+          <div class="card">
+
+                <div class="filter">
+                  <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                    <li class="dropdown-header text-start">
+                      <h6>Filter</h6>
+                    </li>
+
+                    <li><a class="dropdown-item" href="#">Today</a></li>
+                    <li><a class="dropdown-item" href="#">This Month</a></li>
+                    <li><a class="dropdown-item" href="#">This Year</a></li>
+                  </ul>
+                </div>
+
+                <div class="card-body">
+                  <h5 class="card-title">Recent Tutors <span>| Today</span></h5>
+
+                  <table class="table table-borderless datatable">
+                    <thead>
+                      <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Tutor</th>
+                        <th scope="col">Status</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    {% for supervisor in l5_supervisors %}
+                      <tr>
+                        <th scope="row"><a href="#">{{supervisor.id}}</a></th>
+                        <td>{{supervisor.first_name}} {{supervisor.last_name}}</td>
+                        <td><span class={% if supervisor.status == '1' %}"badge bg-warning"
+                          {% elif supervisor.status == '2' %}"badge bg-info"
+                          {% elif supervisor.status == '3' %}"badge bg-primary"
+                          {% elif supervisor.status == '4' %}"badge bg-primary"
+                          {% elif supervisor.status == '5' %}"badge bg-success"
+                          {% else %} "badge bg-danger" {% endif %} >{{switch_status(supervisor.status)}}</span></td>
+                      </tr>
+                    {% endfor %}
+                    </tbody>
+                  </table>
+
+                </div>
+
+              </div>
+
+          <!-- Last students -->
+          <div class="card">
+
+                <div class="filter">
+                  <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                    <li class="dropdown-header text-start">
+                      <h6>Filter</h6>
+                    </li>
+
+                    <li><a class="dropdown-item" href="#">Today</a></li>
+                    <li><a class="dropdown-item" href="#">This Month</a></li>
+                    <li><a class="dropdown-item" href="#">This Year</a></li>
+                  </ul>
+                </div>
+
+                <div class="card-body">
+                  <h5 class="card-title">Recent Students <span>| Today</span></h5>
+
+                  <table class="table table-borderless datatable">
+                    <thead>
+                      <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Student</th>
+                        <th scope="col">Grade</th>
+                        <th scope="col">Modality</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    {% for student in l5_students %}
+                      <tr>
+                        <th scope="row"><a href="#">{{student.id}}</a></th>
+                        <td>{{student.first_name}} {{student.last_name}}</td>
+                        <td>{{student.grade}}</td>
+                        <td>{{student.modality}}</td>
+                      </tr>
+                    {% endfor %}
+                    </tbody>
+                  </table>
+
+                </div>
+
+              </div>
+        </div><!-- End Right side columns -->
       </div>
-    </div>
-    <hr>
-    <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3 mt-3 mb-3">
-      <a href="{{url_for('admin.create_user')}}" class="text-decoration-none text-center text-info">
-      <div class="col">
-        <div class="p-3 border bg-secondary">Create User</div>
-      </div>
-      </a>
-      <a href="{{url_for('admin.show_tutors')}}" class="text-decoration-none text-center text-info">
-      <div class="col">
-        <div class="p-3 border bg-secondary">Manage Tutors</div>
-      </div>
-      </a>
-      <a href="{{url_for('admin.create_student')}}" class="text-decoration-none text-center text-info">
-        <div class="col">
-          <div class="p-3 border bg-dark-purple">Create Students</div>
-        </div>
-      </a>
-      <a href="{{url_for('admin.student_list')}}" class="text-decoration-none text-center text-info">
-      <div class="col">
-        <div class="p-3 border bg-dark-purple">Manage Students</div>
-      </div>
-      </a>
-      <a href="{{url_for('admin.show_all_courses')}}" class="text-decoration-none text-center text-info">
-      <div class="col">
-        <div class="p-3 border btn-info">All Course List</div>
-      </div>
-      </a>
-        <!--
-        <div class="col">
-          <div class="p-3 border bg-light">Row column</div>
-        </div>
-        <div class="col">
-          <div class="p-3 border bg-light">Row column</div>
-        </div>
-        <div class="col">
-          <div class="p-3 border bg-light">Row column</div>
-        </div>
-        <div class="col">
-          <div class="p-3 border bg-light">Row column</div>
-        </div>
-        <div class="col">
-          <div class="p-3 border bg-light">Row column</div>
-        </div>
-        <div class="col">
-          <div class="p-3 border bg-light">Row column</div>
-        </div>
-        -->
-      </div>
-  </div>
+    </section>
+
+  </main><!-- End #main -->
 
 {% endblock %}

@@ -1,4 +1,4 @@
-from flask import render_template, render_template_string, redirect, url_for, flash
+from flask import render_template, render_template_string, redirect, url_for, flash, abort
 from flask_login import current_user, login_user, logout_user, login_required
 from flask import request
 from werkzeug.urls import url_parse
@@ -104,13 +104,13 @@ def profile(user_name):
 @auth_bp.route('/user/<user_name>/profile_1', methods=['GET', 'POST'])
 @login_required
 def profile_1(user_name):
-    form = forms.ProfilePage1Form()
+    print('Initial connection to route')
     if current_user.role in ['admin', 'superadmin']:
         user = models.User.query.filter_by(username=user_name).first_or_404()
     else:
         user = current_user.query.filter_by(username=user_name).first_or_404()
     my_infos = user.my_info
-
+    form = forms.ProfilePage1Form()
     if request.method == 'POST':
         if my_infos is not None:
             my_infos.address = request.form["address"]
@@ -123,10 +123,10 @@ def profile_1(user_name):
             try:
                 db.session.commit()
                 flash('Update successful', 'info')
-                return render_template('auth/profile_1.html', form=form, data=user)
+
             except:
                 flash('Something went wrong, try again!', 'warning')
-                return render_template('auth/profile_1.html', form=form)
+
         else:
             personal_info = models.MyInformation(address=form.address.data, city=form.city.data,
                                              zipcode=form.zipcode.data, email2=form.email2.data,
@@ -143,7 +143,9 @@ def profile_1(user_name):
         form.birth_date.data = datetime.strptime(my_infos.birth_date,'%Y-%m-%d')
         form.short_text.data = my_infos.short_text
 
-    return render_template('auth/profile_1.html', data=user, form=form, legend='My Information')
+    print("Connected to route after update")
+    return redirect(url_for('admin.get_tutor_by_id', tutor_id=user.id))
+    #return render_template('admin/profile_template.html', data=user, form=form, legend='My Information')
 
 
 def add_item_to_list(d, ls):
@@ -303,27 +305,26 @@ def delete_subject(subject_id):
 @auth_bp.route('/user/<user_name>/profile_3', methods=['GET', 'POST'])
 @login_required
 def profile_3(user_name):
-    form = forms.ProfilePage3Form()
     if current_user.role in ['admin', 'superadmin']:
         user = models.User.query.filter_by(username=user_name).first_or_404()
     else:
         user = current_user.query.filter_by(username=user_name).first_or_404()
     more_about = user.more
-    print(more_about)
-    if request.method == 'POST' and form.validate_on_submit():
+    form3 = forms.ProfilePage3Form()
+    if request.method == 'POST' and form3.validate_on_submit():
         if more_about is not None:
             more_about.why = request.form["why"]
             more_about.when = request.form["when"]
-            more_about.inquiry = form.inquiry.data
+            more_about.inquiry = form3.inquiry.data
             more_about.experience = request.form["experience"]
 
             try:
                 db.session.commit()
                 flash('Update successful', 'info')
-                return render_template('auth/profile_3.html', form=form, data=user)
+                return redirect(url_for('admin.get_tutor_by_id', tutor_id=user.id))
             except:
                 flash('Something went wrong, try again!', 'warning')
-                return render_template('auth/profile_3.html', form=form)
+                return redirect(url_for('admin.get_tutor_by_id', tutor_id=user.id))
         else:
             update_more = models.MoreAboutMe(why=request.form["why"], when=request.form["when"],
                                              inquiry=request.form["inquiry"], experience=request.form["experience"], user=user)
@@ -335,34 +336,41 @@ def profile_3(user_name):
             db.session.commit()
 
     if more_about is not None:
-        form.why.data = more_about.why
-        form.when.data = more_about.when
-        form.inquiry.data = more_about.inquiry
-        form.experience.data = more_about.experience
+        form3.why.data = more_about.why
+        form3.when.data = more_about.when
+        form3.inquiry.data = more_about.inquiry
+        form3.experience.data = more_about.experience
+        print('Found correct route')
 
-    return render_template('auth/profile_3.html', data=user, form=form, legend='More About Me')
+    return redirect(url_for('admin.get_tutor_by_id', tutor_id=user.id))
+    #return render_template('auth/profile_3.html', data=user, form3=form3, legend='More About Me')
 
 
 @auth_bp.route('/user/<user_name>/profile_4', methods=['GET', 'POST'])
 @login_required
 def profile_4(user_name):
-    form = forms.ValidateInterviewDateForm()
     if current_user.role in ['admin', 'superadmin']:
         user = models.User.query.filter_by(username=user_name).first_or_404()
     else:
         user = current_user.query.filter_by(username=user_name).first_or_404()
+    print("Profile_4 route---->>>")
+    form4 = forms.ValidateInterviewDateForm()
+    if form4.validate_on_submit():
+        user.my_interviews.is_accepted = form4.is_accepted.data
+        try:
+            db.session.commit()
+            if user.my_interviews.is_accepted:
+                flash('Interview date accepted', 'info')
+            else:
+                flash('Interview date declined', 'warning')
+        except:
+            flash('Something wrong happened, try again', 'warning')
 
-    if form.validate_on_submit():
-        user.my_interviews.is_accepted = form.is_accepted.data
-        db.session.commit()
-        if user.my_interviews.is_accepted:
-            flash( 'Interview date accepted', 'info')
-        else:
-            flash('Interview date declined', 'warning')
+    form4.is_accepted.data = user.my_interviews.is_accepted
+    print("check where I am", user.my_interviews.is_accepted)
 
-    form.is_accepted.data = user.my_interviews.is_accepted
-
-    return render_template('auth/profile_4.html', data=user, form=form, legend='My Interviews')
+    return redirect(url_for('admin.get_tutor_by_id', tutor_id=user.id))
+    #return render_template('auth/profile_4.html', data=user, form=form, legend='My Interviews')
 
 
 @auth_bp.route('/user/<user_name>/profile_5', methods=['GET', 'POST'])

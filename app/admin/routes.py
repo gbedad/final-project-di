@@ -1,11 +1,11 @@
-from flask import render_template, redirect, url_for, flash, request, render_template_string
+from flask import render_template, redirect, url_for, flash, request, render_template_string, abort
 from flask_login import current_user, login_user, logout_user, login_required
-from flask import request
 from werkzeug.urls import url_parse
 from sqlalchemy import or_, and_
 from app.auth import models
-
+from app.auth import routes
 from app.admin import forms as ad_forms
+from app.auth import forms as auth_forms
 from app.course import forms as crs_forms
 from app.auth import forms as auth_forms
 from flask.blueprints import Blueprint
@@ -14,7 +14,14 @@ from datetime import datetime, time
 from collections import namedtuple
 from app.utils import get_grade_from_range, check_tuple_in_list
 
+
 admin_bp = Blueprint('admin',  __name__, template_folder='templates', static_folder='static')
+
+
+@admin_bp.errorhandler(404)
+def page_not_found(e):
+    # note that we set the 404 status explicitly
+    return render_template('admin/error_404.html'), 404
 
 
 @admin_bp.route('/admin/dashboard')
@@ -23,14 +30,28 @@ def admin_dashboard():
     if current_user.role not in ['superadmin', 'admin']:
         flash('Sorry, you have to be an admin', 'warning')
         return redirect(url_for('auth.login'))
-
-    students_in_db = db.session.query(models.Students).count()
-    tutors_in_db = models.User.query.filter(models.User.role == 'supervisor').count()
-    courses_created = models.Course.query.filter(models.Course.status == 'created').count()
-    courses_accepted = models.Course.query.filter(models.Course.status == 'accepted').count()
+    supervisors = models.User.query.filter_by(role='supervisor').order_by(models.User.created_at.desc())
+    if not supervisors:
+        abort(404)
+    last_five_supervisors = supervisors.limit(5)
+    new_supervisors = [created for created in supervisors if created.status == '1']
+    documented_supervisors = [documented for documented in supervisors if documented.status == '3']
+    count_new_supervisors = len(list(new_supervisors))
+    count_documented_supervisors = len(list(documented_supervisors))
+    students = db.session.query(models.Students)
+    courses = db.session.query(models.Course)
+    l5_students = students.limit(5)
+    l5_courses = courses.limit(5)
+    students_in_db = students.count()
+    tutors_in_db = supervisors.count()
+    courses_created = courses.filter(models.Course.status == 'created').count()
+    courses_accepted = courses.filter(models.Course.status == 'accepted').count()
     courses_total = courses_accepted + courses_created
 
-    return render_template('admin/admin_dashboard.html',tutors=tutors_in_db, students=students_in_db, courses_t=courses_created, courses_a=courses_accepted, total=courses_total, title='Show tutors', legend='Admin Dashboard')
+    return render_template('admin/admin_dashboard.html', l5_supervisors=last_five_supervisors, count_new_supervisors=count_new_supervisors, count_documented_supervisors=count_documented_supervisors,
+                           new_supervisors=new_supervisors, documented_supervisors=documented_supervisors, l5_students=l5_students,
+                           tutors=tutors_in_db, students=students_in_db, courses_t=courses_created, l5_courses=l5_courses,
+                           courses_a=courses_accepted, total=courses_total, title='Show tutors', legend='Admin Dashboard')
 
 
 @admin_bp.route('/admin/show_tutors')
@@ -84,6 +105,13 @@ def get_tutor_by_id(tutor_id):
         return redirect(url_for('auth.login'))
     status_form = ad_forms.ChangeTutorStatus()
     interview_form = ad_forms.PlanInterview()
+    form = auth_forms.ProfilePage1Form()
+    form2 = auth_forms.ProfilePage2Form()
+    form3 = auth_forms.ProfilePage3Form()
+    form4 = auth_forms.ValidateInterviewDateForm()
+    availability_form = auth_forms.AddAvailabilitiesToTutor()
+    modality_form = auth_forms.AddModalityToTutor()
+    subjects_form = auth_forms.AddSubjectGradesToTutor()
     selected_tutor = models.User.query.filter_by(id=tutor_id).first_or_404()
     tutor_interviews = selected_tutor.my_interviews
 
@@ -127,8 +155,28 @@ def get_tutor_by_id(tutor_id):
         interview_form.interviewer.data = tutor_interviews.interviewer
         interview_form.message.data = tutor_interviews.message
 
-    return render_template('admin/tutor_view.html', data=selected_tutor, status_form=status_form,
-                           interview_form=interview_form, title='View Tutor',
+    if selected_tutor.my_info is not None:
+        form.address.data = selected_tutor.my_info.address
+        form.city.data = selected_tutor.my_info.city
+        form.zipcode.data = selected_tutor.my_info.zipcode
+        form.email2.data = selected_tutor.my_info.email2
+        form.phone.data = selected_tutor.my_info.phone
+        form.birth_date.data = datetime.strptime(selected_tutor.my_info.birth_date,'%Y-%m-%d')
+        form.short_text.data = selected_tutor.my_info.short_text
+
+    if selected_tutor.more is not None:
+        form3.why.data = selected_tutor.more.why
+        form3.experience.data = selected_tutor.more.experience
+        form3.when.data = selected_tutor.more.when
+        form3.inquiry.data = selected_tutor.more.inquiry
+        print(selected_tutor.more.inquiry)
+    print(selected_tutor.my_interviews.is_accepted)
+    if selected_tutor.my_interviews:
+        form4.is_accepted.data = selected_tutor.my_interviews.is_accepted
+
+    return render_template('admin/profile_template.html', data=selected_tutor, status_form=status_form,
+                           interview_form=interview_form, form=form, form2=form2, form3=form3, form4=form4, avail_form=availability_form, mod_form=modality_form,
+                           subjects_form=subjects_form, title='View Tutor',
                            legend=f'{selected_tutor.first_name} {selected_tutor.last_name} information')
 
 
@@ -310,7 +358,7 @@ def tutor_detailed_view(tutor_id):
     tutor_selected = models.User.query.filter_by(id=tutor_id).first()
 
     if tutor_selected:
-        return render_template('admin/tutor_profile.html', data=tutor_selected, title='Tutor Details', legend='Tutor Details')
+        return render_template('admin/profile_template.html', data=tutor_selected, title='Tutor Details', legend='Tutor Details')
 
 
 @admin_bp.route('/admin/student/<int:student_id>/search_tutor', methods=['GET', 'POST'])

@@ -1,61 +1,44 @@
-{% extends 'base.html' %}
-{% from "_macros.html" import render_field, render_fields %}
-
-{% block content %}
-
-<div class="row mb-4">
-  <div class="col-10"><h3>{{ legend }}</h3></div>
-  {% include 'auth/breadcrumb_user.html' %}
-</div>
-{% if current_user_role == 'supervisor' %}
-{% include 'auth/nav_profile.html' %}
-{% elif current_user.role in ['admin', 'superadmin'] %}
-{% include 'admin/admin_nav_profile_user.html' %}
-{% endif %}
-<hr>
-<form method="post">
-{{ form.hidden_tag() }}
-    <div class="row mb-2">
-        <div class="col-6">
-            <div class="form-outline mb-4">
-                    {{ form.why.label(class="form-label") }}<br>
-                    {{ form.why(size=500, class="form-control") }}
-                    {% for error in form.why.errors %}
-                    <span class="danger">[{{ error }}]</span>
-                    {% endfor %}
-            </div>
-        </div>
-    <div class="col-6">
-        <div class="form-outline mb-4">
-                {{ form.experience.label(class="form-label") }}<br>
-                {{ form.experience(size=500, class="form-control") }}
-                {% for error in form.experience.errors %}
+<form action="{{url_for('auth.profile_3', user_name=data.username)}}" method="post">
+    {{ form3.hidden_tag() }}
+    <div class="row mb-3">
+            <div class="form-outline">
+                {{ form3.why.label(class="form-label") }}<br>
+                {{ form3.why(size=500, class="form-control") }}
+                {% for error in form3.why.errors %}
                 <span class="danger">[{{ error }}]</span>
                 {% endfor %}
+            </div>
+    </div>
+
+    <div class="row mb-3">
+            <div class="form-outline">
+                {{ form3.experience.label(class="form-label") }}<br>
+                {{ form3.experience(size=500, class="form-control") }}
+                {% for error in form3.experience.errors %}
+                <span class="danger">[{{ error }}]</span>
+                {% endfor %}
+            </div>
+    </div>
+
+    <div class="row mb-3">
+            <div class="form-outline">
+                {{ form3.when.label(class="form-label") }}<br>
+                {{ form3.when(size=500, class="form-control") }}
+                {% for error in form3.when.errors %}
+                <span class="danger">[{{ error }}]</span>
+                {% endfor %}
+            </div>
+    </div>
+
+    <div class="row mb-3">
+        <div class="form-outline">
+            {{ render_field(form3.inquiry) }}
         </div>
     </div>
-</div>
-    <div>
-    <div class="row mb-2">
-        <div class="col-6">
-            <div class="form-outline mb-4">
-                    {{ form.when.label(class="form-label") }}<br>
-                    {{ form.when(size=400, class="form-control") }}
-                    {% for error in form.when.errors %}
-                    <span class="danger">[{{ error }}]</span>
-                    {% endfor %}
-            </div>
+        <!-- Submit button -->
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary">
+              Save Changes
+            </button>
         </div>
-            <div class="col">
-                    <div class="form-outline">
-                        {{ render_field(form.inquiry) }}
-                    </div>
-            </div>
-</div>
-    <div>
-    <!-- Submit button -->
-    <p class="text-center mt-4" >{{ form.submit(class="btn btn-success btn-block mb-4") }}</p>
-</div>
 </form>
-
-{% endblock %}

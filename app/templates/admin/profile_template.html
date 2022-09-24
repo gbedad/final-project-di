@@ -1,0 +1,215 @@
+{% extends 'base.html' %}
+
+{% from "_macros.html" import render_field, render_fields, switch_status %}
+
+{% block content %}
+    <main id="main" class="main">
+      <div class="pagetitle">
+        <h1>Profile</h1>
+        <nav>
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+            <li class="breadcrumb-item">Users</li>
+            <li class="breadcrumb-item active">Profile</li>
+          </ol>
+        </nav>
+      </div>
+      <!-- End Page Title -->
+
+      <section class="section profile">
+        <div class="row">
+          <div class="col-xl-4">
+            <div class="card">
+              <div
+                class="card-body profile-card pt-4 d-flex flex-column align-items-center"
+              >
+                <h2>{{data.first_name}} {{data.last_name}}</h2>
+                <h3>{{data.role}}</h3>
+                <p>{{data.email}}</p>
+                <p class={% if data.status == '1' %}"badge bg-warning"
+                          {% elif data.status == '2' %}"badge bg-info"
+                          {% elif data.status == '3' %}"badge bg-primary"
+                          {% elif data.status == '4' %}"badge bg-primary"
+                          {% elif data.status == '5' %}"badge bg-success"
+                          {% else %} "badge bg-danger" {% endif %}>{{switch_status(data.status)}}</p>
+                <div class="mt-2">
+                  <a href="#statusModal" data-bs-toggle="modal" data-bs-target="#statusModal" class="btn text-decoration-none">
+                    Change Status
+                </a>
+                  <a href="#interviewModal" class="btn text-decoration-none" data-bs-toggle="modal" data-bs-target="#interviewModal">
+                Plan Interview
+                </a>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-xl-8">
+            <div class="card">
+              <div class="card-body pt-3">
+                <!-- Bordered Tabs {%  include 'admin/admin_nav_profile_user.html' %}-->
+
+                <ul class="nav nav-tabs nav-tabs-bordered" role="tablist">
+                  <li class="nav-item">
+                    <button
+                      class="nav-link active"
+                      data-bs-toggle="tab"
+                      data-bs-target="#profile-overview"
+                    >
+                      Overview
+                    </button>
+                  </li>
+
+                  <li class="nav-item">
+                    <a class='nav-link'
+                       data-bs-toggle="tab"
+                       data-bs-target="#profile-edit"
+                       href="{{url_for('auth.profile_1', user_name=data.username)}}">
+                        <i class="bi bi-1-circle m-1"></i>Information</a>
+                  </li>
+
+                  <li class="nav-item">
+                    <a
+                      class="nav-link"
+                      data-bs-toggle="tab"
+                      data-bs-target="#profile-2"
+                      href="{{url_for('auth.profile_2', user_name=data.username)}}"
+                      ><i class="bi bi-2-circle m-1"></i>Settings</a
+                    >
+                  </li>
+
+                   <li class="nav-item">
+                    <a
+                      class="nav-link"
+                      data-bs-toggle="tab"
+                      data-bs-target="#profile-3"
+                      href="{{url_for('auth.profile_3', user_name=data.username)}}"
+                      ><i class="bi bi-3-circle m-1"></i>More</a
+                    >
+                  </li>
+
+                   <li class="nav-item">
+                    <a
+                      class="nav-link"
+                      data-bs-toggle="tab"
+                      data-bs-target="#profile-4"
+                      href="{{url_for('auth.profile_4', user_name=data.username)}}"
+                      ><i class="bi bi-4-circle m-1"></i>Interview</a
+                    >
+                  </li>
+
+                </ul>
+                <div class="tab-content pt-2">
+                    <div
+                    class="tab-pane fade show active profile-overview"
+                    id="profile-overview"
+                  >
+                    {% include 'admin/tutor_profile.html' %}
+                  </div>
+
+                    <div
+                    class="tab-pane fade profile-edit pt-3"
+                    id="profile-edit"
+                  >
+                    {% include 'auth/profile_1.html' %}
+                  </div>
+
+                    <div class="tab-pane fade pt-3"
+                       id="profile-2"
+                  >
+                    {% include 'auth/profile_2.html' %}
+                  </div>
+
+                    <div class="tab-pane fade pt-3"
+                       id="profile-3"
+                  >
+                    {% include 'auth/profile_3.html' %}
+                  </div>
+
+                    <div class="tab-pane fade pt-3"
+                       id="profile-4"
+                  >
+                    {% include 'auth/profile_4.html' %}
+                  </div>
+                </div>
+                <!-- End Bordered Tabs -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+<!-- Interview Modal -->
+<div class="modal fade" id="statusModal" tabindex="-1" aria-labelledby="statusModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="statusModalLabel">Change Current status</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form method="post">
+            {{ status_form.hidden_tag() }}
+            <div class="form-outline mb-4">
+                {{ render_field(status_form.status) }}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <p>{{status_form.submit(class="btn btn-info")}}</p>
+                <button type="submit" class="btn btn-primary" >update</button>
+            </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="interviewModal" tabindex="-1" aria-labelledby="interviewModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="interviewModalLabel">Plan Interview</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form method="post">
+            {{ interview_form.hidden_tag() }}
+            <div class="form-outline mb-4">
+                {{ interview_form.interview_date.label(class="form-label") }}<br>
+                    {{ interview_form.interview_date(size=64, class="form-control") }}
+                    {% for error in interview_form.interview_date.errors %}
+                    <span class="danger">[{{ error }}]</span>
+                    {% endfor %}
+            </div>
+             <div class="form-outline mb-4">
+                {{ interview_form.interview_time.label(class="form-label") }}<br>
+                    {{ interview_form.interview_time(size=64, class="form-control") }}
+                    {% for error in interview_form.interview_time.errors %}
+                    <span class="danger">[{{ error }}]</span>
+                    {% endfor %}
+            </div>
+
+            <div class="form-outline mb-4">
+                {{ render_field(interview_form.interviewer) }}
+            </div>
+            <div class="form-outline mb-4">
+                {{ interview_form.message.label(class="form-label") }}<br>
+                    {{ interview_form.message(size=64, class="form-control") }}
+                    {% for error in interview_form.message.errors %}
+                    <span class="danger">[{{ error }}]</span>
+                    {% endfor %}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <p>{{interview_form.submit(class="btn btn-info")}}</p>
+                <button type="submit" class="btn btn-primary" >update</button>
+            </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>
+{% endblock %}
