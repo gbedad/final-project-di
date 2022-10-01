@@ -1,4 +1,5 @@
-from flask import render_template, redirect, url_for, flash, request, render_template_string, abort
+from io import BytesIO
+from flask import render_template, redirect, url_for, flash, request, send_file, render_template_string, abort
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.urls import url_parse
 from sqlalchemy import or_, and_
@@ -177,6 +178,24 @@ def get_tutor_by_id(tutor_id):
                            interview_form=interview_form, form=form, form2=form2, form3=form3, form4=form4, avail_form=availability_form, mod_form=modality_form,
                            subjects_form=subjects_form, title='View Tutor',
                            legend=f'{selected_tutor.first_name} {selected_tutor.last_name} information')
+
+
+@admin_bp.route('/admin/<int:user_id>/cv_upload/<int:upload_cv_id>')
+def upload_cv(user_id, upload_cv_id):
+    cv_upload = models.UploadCv.query.filter_by(id=upload_cv_id).filter_by(user_id=user_id).first()
+    return send_file(BytesIO(cv_upload.cv_data), attachment_filename=cv_upload.cv_filename, as_attachment=True)
+
+
+@admin_bp.route('/admin/<int:user_id>/b3_upload/<int:upload_b3_id>')
+def upload_b3(user_id, upload_b3_id):
+    b3_upload = models.UploadB3.query.filter_by(id=upload_b3_id).filter_by(user_id=user_id).first()
+    return send_file(BytesIO(b3_upload.b3_data), attachment_filename=b3_upload.b3_filename, as_attachment=True)
+
+
+@admin_bp.route('/admin/<int:user_id>/id_upload/<int:upload_ident_id>')
+def upload_id(user_id, upload_ident_id):
+    id_upload = models.UploadId.query.filter_by(id=upload_ident_id).filter_by(user_id=user_id).first()
+    return send_file(BytesIO(id_upload.id_data), attachment_filename=id_upload.id_filename, as_attachment=True)
 
 
 @admin_bp.route('/admin/students/create', methods=['GET', 'POST'])

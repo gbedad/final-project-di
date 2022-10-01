@@ -15,7 +15,7 @@
         </div>
         <div class="col">
             {% if data.my_upload_cv.cv_filename %}
-            <span>{{data.my_upload_cv.cv_filename}}</span>
+            <span><a href="{{url_for('admin.upload_cv', user_id=data.my_upload_cv.user_id, upload_cv_id=data.my_upload_cv.id)}}">{{data.my_upload_cv.cv_filename}}</a></span>
             {% else %}
             <span>Please upload your CV </span>
             {% endif %}
@@ -35,7 +35,7 @@
         <div class="col">
             <div class="col">
             {% if data.my_upload_b3.b3_filename %}
-            <span>{{data.my_upload_b3.b3_filename}}</span>
+                <span><a href="{{url_for('admin.upload_b3', user_id=data.my_upload_b3.user_id, upload_b3_id=data.my_upload_b3.id)}}">{{data.my_upload_b3.b3_filename}}</a></span>
             {% else %}
             <span>Please upload your B3 </span>
             {% endif %}
@@ -56,7 +56,7 @@
         <div class="col">
             <div class="col">
             {% if data.my_upload_id.id_filename %}
-            <span>{{data.my_upload_id.id_filename}}</span>
+                <span><a href="{{url_for('admin.upload_id', user_id=data.my_upload_id.user_id, upload_ident_id=data.my_upload_id.id)}}">{{data.my_upload_id.id_filename}}</a></span>
             {% else %}
             <span>Please upload your ID </span>
             {% endif %}
