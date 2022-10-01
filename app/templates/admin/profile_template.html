@@ -3,18 +3,30 @@
 {% from "_macros.html" import render_field, render_fields, switch_status %}
 
 {% block content %}
+
     <main id="main" class="main">
       <div class="pagetitle">
         <h1>Profile</h1>
         <nav>
           <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-            <li class="breadcrumb-item">Users</li>
+            <li class="breadcrumb-item"><a href="{{url_for('admin.show_tutors')}}">Users</a></li>
             <li class="breadcrumb-item active">Profile</li>
           </ol>
         </nav>
       </div>
       <!-- End Page Title -->
+        <!-- Flash messages -->
+        <div class="container">
+          {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+              {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">{{ message }}</div>
+              {% endfor %}
+            {% endif %}
+          {% endwith %}
+        </div>
+        <!-- End Flash messages -->
 
       <section class="section profile">
         <div class="row">
@@ -51,7 +63,7 @@
                 <!-- Bordered Tabs {%  include 'admin/admin_nav_profile_user.html' %}-->
 
                 <ul class="nav nav-tabs nav-tabs-bordered" role="tablist">
-                  <li class="nav-item">
+                    <li class="nav-item">
                     <button
                       class="nav-link active"
                       data-bs-toggle="tab"
@@ -60,16 +72,14 @@
                       Overview
                     </button>
                   </li>
-
-                  <li class="nav-item">
+                    <li class="nav-item">
                     <a class='nav-link'
                        data-bs-toggle="tab"
                        data-bs-target="#profile-edit"
                        href="{{url_for('auth.profile_1', user_name=data.username)}}">
                         <i class="bi bi-1-circle m-1"></i>Information</a>
                   </li>
-
-                  <li class="nav-item">
+                    <li class="nav-item">
                     <a
                       class="nav-link"
                       data-bs-toggle="tab"
@@ -78,8 +88,7 @@
                       ><i class="bi bi-2-circle m-1"></i>Settings</a
                     >
                   </li>
-
-                   <li class="nav-item">
+                    <li class="nav-item">
                     <a
                       class="nav-link"
                       data-bs-toggle="tab"
@@ -88,8 +97,7 @@
                       ><i class="bi bi-3-circle m-1"></i>More</a
                     >
                   </li>
-
-                   <li class="nav-item">
+                    <li class="nav-item">
                     <a
                       class="nav-link"
                       data-bs-toggle="tab"
@@ -98,7 +106,15 @@
                       ><i class="bi bi-4-circle m-1"></i>Interview</a
                     >
                   </li>
-
+                    <li class="nav-item">
+                    <a
+                      class="nav-link"
+                      data-bs-toggle="tab"
+                      data-bs-target="#profile-5"
+                      href="{{url_for('auth.profile_5', user_name=data.username)}}"
+                      ><i class="bi bi-5-circle m-1"></i>Uploads</a
+                    >
+                  </li>
                 </ul>
                 <div class="tab-content pt-2">
                     <div
@@ -124,14 +140,20 @@
                     <div class="tab-pane fade pt-3"
                        id="profile-3"
                   >
-                    {% include 'auth/profile_3.html' %}
-                  </div>
+                        {% include 'auth/profile_3.html' %}
+                    </div>
 
                     <div class="tab-pane fade pt-3"
                        id="profile-4"
                   >
-                    {% include 'auth/profile_4.html' %}
-                  </div>
+                        {% include 'auth/profile_4.html' %}
+                    </div>
+
+                    <div class="tab-pane fade pt-3"
+                       id="profile-5"
+                  >
+                        {% include 'auth/profile_5.html' %}
+                    </div>
                 </div>
                 <!-- End Bordered Tabs -->
               </div>

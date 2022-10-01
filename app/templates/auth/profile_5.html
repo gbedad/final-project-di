@@ -1,91 +1,79 @@
-{% extends 'base.html' %}
 {% from "_macros.html" import render_field, render_fields %}
 
-{% block content %}
-
-<div class="row mb-4">
-  <div class="col-10"><h3>{{ legend }}</h3></div>
-  {% include 'auth/breadcrumb_user.html' %}
-</div>
+<!--
 {% if current_user_role == 'supervisor' %}
 {% include 'auth/nav_profile.html' %}
 {% elif current_user.role in ['admin', 'superadmin'] %}
 {% include 'admin/admin_nav_profile_user.html' %}
 {% endif %}
-<hr>
-<form method="post" enctype="multipart/form-data">
-<div class="row">
-    <div class="col-1"></div>
-    <div class="col">
-            <h5 class="mb-4">To finalize the validation process : </h5>
+-->
+<form method="post" enctype="multipart/form-data" action="{{url_for('auth.profile_5', user_name=data.username)}}">
+    <p class="mb-4">To finalize the validation process : </p>
     <div class="row mb-4">
-
+        <div class="col-sm-6">
+            <input class="form-control form-control-sm" type="file" id="cvFile" name="cv_file">
+        </div>
         <div class="col">
+            {% if data.my_upload_cv.cv_filename %}
+            <span>{{data.my_upload_cv.cv_filename}}</span>
+            {% else %}
             <span>Please upload your CV </span>
+            {% endif %}
         </div>
-        <div class="col mb-4">
-            <input type="file" name="cv_file">
-        </div>
-        <div class="col mb-4">
-            <p></p>
-        </div>
-        <div class="col-1 mb-4">
-            {% if cv %}
-            <i class="bi bi-check-circle text-success"></i>
+        <div class="col-1">
+            {% if data.my_upload_cv.cv_filename %}
+            <i class="bi bi-check-circle-fill text-success"></i>
             {% else %}
             <i class="bi bi-circle"></i>
             {% endif %}
         </div>
-        <br>
     </div>
     <div class="row mb-4">
+        <div class="col-sm-6">
+            <input class="form-control form-control-sm" type="file" id="b3File" name="b3_file">
+        </div>
         <div class="col">
+            <div class="col">
+            {% if data.my_upload_b3.b3_filename %}
+            <span>{{data.my_upload_b3.b3_filename}}</span>
+            {% else %}
             <span>Please upload your B3 </span>
+            {% endif %}
         </div>
-        <div class="col mb-4">
-            <input type="file" name="b3_file">
         </div>
-        <div class="col mb-4">
-            <p></p>
-        </div>
-        <div class="col-1 mb-4">
-            {% if b3 %}
-            <i class="bi bi-check-circle text-success"></i>
+        <div class="col-1">
+            {% if data.my_upload_b3.b3_filename %}
+            <i class="bi bi-check-circle-fill text-success"></i>
             {% else %}
             <i class="bi bi-circle"></i>
             {% endif %}
         </div>
-        <br>
     </div>
     <div class="row mb-4">
+        <div class="col-sm-6">
+            <input class="form-control form-control-sm" type="file" id="idFile" name="id_file">
+        </div>
         <div class="col">
+            <div class="col">
+            {% if data.my_upload_id.id_filename %}
+            <span>{{data.my_upload_id.id_filename}}</span>
+            {% else %}
             <span>Please upload your ID </span>
+            {% endif %}
         </div>
-        <div class="col mb-4">
-            <input type="file" name="id_file">
         </div>
-        <div class="col mb-4">
-            <p></p>
-        </div>
-        <div class="col-1 mb-4">
-            {% if id %}
-            <i class="bi bi-check-circle text-success"></i>
+        <div class="col-1">
+            {% if data.my_upload_id.id_filename %}
+            <i class="bi bi-check-circle-fill text-success"></i>
             {% else %}
             <i class="bi bi-circle"></i>
             {% endif %}
         </div>
-        <br>
-        <div class="row">
-            <div class="col-6"></div>
-            <div class="col-4">
-                <input class="bg-dark-purple" type=submit value=Upload>
-            </div>
-        </div>
-
+     <!-- Submit button -->
     </div>
+        <div class="text-center">
+        <button type="submit" class="btn btn-primary">
+          Upload
+        </button>
     </div>
-</div>
 </form>
-
-
-{% endblock %}

@@ -169,8 +169,7 @@ def get_tutor_by_id(tutor_id):
         form3.experience.data = selected_tutor.more.experience
         form3.when.data = selected_tutor.more.when
         form3.inquiry.data = selected_tutor.more.inquiry
-        print(selected_tutor.more.inquiry)
-    print(selected_tutor.my_interviews.is_accepted)
+
     if selected_tutor.my_interviews:
         form4.is_accepted.data = selected_tutor.my_interviews.is_accepted
 

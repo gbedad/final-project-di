@@ -17,6 +17,7 @@ auth_bp = Blueprint('auth',  __name__, template_folder='templates', static_folde
 
 @auth_bp.route('/login', methods=['GET', 'POST'])
 def login():
+
     if current_user.is_authenticated:
         return redirect(url_for('main.index'))
     form = forms.LoginForm()
@@ -366,8 +367,9 @@ def profile_4(user_name):
         except:
             flash('Something wrong happened, try again', 'warning')
 
-    form4.is_accepted.data = user.my_interviews.is_accepted
-    print("check where I am", user.my_interviews.is_accepted)
+    if user.my_interviews.is_accepted:
+        form4.is_accepted.data = user.my_interviews.is_accepted
+        print("check where I am", user.my_interviews.is_accepted)
 
     return redirect(url_for('admin.get_tutor_by_id', tutor_id=user.id))
     #return render_template('auth/profile_4.html', data=user, form=form, legend='My Interviews')
@@ -376,7 +378,6 @@ def profile_4(user_name):
 @auth_bp.route('/user/<user_name>/profile_5', methods=['GET', 'POST'])
 @login_required
 def profile_5(user_name):
-
     if current_user.role in ['admin', 'superadmin']:
         user = models.User.query.filter_by(username=user_name).first_or_404()
     else:
@@ -389,6 +390,7 @@ def profile_5(user_name):
         cv_file = request.files['cv_file']
         b3_file = request.files['b3_file']
         ident_file = request.files['id_file']
+        print(cv_file, b3_file, ident_file)
 
         if not cv_file and not b3_file and not ident_file:
             flash('Something wrong  happened or one or more files are missing! Try again.', 'warning')
@@ -397,12 +399,16 @@ def profile_5(user_name):
         cv_f = secure_filename(cv_file.filename)
         b3_f = secure_filename(b3_file.filename)
         id_f = secure_filename(ident_file.filename)
+        if b3_f:
+            upload_cv = models.UploadCv(cv_filename=cv_f, cv_data=cv_file.read(), user=user)
+            db.session.add(upload_cv)
+        if cv_f:
+            upload_b3 = models.UploadB3(b3_filename=b3_f, b3_data=b3_file.read(), user=user)
+            db.session.add(upload_b3)
+        if id_f:
+            upload_id = models.UploadId(id_filename=id_f, id_data=ident_file.read(), user=user)
+            db.session.add(upload_id)
 
-        uploads = models.Upload(cv_filename=cv_f, cv_data=cv_file.read(),
-                                b3_filename=b3_f, b3_data=b3_file.read(),
-                                id_filename=id_f, id_data=ident_file.read())
-
-        db.session.add(uploads)
         try:
             db.session.commit()
             flash('Files successfully uploaded', 'success')
@@ -411,7 +417,8 @@ def profile_5(user_name):
             flash('Something wrong  happened or one or more files are missing! Try again.', 'warning')
             return redirect(url_for('auth.profile_5', user_name=user.username))
 
-    return render_template('auth/profile_5.html', data=user, legend='My Commitment')
+    return redirect(url_for('admin.get_tutor_by_id', tutor_id=user.id))
+    #return render_template('auth/profile_5.html', data=user, legend='My Commitment')
 
 
 @auth_bp.route('/user/<int:tutor_id>/dashboard')

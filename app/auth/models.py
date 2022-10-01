@@ -46,7 +46,10 @@ class User(UserMixin, db.Model):
     password_hash = db.Column(db.String(128))
     role = db.Column(db.String(64), default='supervisor')
     status = db.Column(db.String(64), default="1")
-    upload_id = db.Column(db.Integer, db.ForeignKey('upload.id'))
+    #upload_id = db.Column(db.Integer, db.ForeignKey('upload.id'))
+    my_upload_cv = db.relationship('UploadCv', backref='user', uselist=False)
+    my_upload_b3 = db.relationship('UploadB3', backref='user', uselist=False)
+    my_upload_id = db.relationship('UploadId', backref='user', uselist=False)
     my_info = db.relationship('MyInformation', backref='user', uselist=False)
     more = db.relationship('MoreAboutMe', backref='user', uselist=False)
     tutoring_exp = db.relationship('Tutoring', backref='user', uselist=False)
@@ -106,25 +109,11 @@ class MyInformation(db.Model):
 
 class Tutoring(db.Model):
     id = db.Column(db.Integer, unique=True, primary_key=True, autoincrement=True)
-    maths = db.Column(db.String(120))
-    physics = db.Column(db.String(120))
-    svt = db.Column(db.String(120))
-    french = db.Column(db.String(120))
-    english = db.Column(db.String(120))
-    spanish = db.Column(db.String(120))
-    history = db.Column(db.String(120))
-    geopolitics = db.Column(db.String(120))
     modalities = db.Column(db.String(240))
     engagement = db.Column(db.String(32))
     start_date = db.Column(db.String(32))
     end_date = db.Column(db.String(32))
     frequency = db.Column(db.Integer)
-    monday = db.Column(db.String(32))
-    tuesday = db.Column(db.String(10))
-    wednesday = db.Column(db.String(10))
-    thursday = db.Column(db.String(10))
-    friday = db.Column(db.String(10))
-    sunday = db.Column(db.String(10))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), unique=True)
     tutor_availabilities = db.relationship('Availabilities', backref='tutor')
     tutor_modalities = db.relationship('Modalities', backref='tutor')
@@ -143,15 +132,28 @@ class MoreAboutMe(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), unique=True)
 
 
-class Upload(db.Model):
+class UploadCv(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     cv_filename = db.Column(db.String(100))
     cv_data = db.Column(db.LargeBinary)
+    #users = db.relationship('User', backref='upload', lazy='dynamic')
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), unique=True)
+
+
+class UploadB3(db.Model):
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     b3_filename = db.Column(db.String(100))
     b3_data = db.Column(db.LargeBinary)
+    #users = db.relationship('User', backref='upload', lazy='dynamic')
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), unique=True)
+
+
+class UploadId(db.Model):
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     id_filename = db.Column(db.String(100))
     id_data = db.Column(db.LargeBinary)
-    users = db.relationship('User', backref='upload', lazy='dynamic')
+    #users = db.relationship('User', backref='upload', lazy='dynamic')
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), unique=True)
 
 
 class Subjects(db.Model):
