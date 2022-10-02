@@ -354,7 +354,7 @@ def profile_4(user_name):
         user = models.User.query.filter_by(username=user_name).first_or_404()
     else:
         user = current_user.query.filter_by(username=user_name).first_or_404()
-    print("Profile_4 route---->>>")
+
     form4 = forms.ValidateInterviewDateForm()
     if form4.validate_on_submit():
         user.my_interviews.is_accepted = form4.is_accepted.data
@@ -405,6 +405,7 @@ def profile_5(user_name):
         if cv_f:
             upload_b3 = models.UploadB3(b3_filename=b3_f, b3_data=b3_file.read(), user=user)
             db.session.add(upload_b3)
+            user.status = '3'
         if id_f:
             upload_id = models.UploadId(id_filename=id_f, id_data=ident_file.read(), user=user)
             db.session.add(upload_id)

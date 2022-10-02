@@ -55,6 +55,15 @@
                 </div>
               </div>
             </div>
+            <div class="d-flex justify-content-around align-center">
+                <div class="card ">
+                    <div class="card-body mt-3">
+                      <span class={% if data.my_upload_cv %} "badge bg-success" {% else %} "badge bg-light text-secondary" {% endif %}  >CV</span>
+                      <span class={% if data.my_upload_b3 %} "badge bg-success" {% else %} "badge bg-light text-secondary" {% endif %}>B3</span>
+                      <span class={% if data.my_upload_id %} "badge bg-success" {% else %} "badge bg-light text-secondary" {% endif %}>ID</span>
+                    </div>
+                </div><!-- End Icon Badges -->
+            </div>
           </div>
 
           <div class="col-xl-8">

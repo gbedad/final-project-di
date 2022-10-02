@@ -547,6 +547,8 @@ h6 {
 }
 
 .header-nav .messages .message-item {
+  display: flex;
+  align-items: center;
   padding: 15px 10px;
   transition: 0.3s;
 }

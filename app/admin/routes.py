@@ -49,10 +49,20 @@ def admin_dashboard():
     courses_accepted = courses.filter(models.Course.status == 'accepted').count()
     courses_total = courses_accepted + courses_created
 
-    return render_template('admin/admin_dashboard.html', l5_supervisors=last_five_supervisors, count_new_supervisors=count_new_supervisors, count_documented_supervisors=count_documented_supervisors,
+    return render_template('admin/admin_dashboard.html', l5_supervisors=last_five_supervisors, count_new_supervisors=count_new_supervisors,
                            new_supervisors=new_supervisors, documented_supervisors=documented_supervisors, l5_students=l5_students,
                            tutors=tutors_in_db, students=students_in_db, courses_t=courses_created, l5_courses=l5_courses,
                            courses_a=courses_accepted, total=courses_total, title='Show tutors', legend='Admin Dashboard')
+
+
+@admin_bp.context_processor
+def context_processor():
+    supervisors = models.User.query.filter_by(role='supervisor').order_by(models.User.created_at.desc())
+    new_supervisors = [created for created in supervisors if created.status == '1']
+    documented_supervisors = [documented for documented in supervisors if documented.status == '3']
+    count_new_supervisors = len(list(new_supervisors))
+    count_documented_supervisors = len(list(documented_supervisors))
+    return dict(count_documented_supervisors=count_documented_supervisors, documented_supervisors=documented_supervisors, count_new_supervisors=count_new_supervisors, new_supervisors=new_supervisors)
 
 
 @admin_bp.route('/admin/show_tutors')
