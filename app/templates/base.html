@@ -181,6 +181,7 @@
             </li>
             {% for  documented in documented_supervisors %}
             <li class="message-item">
+              <i class="bi bi-info-circle text-success"></i>
               <a href="{{url_for('admin.get_tutor_by_id', tutor_id=documented.id)}}">
                 <div>
                   <h4>{{documented.first_name}} {{documented.last_name}}</h4>

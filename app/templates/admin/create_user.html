@@ -7,6 +7,96 @@ Create User
 {% endblock %}
 
 {% block content %}
+<main id="main" class="main">
+      <div class="pagetitle">
+        <h1>Create tutor</h1>
+        <nav>
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{{url_for('main.index')}}">Home</a></li>
+            <li class="breadcrumb-item"><a href="{{url_for('admin.show_tutors')}}">Users</a></li>
+            <li class="breadcrumb-item active">Create</li>
+          </ol>
+        </nav>
+      </div>
+      <!-- End Page Title -->
+        <!-- Flash messages -->
+        <div class="container">
+          {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+              {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">{{ message }}</div>
+              {% endfor %}
+            {% endif %}
+          {% endwith %}
+        </div>
+        <!-- End Flash messages -->
+
+<section class="section profile">
+<form method="post" novalidate>
+    {{ user_form.hidden_tag() }}
+
+    <div  class="row mb-3">
+        <div class="col col-12 col-md-6 col-lg-4">
+            <div class="form-outline">
+                    {{ user_form.first_name.label(class="form-label") }}<br>
+                    {{ user_form.first_name(size=64, class="form-control") }}
+                    {% for error in user_form.first_name.errors %}
+                    <span class="danger">[{{ error }}]</span>
+                    {% endfor %}
+                </div>
+        </div>
+        <div class="col col-12 col-md-6 col-lg-4">
+            <div class="form-outline">
+                    {{ user_form.last_name.label(class="form-label") }}<br>
+                    {{ user_form.last_name(size=64, class="form-control") }}
+                    {% for error in user_form.last_name.errors %}
+                    <span class="danger">[{{ error }}]</span>
+                    {% endfor %}
+                </div>
+        </div>
+        <div class="col col-12 col-md-6 col-lg-4">
+                <div class="form-outline">
+                    {{ user_form.email.label(class="form-label") }}<br>
+                    {{ user_form.email(size=64, class="form-control") }}
+                    {% for error in user_form.email.errors %}
+                    <span class="danger">[{{ error }}]</span>
+                    {% endfor %}
+                </div>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <div class="col">
+            <div class="form-outline">
+                {{ user_form.username.label(class="form-label") }}<br>
+                {{ user_form.username(size=64, class="form-control") }}
+                {% for error in user_form.username.errors %}
+                <span class="danger">[{{ error }}]</span>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="col">
+                <div class="form-outline">
+                    {{ render_field(user_form.role) }}
+                </div>
+        </div>
+        <div class="col">
+                <div class="form-outline">
+                    {{ render_field(user_form.status) }}
+                </div>
+        </div>
+    </div>
+    </div>
+
+    <!-- Submit button -->
+        <div class="text-center">
+            <button type="submit" class="btn btn-primary">
+              Save Changes
+            </button>
+        </div>
+    </form>
+  </section>
+</main>
+<!--
 <div class="row mb-4">
   <div class="col-10 me-0"><h3 class="legend-color">{{ legend }}</h3></div>
   {% include 'auth/breadcrumb_user.html' %}
@@ -77,5 +167,5 @@ Create User
     <hr>
 
 </div>
-
+-->
 {% endblock %}
