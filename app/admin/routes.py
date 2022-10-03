@@ -503,10 +503,10 @@ def create_user():
         try:
             db.session.commit()
             flash('New user successfully added', 'success')
-            return redirect(url_for('admin.show_tutors'))
+            return redirect(url_for('admin.create_user'))
         except:
             flash('Something wrong happened', 'warning')
-            return redirect(url_for('admin.show_tutors'))
+            return redirect(url_for('admin.create_user'))
 
     return render_template('admin/create_user.html', user_form=user_form, title='Create User', legend='Create New Tutor')
 
